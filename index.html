@@ -1,9 +1,160 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Городской Транспорт</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;500&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 200;
+            color: #ffffff;
+            background: #000000;
+        }
+
+        #main {
+            width: 100%;
+            padding: 20px;
+            text-align: center;
+        }
+
+        img {
+            width: 50px;
+            margin: -10px auto 30px -200px;
+            position: absolute;
+        }
+
+        p {
+            width: 350px;
+            margin: 0 auto;
+        }
+
+        #p01 { /* пример записи стиля абзаца через идентификатор */
+        color: #ffffff94;
+        }
+
+        label {
+          font-family: sans-serif;
+          font-size: 1rem;
+          padding-right: 10px;
+        }
+
+        select {
+          font-size: 0.9rem;
+          padding: 2px 5px;
+          background-color: black;
+          color: white;
+          border: black;
+        }
+
+
+        button {
+            border: 0;
+            border-radius: 5px;
+            margin-top: 50px;
+            height: 60px;
+            width: 950px;
+            font-size: 20px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 50ms ease;
+            color: #ffffff;
+            background: #cc0b0b;
+        }
+
+        .btn_2
+        {
+            background-color: black;
+            font: 17px/1.5 sans-serif;
+            color: red;
+            border-radius: 6px;
+            border: none;
+            width: 100px;
+            height: 30px;
+        }
+
+        .btn_3
+        {
+            background-color: black;
+            font: 17px/1.5 sans-serif;
+            color: white;
+            border-radius: 6px;
+            border: none;
+            width: 100px;
+            height: 30px;
+        }
+
+        hr {
+        border: none;
+        height: 1px;
+        color: #333;  /* old IE */
+        background-color: #333;  /* Modern Browsers */
+}
+
+    </style>
+</head>
 <body>
+    <div id="main">
+        <h1>Действует: 15сек.</h1><br>
+        <button class="btn btn_2">Билет</button><button class="btn btn_3">Контроль</button>
+        <hr style="width:250px; margin: auto;"/>
+        <img src="https://sun9-46.userapi.com/impg/AiOicp1Fv2Z7pq1vr3aWd7qYWLi8qyspiAeZ3g/bYQlrLxTSro.jpg?size=75x91&quality=96&sign=ae15d5e10e4dcac887e64fab967d30f8&type=album">
+        <p id="p01">Перевозчик</p>
+        <p>МП ПАТП</p>
+        <hr style="width:250px; margin: auto;"/>
 
-<h1 style="background-color: red;">Hello World!</h1>
-<p>This is a paragr dasdas  dasaph.</p>
 
+        <label>
+            <select style="width:250px;-webkit-appearance: none;"> ### маршрут
+            <option>Ленина 75 - Церковь - Ленина 75</option>
+            <option>Питер - Питер - Питер</option>
+            <option>2002</option>
+               ...
+            </select>
+        </label>
+
+
+        <p>а878ту124</p>
+        <hr style="width:250px; margin: auto;"/>
+
+        <p id="p01">Стоимость</p>
+        <p>1шт., Полный, 42.00 Р</p>
+        <hr style="width:250px; margin: auto;"/>
+
+        <p id="p01">Дата покупки</p>
+        <label>
+            <select style="width:140px;-webkit-appearance: none;"> ### дата покупки
+            <option>10 сентября 2024 г.</option>
+            <option>11 сентября 2024 г.</option>
+            <option>12 сентября 2024 г.</option>
+               ...
+            </select>
+        </label>
+        <hr style="width:250px; margin: auto;"/>
+
+        <p id="p01">Время покупки</p>
+        <input type="time"><br>
+        <button id="buy">ЗАКРЫТЬ</button>
+    </div>
+    <script>
+ let seconds = 15;
+ const timer = setInterval(() => {
+            if (seconds <= 0) {
+                clearInterval(timer);
+            }
+            seconds--;
+        }, 1000);
+</script>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </body>
 </html>
