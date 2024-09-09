@@ -28,29 +28,32 @@
             text-align: center;
         }
 
-        img {
-            width: 50px;
-            margin: -10px auto 30px -180px;
-            position: absolute;
+        #div1 {
+            width: 100%;
+            padding: 20px;
+            margin: 0px -50px 0px;
         }
 
-        p {
-            width: 350px;
-            margin: 0 auto;
-            padding: 2.50px;
+        #div2 {
+            width: 100%;
+            margin: 0px 0px 0px;
+        }
+
+        #img1 {
+            width: 50px;
+            margin: -10px auto 30px -130px;
+            position: absolute;
         }
 
         #p01 { /* Надтекстом1 */
             color: #ffffff94;
             font-size: 16px;
-            margin-left: 790px;
         }
 
         #p02 { /* Надтекстом1 */
             color: white;
             font-size: 20px;
             font-weight: bolder;
-            margin-left: 790px;
         }
 
         input {
@@ -59,12 +62,6 @@
             color: white;
             font-family: 'Montserrat';
             border: hidden;
-        }
-
-        label {
-          font-family: sans-serif;
-          font-size: 1rem;
-          padding-right: 10px;
         }
 
         select {
@@ -80,9 +77,9 @@
         button {
             border: 0;
             border-radius: 5px;
-            margin-top: 50px;
+            margin-top: 80px;
             height: 60px;
-            width: 400px;
+            width: 380px;
             font-size: 20px;
             font-weight: 500;
             cursor: pointer;
@@ -141,36 +138,43 @@
         <hr style="width:360px; margin: auto;"/></div>
 
 
-        <div>
-        <img src="https://sun9-46.userapi.com/impg/AiOicp1Fv2Z7pq1vr3aWd7qYWLi8qyspiAeZ3g/bYQlrLxTSro.jpg?size=75x91&quality=96&sign=ae15d5e10e4dcac887e64fab967d30f8&type=album">
-        <p id="p01">Перевозчик</p>
+        <div id="div1">
+        <img id="img1" src="https://sun9-46.userapi.com/impg/AiOicp1Fv2Z7pq1vr3aWd7qYWLi8qyspiAeZ3g/bYQlrLxTSro.jpg?size=75x91&quality=96&sign=ae15d5e10e4dcac887e64fab967d30f8&type=album">
+        <p id="p01" >Перевозчик</p>
         <p id="p02">МП ПАТП</p>
-        <hr style="width:300px; margin: auto;"/>
+        <hr style="width:320px; margin: 0px 880px 0px;"/>
             </div>
 
 
-        <div>
+        <div id="div2">
             <select style="width:250px;-webkit-appearance: none;"> ### маршрут
+            <option>> маршрут <</option>
             <option>Ленина 75 - Церковь - Ленина 75</option>
-            <option>Питер - Питер - Питер</option>
             <option>2002</option>
                ...
+            </select><br>
+        <select style="width:250px;-webkit-appearance: none;"> ### номер автобуса
+            <option>а878ту124</option>
+            <option>12345</option>
+            ...
             </select>
-        <p id="p02">а878ту124</p>
         <hr style="width:300px; margin: auto;"/>
             </div>
 
 
-        <div>
+        <div id="div2">
         <p id="p01">Стоимость</p>
-        <p id="p02">1шт., Полный, 42.00 ₽</p>
+        <select style="width:250px;-webkit-appearance: none;"> ### маршрут
+            <option>1шт., Полный, 42.00 ₽</option>
+               ...
+            </select><br>
         <hr style="width:300px; margin: auto;"/>
             </div>
 
 
-        <div>
+        <div id="div2">
         <p id="p01">Дата покупки</p>
-            <select style="width:140px;-webkit-appearance: none;"> ### дата покупки
+            <select style="width:250px;-webkit-appearance: none;"> ### дата покупки
             <option>10 сентября 2024 г.</option>
             <option>11 сентября 2024 г.</option>
             <option>12 сентября 2024 г.</option>
@@ -182,7 +186,7 @@
 
         <div>
         <p id="p01">Время покупки</p>
-        <input type="time" class="without_ampm"><br>
+        <input type="time" style="width: 200px" class="without_ampm"><br>
             </div>
 
 
