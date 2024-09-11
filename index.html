@@ -20,10 +20,10 @@
             display: none;
         }
         .container {
-            margin: 20px 350px; /* Центрирование по горизонтали */
-            width: 500px; /* Ширина контейнера */
+            margin: 20px auto; /* Центрирование по горизонтали */
+            width: 90%; /* Ширина контейнера */
             padding: 20px;
-          /*   background-color: #111; Темно-серый фон контейнера */
+            background-color: #111; /* Темно-серый фон контейнера */
             border-radius: 10px; /* Скругленные углы */
             text-align: left; /* Выравнивание по левому краю */
         }
@@ -35,6 +35,8 @@
             color: #fff;
             margin: 5px;
             border-radius: 5px; /* Скругленные углы */
+            width: 100%; /* Ширина кнопок */
+            box-sizing: border-box; /* Включить отступы в ширину */
         }
 
         #button2 {
@@ -43,14 +45,16 @@
             border: none;
             background-color: red;
             color: #fff;
-            margin: 20px -120px;
+            margin: 20px 0; /* Центрирование */
             border-radius: 5px; /* Скругленные углы */
+            width: 100%; /* Ширина кнопок */
+            box-sizing: border-box; /* Включить отступы в ширину */
         }
 
         #img1 {
             width: 35px;
-            margin: 10px -70px 130px;
-            position: absolute;
+            margin: 10px 0 130px; /* Центрирование */
+            position: relative; /* Убрать абсолютное позиционирование */
         }
 
         #select_first {
@@ -61,6 +65,8 @@
             font-family: "Roboto", sans-serif;
             font-weight: normal;
             font-style: normal;
+            width: 100%; /* Ширина селекта */
+            box-sizing: border-box; /* Включить отступы в ширину */
         }
 
         #select_second {
@@ -72,6 +78,8 @@
             font-weight: normal;
             font-style: normal;
             font-size: 150%;
+            width: 100%; /* Ширина селекта */
+            box-sizing: border-box; /* Включить отступы в ширину */
         }
 
         #p_first {
@@ -105,6 +113,8 @@ input {
             background-color: black;
             color: white;
             border: hidden;
+            width: 100%; /* Ширина инпута */
+            box-sizing: border-box; /* Включить отступы в ширину */
         }
 
  hr {
@@ -112,10 +122,11 @@ input {
         height: 1px;
         color: #333;
         background-color: #333;
+        width: 100%; /* Ширина линии */
         }
 
  #menu_btn {
-     margin: 10px -40px 10px;
+     margin: 10px 0; /* Центрирование */
  }
 
  .without_ampm::-webkit-datetime-edit-ampm-field {
@@ -143,7 +154,7 @@ input {
 
     <button id="ticketButton" class="button active" onclick="toggleContent('ticket')">Билет</button>
     <button id="controlButton" class="button" onclick="toggleContent('control')">Контроль</button>
-    <hr style="width:320px; margin: 0px -60px 0px;"/> <!-- (---) линии под текстом (---) -->
+    <hr /> <!-- (---) линии под текстом (---) -->
         </div>
 
     <div id="ticketContent">
@@ -152,7 +163,7 @@ input {
           <p id="p_first">Перевозчик</p>
         <select id="select_second"><option>МП ПАТП</option></select>
           <p></p>
-          <hr style="width:320px; margin: 0px -90px 0px;"/> <!-- (---) линии под текстом (---) -->
+          <hr /> <!-- (---) линии под текстом (---) -->
           <p></p>
           </div>
 
@@ -164,7 +175,7 @@ input {
         <select id="select_second"><option>a878ту124</option>
             <option>a878ту124</option></select>
         <p></p>
-        <hr style="width:320px; margin: 0px -90px 0px;"/> <!-- (---) линии под текстом (---) -->
+        <hr /> <!-- (---) линии под текстом (---) -->
 </div>
 
 
@@ -173,7 +184,7 @@ input {
         <p id="p_first">Стоимость</p>
         <select id="select_second"><option>1 шт., Полный, 42.00 ₽</option></select>
         <p></p>
-        <hr style="width:320px; margin: 0px -90px 0px;"/> <!-- (---) линии под текстом (---) -->
+        <hr /> <!-- (---) линии под текстом (---) -->
 </div>
 
 
@@ -186,7 +197,7 @@ input {
         <option>15 сентября 2024 г.</option>
         <option>16 сентября 2024 г.</option></select>
         <p></p>
-        <hr style="width:320px; margin: 0px -90px 0px;"/> <!-- (---) линии под текстом (---) -->
+        <hr /> <!-- (---) линии под текстом (---) -->
 </div>
 
 <div>
@@ -202,7 +213,7 @@ input {
         <p>Извините, сервис временно не работает.</p>
     </div>
 
-    <button id="button2" class="button" onclick="closeWindow()" style="width: 400px">Закрыть</button>
+    <button id="button2" class="button" onclick="closeWindow()">Закрыть</button>
 </div>
 
 <script>
