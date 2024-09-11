@@ -1,113 +1,88 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Городской Транспорт</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Билет</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;500&display=swap');
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 200;
-            color: #ffffff;
-            background: #000000;
+            font-family: Arial, sans-serif;
+            text-align: left; /* Текст слева */
+            background-color: #000; /* Черный фон */
+            color: #fff; /* Белый цвет текста */
         }
-
-        #main {
-            width: 100%;
+        .active {
+            color: red;
+            text-decoration: underline; /* Добавлено подчеркивание */
+            background-color: red; /* Добавлено фоновое закрашивание */
+        }
+        .hidden {
+            display: none;
+        }
+        .container {
+            margin: 20px auto; /* Центрирование по горизонтали */
+            width: 500px; /* Ширина контейнера */
             padding: 20px;
+          /*   background-color: #111; Темно-серый фон контейнера */
+            border-radius: 10px; /* Скругленные углы */
+            text-align: left; /* Выравнивание по левому краю */
+        }
+        .button {
+            padding: 10px 20px;
+            cursor: pointer;
+            border: none;
+            background-color: transparent; /* Прозрачный фон */
+            color: #fff;
+            margin: 5px;
+            border-radius: 5px; /* Скругленные углы */
         }
 
-        #div1 {
-            width: 100%;
-            padding: 20px;
-            margin: 0px -50px 0px;
-        }
-
-        #div2 {
-            width: 100%;
-            margin: 0px 0px 0px;
+        #button2 {
+            padding: 10px 20px;
+            cursor: pointer;
+            border: none;
+            background-color: red;
+            color: #fff;
+            margin: 20px -120px;
+            border-radius: 5px; /* Скругленные углы */
         }
 
         #img1 {
-            width: 50px;
-            margin: -10px auto 30px -130px;
+            width: 35px;
+            margin: 10px -70px 130px;
             position: absolute;
         }
 
-        #p01 { /* Надтекстом1 */
-            color: #ffffff94;
-            font-size: 16px;
-
-        }
-
-        #p02 { /* Надтекстом1 */
-            color: white;
-            font-size: 20px;
-            font-weight: bolder;
-        }
-
-        input {
-            font-size: 20px;
-            background-color: black;
-            color: white;
-            font-family: 'Montserrat';
-            border: hidden;
-        }
-
-        select {
-          font-size: 20px;
-          padding: 2px 5px;
-          background-color: black;
-          color: white;
-          border: none;
-            margin-right: -40px;
-        }
-
-
-        button {
-            border: 0;
-            border-radius: 5px;
-            margin-top: 80px;
-            height: 60px;
-            width: 350px;
-            font-size: 20px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 50ms ease;
-            color: #ffffff;
-            background: #cc0b0b;
-        }
-
-        .btn_2
-        {
-            background-color: black;
-            font: 17px/1.5 sans-serif;
-            color: red;
-            border-radius: 6px;
+        #select_first {
             border: none;
-            width: 100px;
-            height: 30px;
+            background-color: black;
+            color: #b1b1b1;
+            -webkit-appearance: none;
+            font-family: "Roboto", sans-serif;
+            font-weight: normal;
+            font-style: normal;
         }
 
-        .btn_3
-        {
-            background-color: black;
-            font: 17px/1.5 sans-serif;
-            color: white;
-            border-radius: 6px;
+        #select_second {
             border: none;
-            width: 100px;
-            height: 30px;
+            background-color: black;
+            color: white;
+            -webkit-appearance: none;
+            font-family: "Roboto", sans-serif;
+            font-weight: normal;
+            font-style: normal;
+            font-size: 150%;
+        }
+
+        #p_first {
+            color: #b1b1b1;
+        }
+
+        #p_second {
+            font-family: "Roboto", sans-serif;
+            font-weight: bold;
+            font-style: normal;
+            font-size: 180%;
         }
 
         .without_ampm::-webkit-datetime-edit-ampm-field {
@@ -122,89 +97,179 @@
    margin: -10px;
  }
 
-        hr {
+input {
+            font-family: "Roboto", sans-serif;
+            font-weight: normal;
+            font-style: normal;
+            font-size: 180%;
+            background-color: black;
+            color: white;
+            border: hidden;
+        }
+
+ hr {
         border: none;
         height: 1px;
-        color: #333;  /* old IE */
-        background-color: #333;  /* Modern Browsers */
-}
+        color: #333;
+        background-color: #333;
+        }
+
+ #menu_btn {
+     margin: 10px -40px 10px;
+ }
+
+ .without_ampm::-webkit-datetime-edit-ampm-field {
+   display: none;
+ }
+ input[type=time]::-webkit-clear-button {
+   -webkit-appearance: none;
+   -moz-appearance: none;
+   -o-appearance: none;
+   -ms-appearance:none;
+   appearance: none;
+   margin: -10px;
+ }
+
 
     </style>
 </head>
 <body>
-    <div align="center" id="main">
-        <div><h2>Действует: 15сек.</h2><br>
-        <button class="btn btn_2">Билет</button><button class="btn btn_3">Контроль</button>
-        <hr style="width:360px; margin: auto;"/></div>
+
+<div class="container">
+    <div id="menu_btn">
+    <h2>Действует: <span id="timer">15</span> сек.</h2>
+    <!-- Убрано "сек" -->
 
 
-        <div id="div1">
-        <img id="img1" src="https://sun9-46.userapi.com/impg/AiOicp1Fv2Z7pq1vr3aWd7qYWLi8qyspiAeZ3g/bYQlrLxTSro.jpg?size=75x91&quality=96&sign=ae15d5e10e4dcac887e64fab967d30f8&type=album">
-        <p id="p01" >Перевозчик</p>
-        <p id="p02">МП ПАТП</p>
+    <button id="ticketButton" class="button active" onclick="toggleContent('ticket')">Билет</button>
+    <button id="controlButton" class="button" onclick="toggleContent('control')">Контроль</button>
+    <hr style="width:320px; margin: 0px -60px 0px;"/> <!-- (---) линии под текстом (---) -->
+        </div>
+
+    <div id="ticketContent">
+      <div>
+          <img id="img1" src="img/man.png">
+          <p id="p_first">Перевозчик</p>
+        <select id="select_second"><option>МП ПАТП</option></select>
+          <p></p>
+          <hr style="width:320px; margin: 0px -90px 0px;"/> <!-- (---) линии под текстом (---) -->
+          <p></p>
+          </div>
+
+<div>
+        <img id="img1" src="img/bus.png">
+        <select id="select_first"><option>Ленина 75 - Церковь - Ленина 75</option>
+            <option>Питер - Питер - Питер</option></select>
+        <p></p>
+        <select id="select_second"><option>a878ту124</option>
+            <option>a878ту124</option></select>
+        <p></p>
         <hr style="width:320px; margin: 0px -90px 0px;"/> <!-- (---) линии под текстом (---) -->
-        <hr style="width:320px; margin: 0px 880px 0px;"/>
-            </div>
+</div>
 
 
-        <div id="div2">
-            <img id="img1" style="margin: 0px -75px 0px" src="https://sun9-43.userapi.com/impg/BeuVXaVQ-HlNH8A_iG0iGtyoLIPtcW6HSwKNCg/wAqMzAUyCoo.jpg?size=71x69&quality=96&sign=4ec4870a988acb7e91c61d93594a3478&type=album">
-            <select style="width:250px;-webkit-appearance: none;"> ### маршрут
-            <option>> маршрут <</option>
-            <option>Ленина 75 - Церковь - Ленина 75</option>
-            <option>Питер</option>
-               ...
-            </select><br>
-        <select style="width:250px;-webkit-appearance: none;"> ### номер автобуса
-            <option>а878ту124</option>
-            ...
-            </select>
-        <hr style="width:300px; margin: auto;"/>
-            </div>
+<div>
+        <img id="img1" src="img/rub.png">
+        <p id="p_first">Стоимость</p>
+        <select id="select_second"><option>1 шт., Полный, 42.00 ₽</option></select>
+        <p></p>
+        <hr style="width:320px; margin: 0px -90px 0px;"/> <!-- (---) линии под текстом (---) -->
+</div>
 
 
-        <div id="div2">
-            <img id="img1" style="margin: 0px -180px 0px" src="https://sun9-30.userapi.com/impg/C-_IXyLdWKlGrqHXc91IBjf2zpywj80X0B5cEg/Y3Zk8YEKWX0.jpg?size=63x62&quality=96&sign=a4c84b865c0138a14a5b31c7ac82e035&type=album">
-        <p id="p01">Стоимость</p>
-        <select style="width:250px;-webkit-appearance: none;"> ### маршрут
-            <option>1шт., Полный, 42.00 ₽</option>
-               ...
-            </select><br>
-        <hr style="width:300px; margin: auto;"/>
-            </div>
+<div>
+        <img id="img1" src="img/clock.png">
+        <p id="p_first">Дата покупки</p>
+        <select id="select_second"><option>12 сентября 2024 г.</option>
+            <option>13 сентября 2024 г.</option>
+        <option>14 сентября 2024 г.</option>
+        <option>15 сентября 2024 г.</option>
+        <option>16 сентября 2024 г.</option></select>
+        <p></p>
+        <hr style="width:320px; margin: 0px -90px 0px;"/> <!-- (---) линии под текстом (---) -->
+</div>
+
+<div>
+        <img id="img1" src="img/calendar.png">
+        <p id="p_first">Время покупки</p>
+        <p><input type="time" id="purchaseTime" value="10:45" class="without_ampm"></p>
+</div>
 
 
-        <div id="div1" style="margin: 0px 0px 0px">
-            <img id="img1" style="margin: 0px -180px 0px" src="https://sun9-20.userapi.com/impg/IqBYHkqRsuXF7LV8sl58XR0lIjz0hox6B6M43w/MHyNLSRdr34.jpg?size=62x67&quality=96&sign=100f9bacb72baf95ba646b59bc279990&type=album">
-        <p id="p01">Дата покупки</p>
-            <select style="width:250px;-webkit-appearance: none;"> ### дата покупки
-            <option>10 сентября 2024 г.</option>
-            <option>11 сентября 2024 г.</option>
-            <option>12 сентября 2024 г.</option>
-               ...
-            </select>
-        <hr style="width:300px; margin: auto;"/>
-            </div>
-
-
-        <div>
-            <img id="img1" style="margin: 0px -180px 0px" src="https://sun9-77.userapi.com/impg/ew8gnAFCaVAQVGxJQLnWR0APtfNR-j83-FmAug/ETE6FOffa4Y.jpg?size=54x57&quality=96&sign=154f9fb4824f9d8c131a5df47578c5e4&type=album">
-        <p id="p01">Время покупки</p>
-        <input type="time" style="width: 200px" class="without_ampm"><br>
-            </div>
-
-
-        <button id="buy">ЗАКРЫТЬ</button>
     </div>
-    <script>
- let seconds = 15;
- const timer = setInterval(() => {
-            if (seconds <= 0) {
-                clearInterval(timer);
+
+    <div id="controlContent" class="hidden">
+        <p>Извините, сервис временно не работает.</p>
+    </div>
+
+    <button id="button2" class="button" onclick="closeWindow()" style="width: 400px">Закрыть</button>
+</div>
+
+<script>
+    // Отсчет времени
+    let timeLeft = 15;
+    const timerElement = document.getElementById('timer');
+
+    const countdown = setInterval(() => {
+        if (timeLeft <= 0) {
+            clearInterval(countdown);
+            timeLeft = 15; // Сброс времени
+            timerElement.textContent = timeLeft; // Обновление отображения
+        } else {
+            timeLeft--;
+            timerElement.textContent = timeLeft;
+        }
+    }, 1000);
+
+    // Переключение контента
+    function toggleContent(type) {
+        const ticketContent = document.getElementById('ticketContent');
+        const controlContent = document.getElementById('controlContent');
+
+        if (type === 'ticket') {
+            ticketContent.classList.remove('hidden');
+            controlContent.classList.add('hidden');
+            document.getElementById('ticketButton').classList.add('active');
+            document.getElementById('controlButton').classList.remove('active');
+            // Убрать "Действует 15 секунд" при активной вкладке "Контроль"
+            document.querySelector('.container > h2').classList.remove('hidden'); // Добавлено
+        } else {
+            ticketContent.classList.add('hidden');
+            controlContent.classList.remove('hidden');
+            document.getElementById('controlButton').classList.add('active');
+            document.getElementById('ticketButton').classList.remove('active');
+            // Убрать "Действует 15 секунд" при активной вкладке "Контроль"
+            document.querySelector('.container > h2').classList.add('hidden'); // Добавлено
+        }
+    }
+
+
+    // Изменение количества
+    function changeQuantity() {
+        const quantity = document.getElementById('quantity');
+        quantity.textContent = '1 шт.';
+    }
+
+    // Закрытие окна
+    function closeWindow() {
+        alert('Закрыть окно');
+    }
+
+    // Добавлено событие click для перезапуска таймера
+    timerElement.addEventListener('click', () => {
+        timeLeft = 15;
+        timerElement.textContent = timeLeft;
+        clearInterval(countdown); // Останавливаем текущий таймер
+        countdown = setInterval(() => { // Запускаем новый таймер
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+            } else {
+                timeLeft--;
+                timerElement.textContent = timeLeft;
             }
-            seconds--;
         }, 1000);
+    });
 </script>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
 </body>
 </html>
