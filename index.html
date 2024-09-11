@@ -29,13 +29,18 @@
             text-align: left; /* Выравнивание по левому краю */
         }
         .button {
-            padding: 10px 20px;
+            padding: 10px 10px;
+            width: 90px;
             cursor: pointer;
             border: none;
             background-color: transparent; /* Прозрачный фон */
             color: #fff;
             margin: 5px 0px;
             border-radius: 5px; /* Скругленные углы */
+            font-family: "Roboto", sans-serif;
+            font-weight: bold;
+            font-style: normal;
+            font-size: 16px;
         }
 
         #button2 {
@@ -44,13 +49,25 @@
             border: none;
             background-color: red;
             color: #fff;
-            margin: 20px -70px;
+            margin: 0px -70px;
             border-radius: 5px; /* Скругленные углы */
         }
 
         #img1 {
             width: 28px;
             margin: 15px -50px 130px;
+            position: absolute;
+        }
+        
+        #img2 {
+            width: 40px;
+            margin: 0px -20px 130px;
+            position: absolute;
+        }
+
+        #img3 {
+            width: 28px;
+            margin: 10px 70px 130px;
             position: absolute;
         }
 
@@ -143,6 +160,8 @@ input {
     <!-- Убрано "сек" -->
 
 <div id="menu_btn">
+    <img id="img2" src="img/ok.png">
+    <img id="img3" src="img/man.png">
     <button id="ticketButton" class="button" onclick="toggleContent('ticket')">Билет</button>
     <button id="controlButton" class="button" onclick="toggleContent('control')">Контроль</button>
     <hr style="width:340px; margin: 0px -70px 0px;"/> <!-- (---) линии под текстом (---) -->
