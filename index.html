@@ -1,75 +1,185 @@
 <!DOCTYPE html>
 <html lang="ru">
-    <head>
-        <meta charset="UTF-8">
-        <link rel="stylesheet" href="styles.css">
-        <title>Городской Транспорт</title>
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Билет</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: left; /* Текст слева */
+            background-color: #000; /* Черный фон */
+            color: #fff; /* Белый цвет текста */
+        }
+        .active {
+            color: red;
+        }
+        .hidden {
+            display: none;
+        }
+        .container {
+            margin: 20px auto; /* Центрирование по горизонтали */
+            width: 500px; /* Ширина контейнера */
+            padding: 20px;
+            background-color: #111; /* Темно-серый фон контейнера */
+            border-radius: 10px; /* Скругленные углы */
+            text-align: center; /* Центрирование текста в контейнере */
+        }
+        .button {
+            padding: 10px 20px;
+            cursor: pointer;
+            border: none;
+            background-color: #f00;
+            color: #fff;
+            margin: 5px;
+            border-radius: 5px; /* Скругленные углы */
+        }
 
+        #img1 {
+            width: 35px;
+            margin: 10px -100px 130px;
+            position: absolute;
+        }
 
+        #select_first {
+            border: none;
+            background-color: black;
+            color: #b1b1b1;
+            -webkit-appearance: none;
+            font-family: "Roboto", sans-serif;
+            font-weight: normal;
+            font-style: normal;
+        }
 
-    <body>
-    <h2 style="margin: 0px -40px">Действует: 15 сек.</h2><br>
-    <p>Билет Контроль</p>
-    <hr style="width:350px; margin: 0px -100px 0px;"/> <!-- (---) линии под текстом (---) -->
+        #select_second {
+            border: none;
+            background-color: black;
+            color: white;
+            -webkit-appearance: none;
+            font-family: "Roboto", sans-serif;
+            font-weight: normal;
+            font-style: normal;
+            font-size: 180%;
+        }
 
+        .without_ampm::-webkit-datetime-edit-ampm-field {
+   display: none;
+ }
+ input[type=time]::-webkit-clear-button {
+   -webkit-appearance: none;
+   -moz-appearance: none;
+   -o-appearance: none;
+   -ms-appearance:none;
+   appearance: none;
+   margin: -10px;
+ }
 
+ input {
+            font-family: "Roboto", sans-serif;
+            font-weight: normal;
+            font-style: normal;
+            font-size: 120%;
+            background-color: black;
+            color: white;
+            border: hidden;
+        }
 
+    </style>
+</head>
+<body>
 
-<div id="div_1"> <!-- 1й блок 'Кто предоставляет услугу' -->
-    <img id="img1" src="https://sun9-46.userapi.com/impg/AiOicp1Fv2Z7pq1vr3aWd7qYWLi8qyspiAeZ3g/bYQlrLxTSro.jpg?size=75x91&quality=96&sign=ae15d5e10e4dcac887e64fab967d30f8&type=album">
-    <p>Перевозчик</p>
-    <p id="p_second">МП ПАТП</p>
-    <hr style="width:320px; margin: 0px -90px 0px;"/> <!-- (---) линии под текстом (---) -->
+<div class="container">
+    <h2>Действует: <span id="timer">15</span> сек.</h2>
+
+    <button id="ticketButton" class="button active" onclick="toggleContent('ticket')">Билет</button>
+    <button id="controlButton" class="button" onclick="toggleContent('control')">Контроль</button>
+
+    <div id="ticketContent">
+      <div>
+          <img id="img1" src="img/man.png">
+          <p>Перевозчик</p>
+        <p>МП ПАТП</p>
+          </div>
+        <select id="select_first"><option>Ленина 75 - Церковь - Ленина 75</option>
+            <option>Питер - Питер - Питер</option></select><br>
+        <select id="select_second"><option>a878ту124</option>
+            <option>a878ту124</option></select>
+        <p>Стоимость</p>
+        <p>1 шт., Полный, 42.00 ₽</p>
+        <p>Дата покупки</p>
+        <p><input type="date" id="purchaseDate" value="2024-09-08"></p>
+        <p>Время покупки</p>
+        <p><input type="time" id="purchaseTime" value="10:45"></p>
+    </div>
+
+    <div id="controlContent" class="hidden">
+        <p>Извините, сервис временно не работает.</p>
+    </div>
+
+    <button id="closeButton" class="button" onclick="closeWindow()">Закрыть</button>
 </div>
 
+<script>
+    // Отсчет времени
+    let timeLeft = 15;
+    const timerElement = document.getElementById('timer');
 
-<div id="div_1"> <!-- 2й блок 'Маршрут и Номер транспорта' -->
-    <img id="img1" src="https://sun9-46.userapi.com/impg/AiOicp1Fv2Z7pq1vr3aWd7qYWLi8qyspiAeZ3g/bYQlrLxTSro.jpg?size=75x91&quality=96&sign=ae15d5e10e4dcac887e64fab967d30f8&type=album">
-    <p></p>
-    <select id="select_first">
-        <option>Адрес</option>
-    </select>
-    <p></p>
-    <select id="select_second">
-        <option>Номер</option>
-    </select>
-    <p></p>
-    <hr style="width:320px; margin: 0px -90px 0px;"/> <!-- (---) линии под текстом (---) -->
-</div>
+    const countdown = setInterval(() => {
+        if (timeLeft <= 0) {
+            clearInterval(countdown);
+            timeLeft = 15; // Сброс времени
+            timerElement.textContent = timeLeft; // Обновление отображения
+        } else {
+            timeLeft--;
+            timerElement.textContent = timeLeft;
+        }
+    }, 1000);
 
+    // Переключение контента
+    function toggleContent(type) {
+        const ticketContent = document.getElementById('ticketContent');
+        const controlContent = document.getElementById('controlContent');
 
-<div id="div_1"> <!-- 3й блок 'Стоимость' -->
-    <img id="img1" src="https://sun9-46.userapi.com/impg/AiOicp1Fv2Z7pq1vr3aWd7qYWLi8qyspiAeZ3g/bYQlrLxTSro.jpg?size=75x91&quality=96&sign=ae15d5e10e4dcac887e64fab967d30f8&type=album">
-    <p>Стоимость</p>
-    <select id="select_second">
-        <option>1 шт., Полный</option>
-    </select>
-    <p></p>
-    <hr style="width:320px; margin: 0px -90px 0px;"/> <!-- (---) линии под текстом (---) -->
-</div>
-
-
-<div id="div_1"> <!-- 4й блок 'Дата покупки' -->
-    <img id="img1" src="https://sun9-46.userapi.com/impg/AiOicp1Fv2Z7pq1vr3aWd7qYWLi8qyspiAeZ3g/bYQlrLxTSro.jpg?size=75x91&quality=96&sign=ae15d5e10e4dcac887e64fab967d30f8&type=album">
-    <p>Дата покупки</p>
-    <select id="select_second">
-        <option>09 сентября 2024 г.</option>
-    </select>
-    <p></p>
-    <hr style="width:320px; margin: 0px -90px 0px;"/> <!-- (---) линии под текстом (---) -->
-</div>
+        if (type === 'ticket') {
+            ticketContent.classList.remove('hidden');
+            controlContent.classList.add('hidden');
+            document.getElementById('ticketButton').classList.add('active');
+            document.getElementById('controlButton').classList.remove('active');
+        } else {
+            ticketContent.classList.add('hidden');
+            controlContent.classList.remove('hidden');
+            document.getElementById('controlButton').classList.add('active');
+            document.getElementById('ticketButton').classList.remove('active');
+        }
+    }
 
 
-<div id="div_1"> <!-- 5й блок 'Время покупки' -->
-    <img id="img1" src="https://sun9-46.userapi.com/impg/AiOicp1Fv2Z7pq1vr3aWd7qYWLi8qyspiAeZ3g/bYQlrLxTSro.jpg?size=75x91&quality=96&sign=ae15d5e10e4dcac887e64fab967d30f8&type=album">
-    <p>Время покупки</p>
-    <p>10:30</p>
-</div>
+    // Изменение количества
+    function changeQuantity() {
+        const quantity = document.getElementById('quantity');
+        quantity.textContent = '1 шт.';
+    }
 
-    </body>
+    // Закрытие окна
+    function closeWindow() {
+        alert('Закрыть окно');
+    }
 
-<footer>
-    <button>ЗАКРЫТЬ</button>
-</footer>
+    // Добавлено событие click для перезапуска таймера
+    timerElement.addEventListener('click', () => {
+        timeLeft = 15;
+        timerElement.textContent = timeLeft;
+        clearInterval(countdown); // Останавливаем текущий таймер
+        countdown = setInterval(() => { // Запускаем новый таймер
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+            } else {
+                timeLeft--;
+                timerElement.textContent = timeLeft;
+            }
+        }, 1000);
+    });
+</script>
+
+</body>
 </html>
