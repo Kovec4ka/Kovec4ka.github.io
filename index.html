@@ -1,209 +1,75 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Городской Транспорт</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;500&display=swap');
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 200;
-            color: #ffffff;
-            background: #000000;
-        }
-
-        #main {
-            width: 100%;
-            padding: 20px;
-        }
-
-        #div1 {
-            width: 100%;
-            padding: 20px;
-            margin: 0px -50px 0px;
-        }
-
-        #div2 {
-            width: 100%;
-            margin: 0px 0px 0px;
-        }
-
-        #img1 {
-            width: 50px;
-            margin: -10px auto 30px -130px;
-            position: absolute;
-        }
-
-        #p01 { /* Надтекстом1 */
-            color: #ffffff94;
-            font-size: 16px;
-        }
-
-        #p02 { /* Надтекстом1 */
-            color: white;
-            font-size: 20px;
-            font-weight: bolder;
-        }
-
-        input {
-            font-size: 20px;
-            background-color: black;
-            color: white;
-            font-family: 'Montserrat';
-            border: hidden;
-        }
-
-        select {
-          font-size: 20px;
-          padding: 2px 5px;
-          background-color: black;
-          color: white;
-          border: none;
-            margin-right: -40px;
-        }
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="styles.css">
+        <title>Городской Транспорт</title>
+    </head>
 
 
-        button {
-            border: 0;
-            border-radius: 5px;
-            margin-top: 80px;
-            height: 60px;
-            width: 350px;
-            font-size: 20px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 50ms ease;
-            color: #ffffff;
-            background: #cc0b0b;
-        }
 
-        .btn_2
-        {
-            background-color: black;
-            font: 17px/1.5 sans-serif;
-            color: red;
-            border-radius: 6px;
-            border: none;
-            width: 100px;
-            height: 30px;
-        }
-
-        .btn_3
-        {
-            background-color: black;
-            font: 17px/1.5 sans-serif;
-            color: white;
-            border-radius: 6px;
-            border: none;
-            width: 100px;
-            height: 30px;
-        }
-
-        .without_ampm::-webkit-datetime-edit-ampm-field {
-   display: none;
- }
- input[type=time]::-webkit-clear-button {
-   -webkit-appearance: none;
-   -moz-appearance: none;
-   -o-appearance: none;
-   -ms-appearance:none;
-   appearance: none;
-   margin: -10px;
- }
-
-        hr {
-        border: none;
-        height: 1px;
-        color: #333;  /* old IE */
-        background-color: #333;  /* Modern Browsers */
-}
-
-    </style>
-</head>
-<body>
-    <div align="center" id="main">
-        <div><h2>Действует: 15сек.</h2><br>
-        <button class="btn btn_2">Билет</button><button class="btn btn_3">Контроль</button>
-        <hr style="width:360px; margin: auto;"/></div>
+    <body>
+    <h2 style="margin: 0px -40px">Действует: 15 сек.</h2><br>
+    <p>Билет Контроль</p>
+    <hr style="width:350px; margin: 0px -100px 0px;"/> <!-- (---) линии под текстом (---) -->
 
 
-        <div id="div1">
-        <img id="img1" src="https://sun9-46.userapi.com/impg/AiOicp1Fv2Z7pq1vr3aWd7qYWLi8qyspiAeZ3g/bYQlrLxTSro.jpg?size=75x91&quality=96&sign=ae15d5e10e4dcac887e64fab967d30f8&type=album">
-        <p id="p01" >Перевозчик</p>
-        <p id="p02">МП ПАТП</p>
-        <hr style="width:320px; margin: 0px 880px 0px;"/>
-            </div>
 
 
-        <div id="div2">
-            <img id="img1" style="margin: 0px -75px 0px" src="https://sun9-43.userapi.com/impg/BeuVXaVQ-HlNH8A_iG0iGtyoLIPtcW6HSwKNCg/wAqMzAUyCoo.jpg?size=71x69&quality=96&sign=4ec4870a988acb7e91c61d93594a3478&type=album">
-            <select style="width:250px;-webkit-appearance: none;"> ### маршрут
-            <option>> маршрут <</option>
-            <option>Ленина 75 - Церковь - Ленина 75</option>
-            <option>2002</option>
-               ...
-            </select><br>
-        <select style="width:250px;-webkit-appearance: none;"> ### номер автобуса
-            <option>а878ту124</option>
-            <option>12345</option>
-            ...
-            </select>
-        <hr style="width:300px; margin: auto;"/>
-            </div>
+<div id="div_1"> <!-- 1й блок 'Кто предоставляет услугу' -->
+    <img id="img1" src="https://sun9-46.userapi.com/impg/AiOicp1Fv2Z7pq1vr3aWd7qYWLi8qyspiAeZ3g/bYQlrLxTSro.jpg?size=75x91&quality=96&sign=ae15d5e10e4dcac887e64fab967d30f8&type=album">
+    <p>Перевозчик</p>
+    <p id="p_second">МП ПАТП</p>
+    <hr style="width:320px; margin: 0px -90px 0px;"/> <!-- (---) линии под текстом (---) -->
+</div>
 
 
-        <div id="div2">
-            <img id="img1" style="margin: 0px -180px 0px" src="https://sun9-30.userapi.com/impg/C-_IXyLdWKlGrqHXc91IBjf2zpywj80X0B5cEg/Y3Zk8YEKWX0.jpg?size=63x62&quality=96&sign=a4c84b865c0138a14a5b31c7ac82e035&type=album">
-        <p id="p01">Стоимость</p>
-        <select style="width:250px;-webkit-appearance: none;"> ### маршрут
-            <option>1шт., Полный, 42.00 ₽</option>
-               ...
-            </select><br>
-        <hr style="width:300px; margin: auto;"/>
-            </div>
+<div id="div_1"> <!-- 2й блок 'Маршрут и Номер транспорта' -->
+    <img id="img1" src="https://sun9-46.userapi.com/impg/AiOicp1Fv2Z7pq1vr3aWd7qYWLi8qyspiAeZ3g/bYQlrLxTSro.jpg?size=75x91&quality=96&sign=ae15d5e10e4dcac887e64fab967d30f8&type=album">
+    <p></p>
+    <select id="select_first">
+        <option>Адрес</option>
+    </select>
+    <p></p>
+    <select id="select_second">
+        <option>Номер</option>
+    </select>
+    <p></p>
+    <hr style="width:320px; margin: 0px -90px 0px;"/> <!-- (---) линии под текстом (---) -->
+</div>
 
 
-        <div id="div1" style="margin: 0px 0px 0px">
-            <img id="img1" style="margin: 0px -180px 0px" src="https://sun9-20.userapi.com/impg/IqBYHkqRsuXF7LV8sl58XR0lIjz0hox6B6M43w/MHyNLSRdr34.jpg?size=62x67&quality=96&sign=100f9bacb72baf95ba646b59bc279990&type=album">
-        <p id="p01">Дата покупки</p>
-            <select style="width:250px;-webkit-appearance: none;"> ### дата покупки
-            <option>10 сентября 2024 г.</option>
-            <option>11 сентября 2024 г.</option>
-            <option>12 сентября 2024 г.</option>
-               ...
-            </select>
-        <hr style="width:300px; margin: auto;"/>
-            </div>
+<div id="div_1"> <!-- 3й блок 'Стоимость' -->
+    <img id="img1" src="https://sun9-46.userapi.com/impg/AiOicp1Fv2Z7pq1vr3aWd7qYWLi8qyspiAeZ3g/bYQlrLxTSro.jpg?size=75x91&quality=96&sign=ae15d5e10e4dcac887e64fab967d30f8&type=album">
+    <p>Стоимость</p>
+    <select id="select_second">
+        <option>1 шт., Полный</option>
+    </select>
+    <p></p>
+    <hr style="width:320px; margin: 0px -90px 0px;"/> <!-- (---) линии под текстом (---) -->
+</div>
 
 
-        <div>
-            <img id="img1" style="margin: 0px -180px 0px" src="https://sun9-77.userapi.com/impg/ew8gnAFCaVAQVGxJQLnWR0APtfNR-j83-FmAug/ETE6FOffa4Y.jpg?size=54x57&quality=96&sign=154f9fb4824f9d8c131a5df47578c5e4&type=album">
-        <p id="p01">Время покупки</p>
-        <input type="time" style="width: 200px" class="without_ampm"><br>
-            </div>
+<div id="div_1"> <!-- 4й блок 'Дата покупки' -->
+    <img id="img1" src="https://sun9-46.userapi.com/impg/AiOicp1Fv2Z7pq1vr3aWd7qYWLi8qyspiAeZ3g/bYQlrLxTSro.jpg?size=75x91&quality=96&sign=ae15d5e10e4dcac887e64fab967d30f8&type=album">
+    <p>Дата покупки</p>
+    <select id="select_second">
+        <option>09 сентября 2024 г.</option>
+    </select>
+    <p></p>
+    <hr style="width:320px; margin: 0px -90px 0px;"/> <!-- (---) линии под текстом (---) -->
+</div>
 
 
-        <button id="buy">ЗАКРЫТЬ</button>
-    </div>
-    <script>
- let seconds = 15;
- const timer = setInterval(() => {
-            if (seconds <= 0) {
-                clearInterval(timer);
-            }
-            seconds--;
-        }, 1000);
-</script>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-</body>
+<div id="div_1"> <!-- 5й блок 'Время покупки' -->
+    <img id="img1" src="https://sun9-46.userapi.com/impg/AiOicp1Fv2Z7pq1vr3aWd7qYWLi8qyspiAeZ3g/bYQlrLxTSro.jpg?size=75x91&quality=96&sign=ae15d5e10e4dcac887e64fab967d30f8&type=album">
+    <p>Время покупки</p>
+    <p>10:30</p>
+</div>
+
+    </body>
+
+<footer>
+    <button>ЗАКРЫТЬ</button>
+</footer>
 </html>
