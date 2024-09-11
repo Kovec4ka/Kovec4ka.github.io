@@ -15,6 +15,7 @@
             color: red;
             text-decoration: underline; /* Добавлено подчеркивание */
             background-color: red; /* Добавлено фоновое закрашивание */
+            padding: 10px 20px; /* Добавлено padding */
         }
         .hidden {
             display: none;
@@ -137,11 +138,11 @@ input {
 
 <div class="container">
 
-    <h1 style="margin: auto -40px">Действует: <span id="timer">15</span> сек.</h1>
+    <h1 id="timer_block" style="margin: auto -40px">Действует: <span id="timer">15</span> сек.</h1>
     <!-- Убрано "сек" -->
 
 <div id="menu_btn">
-    <button id="ticketButton" class="button active" onclick="toggleContent('ticket')">Билет</button>
+    <button id="ticketButton" class="button" onclick="toggleContent('ticket')">Билет</button>
     <button id="controlButton" class="button" onclick="toggleContent('control')">Контроль</button>
     <hr style="width:340px; margin: 0px -70px 0px;"/> <!-- (---) линии под текстом (---) -->
         </div>
@@ -161,9 +162,11 @@ input {
         <select id="select_first"><option>Ленина 75 - Церковь - Ленина 75</option>
             <option>Питер - Питер - Питер</option></select>
         <p></p>
-        <select id="select_second"><option>a878ту124</option>
-            <option>a878ту124</option></select>
-        <p></p>
+        <select id="select_second">
+            <option value="a878ту124" title="Автобус">a878ту124</option>
+            <option value="a878ту124" title="Автобус">a878ту124</option>
+        </select>
+        <p id="hint"></p>
         <hr style="width:320px; margin: 0px -50px 0px;"/> <!-- (---) линии под текстом (---) -->
 </div>
 
@@ -209,6 +212,7 @@ input {
     // Отсчет времени
     let timeLeft = 15;
     const timerElement = document.getElementById('timer');
+    const timerBlock = document.getElementById('timer_block');
 
     const countdown = setInterval(() => {
         if (timeLeft <= 0) {
@@ -231,15 +235,13 @@ input {
             controlContent.classList.add('hidden');
             document.getElementById('ticketButton').classList.add('active');
             document.getElementById('controlButton').classList.remove('active');
-            // Убрать "Действует 15 секунд" при активной вкладке "Контроль"
-            document.querySelector('.container > h2').classList.remove('hidden'); // Добавлено
+            timerBlock.classList.remove('hidden'); // Показываем таймер
         } else {
             ticketContent.classList.add('hidden');
             controlContent.classList.remove('hidden');
             document.getElementById('controlButton').classList.add('active');
             document.getElementById('ticketButton').classList.remove('active');
-            // Убрать "Действует 15 секунд" при активной вкладке "Контроль"
-            document.querySelector('.container > h2').classList.add('hidden'); // Добавлено
+            timerBlock.classList.add('hidden'); // Скрываем таймер
         }
     }
 
@@ -269,6 +271,7 @@ input {
             }
         }, 1000);
     });
+
 </script>
 
 </body>
