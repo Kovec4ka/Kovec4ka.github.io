@@ -62,6 +62,7 @@
             font-family: "Roboto", sans-serif;
             font-weight: normal;
             font-style: normal;
+            font-size: 16px;
         }
 
         #select_second {
@@ -131,6 +132,17 @@ input {
    margin: -10px;
  }
 
+ #mobileHint {
+            position: absolute;
+            top: 50px; /* Позиционирование по вертикали */
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: white;
+            color: black;
+            padding: 5px 10px;
+            border-radius: 5px;
+            display: none; /* Скрыт по умолчанию */
+        }
 
     </style>
 </head>
@@ -163,10 +175,10 @@ input {
             <option>Питер - Питер - Питер</option></select>
         <p></p>
         <select id="select_second">
-            <option value="a878ту124" title="Автобус">a878ту124</option>
-            <option value="a878ту124" title="Автобус">a878ту124</option>
+            <option value="a878ту124" onclick="showMobileHint('Автобус')">a878ту124</option>
+            <option value="a878ту124" onclick="showMobileHint('Автобус')">a878ту124</option>
         </select>
-        <p id="hint"></p>
+        <div id="mobileHint"></div>
         <hr style="width:320px; margin: 0px -50px 0px;"/> <!-- (---) линии под текстом (---) -->
 </div>
 
@@ -272,6 +284,12 @@ input {
         }, 1000);
     });
 
+    // Функция для подсказки
+    function showMobileHint(hint) {
+        const mobileHint = document.getElementById('mobileHint');
+        mobileHint.textContent = hint;
+        mobileHint.style.display = 'block';
+    }
 </script>
 
 </body>
