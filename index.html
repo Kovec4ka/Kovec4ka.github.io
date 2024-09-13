@@ -4,22 +4,45 @@
   <title>Калькулятор цен</title>
   <style>
     body {
-      font-family: sans-serif;
-      background-color: #222;
-      color: #eee;
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
     }
 
     .container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      background-color: #fff;
+      border-radius: 10px;
+      padding: 30px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      width: 500px;
     }
 
-    .button-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
+    h1 {
+      color: #333;
       margin-bottom: 20px;
+    }
+
+    #login, #content {
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    input[type="text"], input[type="date"] {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      width: 100%;
+      margin-bottom: 10px;
     }
 
     button {
@@ -27,23 +50,42 @@
       border: none;
       border-radius: 5px;
       background-color: #4CAF50;
-      color: white;
+      color: #fff;
       cursor: pointer;
+      font-size: 16px;
     }
 
-    .hidden {
-      display: none;
+    button:hover {
+      background-color: #45a049;
     }
 
-    #total {
-      font-size: 20px;
-      font-weight: bold;
+    .button-group {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
       margin-bottom: 20px;
     }
 
-    #discount {
+    .button-group button {
+      width: 120px;
+    }
+
+    #total, #discount {
       font-size: 18px;
+      font-weight: bold;
       margin-bottom: 10px;
+    }
+
+    #date-picker {
+      margin-bottom: 10px;
+    }
+
+    #services {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
     }
   </style>
 </head>
@@ -61,6 +103,11 @@
       <h2>Ваши данные</h2>
       <p>Привет, <span id="user-name"></span>!</p>
 
+      <div id="date-picker">
+        <label for="selected-date">Выберите дату:</label>
+        <input type="date" id="selected-date" value="<?php echo date('Y-m-d'); ?>">
+      </div>
+
       <div id="total">
         Общая сумма: 0
       </div>
@@ -70,6 +117,7 @@
 
       <button onclick="resetTotal()">Обнулить счет</button>
       <button onclick="removeLast()">Убрать предыдущее</button>
+      <button onclick="logout()">Выйти</button>
 
       <button id="toggle-button">Показать все услуги</button>
       <div id="services" class="hidden">
@@ -105,10 +153,12 @@
     <script>
       let total = 0;
       let selectedServices = [];
+      let selectedDate = "<?php echo date('Y-m-d'); ?>"; // Текущая дата по умолчанию
 
       // Загружаем данные из localStorage при загрузке страницы
       window.onload = () => {
         loadSavedData();
+        updateTotal(); // Обновляем сумму при загрузке
       };
 
       function addPrice(service, price) {
@@ -189,7 +239,8 @@
       }
 
       function saveSelectedServices() {
-        localStorage.setItem('selectedServices', JSON.stringify(selectedServices));
+        localStorage.setItem(`selectedServices-${selectedDate}`, JSON.stringify(selectedServices));
+        localStorage.setItem(`total-${selectedDate}`, total); // Сохраняем общую сумму
       }
 
       function loadSavedData() {
@@ -200,15 +251,18 @@
           document.getElementById('login').classList.add('hidden');
         }
 
-        const savedServices = localStorage.getItem('selectedServices');
+        // Загружаем данные для выбранной даты
+        const savedServices = localStorage.getItem(`selectedServices-${selectedDate}`);
         if (savedServices) {
           selectedServices = JSON.parse(savedServices);
-          for (const service of selectedServices) {
-            const price = getPrice(service);
-            total += price;
-          }
-          updateTotal();
         }
+        total = parseInt(localStorage.getItem(`total-${selectedDate}`), 10) || 0; // Загружаем общую сумму
+      }
+
+      function logout() {
+        localStorage.removeItem('username');
+        document.getElementById('content').classList.add('hidden');
+        document.getElementById('login').classList.remove('hidden');
       }
 
       document.getElementById('toggle-button').addEventListener('click', () => {
@@ -219,6 +273,13 @@
         } else {
           document.getElementById('toggle-button').textContent = 'Скрыть услуги';
         }
+      });
+
+      // Обработка изменения даты
+      document.getElementById('selected-date').addEventListener('change', (event) => {
+        selectedDate = event.target.value;
+        loadSavedData(); // Загружаем данные для новой даты
+        updateTotal(); // Обновляем общую сумму
       });
     </script>
   </div>
