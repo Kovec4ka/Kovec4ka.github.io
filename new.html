@@ -202,7 +202,7 @@
       </div>
 
       <h2>История</h2>
-      <ul class="history-list" id="history-list"></ul>
+      <ol class="history-list" id="history-list"></ol>
     </div>
 
     <script>
@@ -217,6 +217,14 @@
         updateTotal(); // Обновляем сумму при загрузке
         updateHistory(); // Обновляем историю
       };
+
+      // Обработка события изменения даты
+      document.getElementById('selected-date').addEventListener('change', function() {
+        selectedDate = this.value; // Обновляем выбранную дату
+        loadSavedData(); // Загружаем данные для новой даты
+        updateTotal(); // Обновляем сумму
+        updateHistory(); // Обновляем историю
+      });
 
       function addPrice(service, price) {
         total += price;
@@ -352,7 +360,7 @@
 
         selectedServices.forEach((service, index) => {
           const listItem = document.createElement('li');
-          listItem.textContent = service;
+          listItem.textContent = `${index + 1}. ${service}`; // Добавляем нумерацию
 
           // Кнопка удаления "-"
           const removeButton = document.createElement('button');
