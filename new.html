@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Калькулятор цен</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #222;
+      color: #eee;
+      margin: 0; /* Убираем отступы */
+      padding: 0; /* Убираем отступы */
+      display: flex;
+      flex-direction: column; /* Выравниваем по вертикали */
+      align-items: center; /* Центрируем элементы */
+    }
+
+    .container {
+      width: 90%; /* Занимаем 90% ширины экрана */
+      max-width: 500px; /* Максимальная ширина */
+      padding: 20px;
+      margin: 20px auto; /* Центрируем контейнер */
+    }
+
+    h1 {
+      font-size: 2rem; /* Увеличиваем размер заголовка */
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      font-size: 1.5rem; /* Увеличиваем размер заголовка */
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .button-group {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+      font-size: 1rem; /* Уменьшаем размер шрифта */
+      flex: 1 1 100px; /* Делаем кнопки адаптивными */
+      min-width: 100px; /* Минимальная ширина кнопок */
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    #total, #discount, #services-count {
+      font-size: 1.2rem; /* Увеличиваем размер текста */
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    #date-picker {
+      margin-bottom: 10px;
+      width: 100%;
+    }
+
+    #toggle-button {
+      background-color: #f44336; /* Красный цвет для выделения */
+      font-size: 1rem; /* Уменьшаем размер шрифта */
+    }
+
+    #services {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    #services .button-group {
+      flex-wrap: wrap; /* Делаем группы кнопок адаптивными */
+      justify-content: center;
+    }
+
+    .history-list {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 20px;
+    }
+
+    .history-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 5px 10px;
+      border-bottom: 1px solid #444;
+    }
+
+    .history-list li button {
+      background-color: transparent;
+      border: none;
+      color: #eee;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .history-list li button:hover {
+      color: #fff;
+    }
+
+    /* Стили для таблицы */
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 8px;
+    }
+
+    tr:nth-child(even) {
+      background-color: #333;
+    }
+
+    th {
+      background-color: #555;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Калькулятор цен</h1>
+
+    <div id="login">
+      <h2>Вход</h2>
+      <input type="text" id="username" placeholder="Введите имя">
+      <button onclick="login()">Войти</button>
+    </div>
+
+    <div id="content" class="hidden">
+      <h2>Ваши данные</h2>
+      <p>Привет, <span id="user-name"></span>!</p>
+
+      <div id="date-picker">
+        <label for="selected-date">Выберите дату:</label>
+        <input type="date" id="selected-date" value="">
+        <script>
+          document.getElementById('selected-date').valueAsDate = new Date();
+        </script>
+      </div>
+
+      <h2>Сводка</h2>
+      <table>
+        <tr>
+          <td>Грязными:</td>
+          <td id="total">0</td>
+        </tr>
+        <tr>
+          <td>Чистыми:</td>
+          <td id="discount">0</td>
+        </tr>
+        <tr>
+          <td>Количество услуг:</td>
+          <td id="services-count">0</td>
+        </tr>
+      </table>
+
+      <h2>Все услуги</h2>
+      <div id="services">
+        <div class="button-group">
+          <button onclick="addPrice('эконом1 (I)', 800)">эконом1 (I)</button>
+          <button onclick="addPrice('эконом2 (I)', 1300)">эконом2 (I)</button>
+          <button onclick="addPrice('нано1 (I)', 900)">нано1 (I)</button>
+          <button onclick="addPrice('нано2 (I)', 1400)">нано2 (I)</button>
+          <button onclick="addPrice('эконом1 (II)', 1000)">эконом1 (II)</button>
+          <button onclick="addPrice('эконом2 (II)', 1500)">эконом2 (II)</button>
+          <button onclick="addPrice('нано1 (II)', 1200)">нано1 (II)</button>
+          <button onclick="addPrice('нано2 (II)', 1700)">нано2 (II)</button>
+        </div>
+        <div class="button-group">
+          <button onclick="addPrice('экспресс (I)', 500)">экспресс (I)</button>
+          <button onclick="addPrice('экспресс (II)', 600)">экспресс (II)</button>
+          <button onclick="addPrice('экспресс (IV)', 1000)">экспресс (IV)</button>
+          <button onclick="addPrice('кварц1 (I)', 2000)">кварц1 (I)</button>
+          <button onclick="addPrice('кварц2 (I)', 2500)">кварц2 (I)</button>
+          <button onclick="addPrice('кварц1 (II)', 2200)">кварц1 (II)</button>
+          <button onclick="addPrice('кварц2 (II)', 2700)">кварц2 (II)</button>
+        </div>
+        <div class="button-group">
+          <button onclick="addPrice('салон I', 1000)">салон I</button>
+          <button onclick="addPrice('салон II', 1300)">салон II</button>
+          <button onclick="addPrice('днище', 400)">днище</button>
+          <button onclick="addPrice('чернение', 300)">чернение</button>
+          <button onclick="addPrice('силикон', 250)">силикон</button>
+          <button onclick="addPrice('полировка пластика', 500)">полировка пластика</button>
+          <button onclick="addPrice('двигатель', 2500)">двигатель</button>
+        </div>
+      </div>
+
+      <h2>История</h2>
+      <ul class="history-list" id="history-list"></ul>
+    </div>
+
+    <script>
+      let total = 0;
+      let selectedServices = [];
+      let selectedDate = new Date().toISOString().slice(0, 10); // Текущая дата в формате YYYY-MM-DD
+      let period = null; // Период для подсчета суммы (null - не определен)
+
+      // Загружаем данные из localStorage при загрузке страницы
+      window.onload = () => {
+        loadSavedData();
+        updateTotal(); // Обновляем сумму при загрузке
+        updateHistory(); // Обновляем историю
+      };
+
+      function addPrice(service, price) {
+        total += price;
+        selectedServices.push(service);
+        updateTotal();
+        saveSelectedServices();
+        updateHistory();
+      }
+
+      function updateTotal() {
+        const discount = total * 0.27;
+        document.getElementById('total').textContent = `${total}₽`;
+        document.getElementById('discount').textContent = `${discount.toFixed(2)}₽`;
+        document.getElementById('services-count').textContent = `${selectedServices.length}`;
+
+        // Определение периода
+        const dateParts = selectedDate.split('-');
+        const day = parseInt(dateParts[2]);
+        if (day <= 15) {
+          period = 1; // 1-й период (1-15)
+        } else {
+          period = 2; // 2-й период (16-30/31)
+        }
+
+        // Вывод информации о периоде
+        if (period) {
+          // Получение общей суммы для периода из localStorage
+          const periodTotal = parseInt(localStorage.getItem(`periodTotal-${selectedDate}-${period}`), 10) || 0;
+          const periodDiscount = parseFloat(localStorage.getItem(`periodDiscount-${selectedDate}-${period}`), 10) || 0;
+
+          // Обновление общей суммы для периода
+          const newPeriodTotal = periodTotal + total;
+          const newPeriodDiscount = periodDiscount + discount;
+          localStorage.setItem(`periodTotal-${selectedDate}-${period}`, newPeriodTotal);
+          localStorage.setItem(`periodDiscount-${selectedDate}-${period}`, newPeriodDiscount);
+
+          // Вывод общей суммы и скидки для периода
+          // document.getElementById('services-count').textContent += ` (период ${period}: ${newPeriodTotal} (чистыми: ${newPeriodDiscount.toFixed(2)}))`;
+        }
+      }
+
+      function resetTotal() {
+        total = 0;
+        selectedServices = [];
+        updateTotal();
+        saveSelectedServices();
+        updateHistory(); // Обновляем историю после обнуления
+      }
+
+      function removeLast() {
+        if (selectedServices.length > 0) {
+          const lastService = selectedServices.pop();
+          const price = getPrice(lastService);
+          total -= price;
+          updateTotal();
+          saveSelectedServices();
+          updateHistory(); // Обновляем историю после удаления
+        }
+      }
+
+      function getPrice(service) {
+        switch (service) {
+          case 'эконом1 (I)': return 800;
+          case 'эконом1 (II)': return 1000;
+          case 'эконом2 (I)': return 1300;
+          case 'эконом2 (II)': return 1500;
+          case 'нано1 (I)': return 900;
+          case 'нано2 (I)': return 1400;
+          case 'нано1 (II)': return 1200;
+          case 'нано2 (II)': return 1700;
+          case 'экспресс (I)': return 500;
+          case 'экспресс (II)': return 600;
+          case 'экспресс (IV)': return 1000;
+          case 'кварц1 (I)': return 2000;
+          case 'кварц2 (I)': return 2500;
+          case 'кварц1 (II)': return 2200;
+          case 'кварц2 (II)': return 2700;
+          case 'салон I': return 1000;
+          case 'салон II': return 1300;
+          case 'днище': return 400;
+          case 'чернение': return 300;
+          case 'силикон': return 250;
+          case 'полировка пластика': return 500;
+          case 'двигатель': return 2500;
+          default: return 0;
+        }
+      }
+
+      function login() {
+        const username = document.getElementById('username').value;
+        if (username) {
+          document.getElementById('user-name').textContent = username;
+          document.getElementById('content').classList.remove('hidden');
+          document.getElementById('login').classList.add('hidden');
+          saveUsername(username);
+        }
+      }
+
+      function saveUsername(username) {
+        localStorage.setItem('username', username);
+      }
+
+      function saveSelectedServices() {
+        localStorage.setItem(`selectedServices-${selectedDate}`, JSON.stringify(selectedServices));
+        localStorage.setItem(`total-${selectedDate}`, total); // Сохраняем общую сумму
+      }
+
+      function loadSavedData() {
+        const username = localStorage.getItem('username');
+        if (username) {
+          document.getElementById('user-name').textContent = username;
+          document.getElementById('content').classList.remove('hidden');
+          document.getElementById('login').classList.add('hidden');
+        }
+
+        // Загружаем данные для выбранной даты
+        const savedServices = localStorage.getItem(`selectedServices-${selectedDate}`);
+        if (savedServices) {
+          selectedServices = JSON.parse(savedServices);
+        }
+        total = parseInt(localStorage.getItem(`total-${selectedDate}`), 10) || 0; // Загружаем общую сумму
+      }
+
+      function logout() {
+        localStorage.removeItem('username');
+        document.getElementById('content').classList.add('hidden');
+        document.getElementById('login').classList.remove('hidden');
+      }
+
+      function updateHistory() {
+        const historyList = document.getElementById('history-list');
+        historyList.innerHTML = ''; // Очищаем список истории
+
+        selectedServices.forEach((service, index) => {
+          const listItem = document.createElement('li');
+          listItem.textContent = service;
+
+          // Кнопка удаления "-"
+          const removeButton = document.createElement('button');
+          removeButton.textContent = '-';
+          removeButton.addEventListener('click', () => {
+            removeServiceFromHistory(index);
+          });
+          listItem.appendChild(removeButton);
+
+          // Кнопка добавления "+"
+          const addButton = document.createElement('button');
+          addButton.textContent = '+';
+          addButton.addEventListener('click', () => {
+            addServiceToHistory(index);
+          });
+          listItem.appendChild(addButton);
+
+          historyList.appendChild(listItem);
+        });
+      }
+
+      function removeServiceFromHistory(index) {
+        const service = selectedServices[index];
+        const price = getPrice(service);
+        total -= price;
+        selectedServices.splice(index, 1);
+        updateTotal();
+        saveSelectedServices();
+        updateHistory(); // Обновляем историю после удаления
+      }
+
+      function addServiceToHistory(index) {
+        const service = selectedServices[index];
+        const price = getPrice(service);
+        total += price;
+        selectedServices.splice(index + 1, 0, service); // Вставляем перед текущим элементом
+        updateTotal();
+        saveSelectedServices();
+        updateHistory(); // Обновляем историю после добавления
+      }
+    </script>
+  </div>
+</body>
+</html>
