@@ -169,6 +169,9 @@
         </tr>
       </table>
 
+      <button onclick="resetTotal()">Очистить сводку</button>
+      <button onclick="clearHistory()">Очистить историю</button> <br> <br>
+
       <h2>Все услуги</h2>
       <div id="services">
         <div class="button-group">
@@ -213,7 +216,7 @@
 
       // Загружаем данные из localStorage при загрузке страницы
       window.onload = () => {
-        loadSavedData();
+        loadData(); // Загружаем данные для текущей даты
         updateTotal(); // Обновляем сумму при загрузке
         updateHistory(); // Обновляем историю
       };
@@ -221,7 +224,15 @@
       // Обработка события изменения даты
       document.getElementById('selected-date').addEventListener('change', function() {
         selectedDate = this.value; // Обновляем выбранную дату
-        loadSavedData(); // Загружаем данные для новой даты
+
+        // Проверяем, была ли эта дата выбрана ранее
+        if (selectedDate !== this.previousDate) {
+          loadData(); // Загружаем данные, если это новая дата
+        }
+
+        // Сохраняем предыдущую выбранную дату
+        this.previousDate = selectedDate;
+
         updateTotal(); // Обновляем сумму
         updateHistory(); // Обновляем историю
       });
@@ -238,7 +249,9 @@
         const discount = total * 0.27;
         document.getElementById('total').textContent = `${total}₽`;
         document.getElementById('discount').textContent = `${discount.toFixed(2)}₽`;
-        document.getElementById('services-count').textContent = `${selectedServices.length}`;
+
+        // Обновляем services-count
+        document.getElementById('services-count').textContent = `${selectedServices.length}`; 
 
         // Определение периода
         const dateParts = selectedDate.split('-');
@@ -266,8 +279,29 @@
         }
       }
 
+      // Переименована из resetData() в loadData()
+      function loadData() {
+        const savedServices = localStorage.getItem(`selectedServices-${selectedDate}`);
+        if (savedServices) {
+          selectedServices = JSON.parse(savedServices);
+          total = parseInt(localStorage.getItem(`total-${selectedDate}`), 10) || 0; // Загружаем общую сумму
+        } else {
+          total = 0; // Сбрасываем total если нет сохраненных данных
+          selectedServices = []; // Сбрасываем selectedServices если нет сохраненных данных
+        }
+        updateTotal();
+        updateHistory(); // Обновляем историю после обнуления
+      }
+
       function resetTotal() {
         total = 0;
+        selectedServices = [];
+        updateTotal();
+        saveSelectedServices();
+        updateHistory(); // Обновляем историю после обнуления
+      }
+
+      function clearHistory() {
         selectedServices = [];
         updateTotal();
         saveSelectedServices();
@@ -358,34 +392,53 @@
         const historyList = document.getElementById('history-list');
         historyList.innerHTML = ''; // Очищаем список истории
 
-        selectedServices.forEach((service, index) => {
-          const listItem = document.createElement('li');
-          listItem.textContent = `${index + 1}. ${service}`; // Добавляем нумерацию
+        const savedServices = localStorage.getItem(`selectedServices-${selectedDate}`);
+        if (savedServices) {
+          const services = JSON.parse(savedServices);
+          services.forEach((service, index) => {
+            const listItem = document.createElement('li');
+            listItem.textContent = `${index + 1}. ${service}`; // Добавляем нумерацию
 
-          // Кнопка удаления "-"
-          const removeButton = document.createElement('button');
-          removeButton.textContent = '-';
-          removeButton.addEventListener('click', () => {
-            removeServiceFromHistory(index);
+            // Кнопка удаления "-"
+            const removeButton = document.createElement('button');
+            removeButton.textContent = '-';
+            removeButton.addEventListener('click', () => {
+              removeServiceFromHistory(index);
+            });
+            listItem.appendChild(removeButton);
+
+            // Кнопка "Удалить"
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Удалить';
+            deleteButton.addEventListener('click', () => {
+              deleteServiceFromHistory(index);
+            });
+            listItem.appendChild(deleteButton);
+
+            // Кнопка добавления "+"
+            const addButton = document.createElement('button');
+            addButton.textContent = '+';
+            addButton.addEventListener('click', () => {
+              addServiceToHistory(index);
+            });
+            listItem.appendChild(addButton);
+
+            historyList.appendChild(listItem);
           });
-          listItem.appendChild(removeButton);
-
-          // Кнопка добавления "+"
-          const addButton = document.createElement('button');
-          addButton.textContent = '+';
-          addButton.addEventListener('click', () => {
-            addServiceToHistory(index);
-          });
-          listItem.appendChild(addButton);
-
-          historyList.appendChild(listItem);
-        });
+        }
       }
 
       function removeServiceFromHistory(index) {
         const service = selectedServices[index];
         const price = getPrice(service);
         total -= price;
+        selectedServices.splice(index, 1);
+        updateTotal();
+        saveSelectedServices();
+        updateHistory(); // Обновляем историю после удаления
+      }
+
+      function deleteServiceFromHistory(index) {
         selectedServices.splice(index, 1);
         updateTotal();
         saveSelectedServices();
