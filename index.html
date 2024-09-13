@@ -5,6 +5,8 @@
   <style>
     body {
       font-family: sans-serif;
+      background-color: #222;
+      color: #eee;
     }
 
     .container {
@@ -38,6 +40,11 @@
       font-weight: bold;
       margin-bottom: 20px;
     }
+
+    #discount {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
   </style>
 </head>
 <body>
@@ -56,6 +63,9 @@
 
       <div id="total">
         Общая сумма: 0
+      </div>
+      <div id="discount">
+        Скидка: 0
       </div>
 
       <button onclick="resetTotal()">Обнулить счет</button>
@@ -109,7 +119,9 @@
       }
 
       function updateTotal() {
-        document.getElementById('total').textContent = `Общая сумма: ${total} (с учетом скидки: ${Math.round(total - (total * 0.27))})`;
+        const discount = total * 0.27;
+        document.getElementById('total').textContent = `Общая сумма: ${total}`;
+        document.getElementById('discount').textContent = `Скидка: ${discount.toFixed(2)}`;
       }
 
       function resetTotal() {
