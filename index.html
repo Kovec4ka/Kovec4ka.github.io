@@ -96,10 +96,16 @@
       let total = 0;
       let selectedServices = [];
 
+      // Загружаем данные из localStorage при загрузке страницы
+      window.onload = () => {
+        loadSavedData();
+      };
+
       function addPrice(service, price) {
         total += price;
         selectedServices.push(service);
         updateTotal();
+        saveSelectedServices();
       }
 
       function updateTotal() {
@@ -110,6 +116,7 @@
         total = 0;
         selectedServices = [];
         updateTotal();
+        saveSelectedServices();
       }
 
       function removeLast() {
@@ -118,9 +125,9 @@
           const price = getPrice(lastService);
           total -= price;
           updateTotal();
+          saveSelectedServices();
         }
       }
-
       function getPrice(service) {
         switch (service) {
           case 'эконом1 (I)': return 800;
@@ -155,6 +162,34 @@
           document.getElementById('user-name').textContent = username;
           document.getElementById('content').classList.remove('hidden');
           document.getElementById('login').classList.add('hidden');
+          saveUsername(username);
+        }
+      }
+
+      function saveUsername(username) {
+        localStorage.setItem('username', username);
+      }
+
+      function saveSelectedServices() {
+        localStorage.setItem('selectedServices', JSON.stringify(selectedServices));
+      }
+
+      function loadSavedData() {
+        const username = localStorage.getItem('username');
+        if (username) {
+          document.getElementById('user-name').textContent = username;
+          document.getElementById('content').classList.remove('hidden');
+          document.getElementById('login').classList.add('hidden');
+        }
+
+        const savedServices = localStorage.getItem('selectedServices');
+        if (savedServices) {
+          selectedServices = JSON.parse(savedServices);
+          for (const service of selectedServices) {
+            const price = getPrice(service);
+            total += price;
+          }
+          updateTotal();
         }
       }
 
