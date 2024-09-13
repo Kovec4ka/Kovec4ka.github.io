@@ -110,6 +110,25 @@
     .history-list li button:hover {
       color: #fff;
     }
+
+    /* Стили для таблицы */
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 8px;
+    }
+
+    tr:nth-child(even) {
+      background-color: #333;
+    }
+
+    th {
+      background-color: #555;
+    }
   </style>
 </head>
 <body>
@@ -134,15 +153,21 @@
         </script>
       </div>
 
-      <div id="total">
-        Общая сумма: 0
-      </div>
-      <div id="discount">
-        Скидка: 0
-      </div>
-      <div id="services-count">
-        Количество услуг: 0
-      </div>
+      <h2>Сводка</h2>
+      <table>
+        <tr>
+          <td>Грязными:</td>
+          <td id="total">0</td>
+        </tr>
+        <tr>
+          <td>Чистыми:</td>
+          <td id="discount">0</td>
+        </tr>
+        <tr>
+          <td>Количество услуг:</td>
+          <td id="services-count">0</td>
+        </tr>
+      </table>
 
       <h2>Все услуги</h2>
       <div id="services">
@@ -203,9 +228,9 @@
 
       function updateTotal() {
         const discount = total * 0.27;
-        document.getElementById('total').textContent = `Общая сумма: ${total}`;
-        document.getElementById('discount').textContent = `Скидка: ${discount.toFixed(2)}`;
-        document.getElementById('services-count').textContent = `Количество услуг: ${selectedServices.length}`;
+        document.getElementById('total').textContent = `${total}₽`;
+        document.getElementById('discount').textContent = `${discount.toFixed(2)}₽`;
+        document.getElementById('services-count').textContent = `${selectedServices.length}`;
 
         // Определение периода
         const dateParts = selectedDate.split('-');
@@ -229,7 +254,7 @@
           localStorage.setItem(`periodDiscount-${selectedDate}-${period}`, newPeriodDiscount);
 
           // Вывод общей суммы и скидки для периода
-          document.getElementById('services-count').textContent += ` (период ${period}: ${newPeriodTotal} (скидка: ${newPeriodDiscount.toFixed(2)}))`;
+          // document.getElementById('services-count').textContent += ` (период ${period}: ${newPeriodTotal} (чистыми: ${newPeriodDiscount.toFixed(2)}))`;
         }
       }
 
