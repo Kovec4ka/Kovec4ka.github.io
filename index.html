@@ -85,6 +85,31 @@
       justify-content: center;
     }
 
+    .history-list {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 20px;
+    }
+
+    .history-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 5px 10px;
+      border-bottom: 1px solid #444;
+    }
+
+    .history-list li button {
+      background-color: transparent;
+      border: none;
+      color: #eee;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .history-list li button:hover {
+      color: #fff;
+    }
   </style>
 </head>
 <body>
@@ -103,7 +128,10 @@
 
       <div id="date-picker">
         <label for="selected-date">Выберите дату:</label>
-        <input type="date" id="selected-date" value="<?php echo date('Y-m-d'); ?>">
+        <input type="date" id="selected-date" value="">
+        <script>
+          document.getElementById('selected-date').valueAsDate = new Date();
+        </script>
       </div>
 
       <div id="total">
@@ -116,12 +144,8 @@
         Количество услуг: 0
       </div>
 
-      <button onclick="resetTotal()">Обнулить счет</button>
-      <button onclick="removeLast()">Убрать предыдущее</button>
-      <button onclick="logout()">Выйти</button>
-
-      <button id="toggle-button">Показать все услуги</button>
-      <div id="services" class="hidden">
+      <h2>Все услуги</h2>
+      <div id="services">
         <div class="button-group">
           <button onclick="addPrice('эконом1 (I)', 800)">эконом1 (I)</button>
           <button onclick="addPrice('эконом2 (I)', 1300)">эконом2 (I)</button>
@@ -151,18 +175,22 @@
           <button onclick="addPrice('двигатель', 2500)">двигатель</button>
         </div>
       </div>
+
+      <h2>История</h2>
+      <ul class="history-list" id="history-list"></ul>
     </div>
 
     <script>
       let total = 0;
       let selectedServices = [];
-      let selectedDate = "<?php echo date('Y-m-d'); ?>"; // Текущая дата по умолчанию
+      let selectedDate = new Date().toISOString().slice(0, 10); // Текущая дата в формате YYYY-MM-DD
       let period = null; // Период для подсчета суммы (null - не определен)
 
       // Загружаем данные из localStorage при загрузке страницы
       window.onload = () => {
         loadSavedData();
         updateTotal(); // Обновляем сумму при загрузке
+        updateHistory(); // Обновляем историю
       };
 
       function addPrice(service, price) {
@@ -170,6 +198,7 @@
         selectedServices.push(service);
         updateTotal();
         saveSelectedServices();
+        updateHistory();
       }
 
       function updateTotal() {
@@ -209,6 +238,7 @@
         selectedServices = [];
         updateTotal();
         saveSelectedServices();
+        updateHistory(); // Обновляем историю после обнуления
       }
 
       function removeLast() {
@@ -218,31 +248,27 @@
           total -= price;
           updateTotal();
           saveSelectedServices();
+          updateHistory(); // Обновляем историю после удаления
         }
       }
+
       function getPrice(service) {
         switch (service) {
           case 'эконом1 (I)': return 800;
-		  case 'эконом1 (II)': return 1000;
-		  case 'эконом2 (I)': return 1300;
-		  case 'эконом2 (II)': return 1500;
-		  
-          
+          case 'эконом1 (II)': return 1000;
+          case 'эконом2 (I)': return 1300;
+          case 'эконом2 (II)': return 1500;
           case 'нано1 (I)': return 900;
           case 'нано2 (I)': return 1400;
-		  case 'нано1 (II)': return 1200;
+          case 'нано1 (II)': return 1200;
           case 'нано2 (II)': return 1700;
-          
-		  
           case 'экспресс (I)': return 500;
           case 'экспресс (II)': return 600;
           case 'экспресс (IV)': return 1000;
-		  
           case 'кварц1 (I)': return 2000;
           case 'кварц2 (I)': return 2500;
           case 'кварц1 (II)': return 2200;
           case 'кварц2 (II)': return 2700;
-		  
           case 'салон I': return 1000;
           case 'салон II': return 1300;
           case 'днище': return 400;
@@ -295,22 +321,53 @@
         document.getElementById('login').classList.remove('hidden');
       }
 
-      document.getElementById('toggle-button').addEventListener('click', () => {
-        const servicesElement = document.getElementById('services');
-        servicesElement.classList.toggle('hidden');
-        if (servicesElement.classList.contains('hidden')) {
-          document.getElementById('toggle-button').textContent = 'Показать все услуги';
-        } else {
-          document.getElementById('toggle-button').textContent = 'Скрыть услуги';
-        }
-      });
+      function updateHistory() {
+        const historyList = document.getElementById('history-list');
+        historyList.innerHTML = ''; // Очищаем список истории
 
-      // Обработка изменения даты
-      document.getElementById('selected-date').addEventListener('change', (event) => {
-        selectedDate = event.target.value;
-        loadSavedData(); // Загружаем данные для новой даты
-        updateTotal(); // Обновляем общую сумму
-      });
+        selectedServices.forEach((service, index) => {
+          const listItem = document.createElement('li');
+          listItem.textContent = service;
+
+          // Кнопка удаления "-"
+          const removeButton = document.createElement('button');
+          removeButton.textContent = '-';
+          removeButton.addEventListener('click', () => {
+            removeServiceFromHistory(index);
+          });
+          listItem.appendChild(removeButton);
+
+          // Кнопка добавления "+"
+          const addButton = document.createElement('button');
+          addButton.textContent = '+';
+          addButton.addEventListener('click', () => {
+            addServiceToHistory(index);
+          });
+          listItem.appendChild(addButton);
+
+          historyList.appendChild(listItem);
+        });
+      }
+
+      function removeServiceFromHistory(index) {
+        const service = selectedServices[index];
+        const price = getPrice(service);
+        total -= price;
+        selectedServices.splice(index, 1);
+        updateTotal();
+        saveSelectedServices();
+        updateHistory(); // Обновляем историю после удаления
+      }
+
+      function addServiceToHistory(index) {
+        const service = selectedServices[index];
+        const price = getPrice(service);
+        total += price;
+        selectedServices.splice(index + 1, 0, service); // Вставляем перед текущим элементом
+        updateTotal();
+        saveSelectedServices();
+        updateHistory(); // Обновляем историю после добавления
+      }
     </script>
   </div>
 </body>
