@@ -97,6 +97,20 @@
             color: #b1b1b1;
         }
 
+        #purchaseDate {
+            font-family: "Roboto", sans-serif;
+            font-weight: normal;
+            font-style: normal;
+            font-size: 140%;
+        }
+
+        #purchaseTime {
+            font-family: "Roboto", sans-serif;
+            font-weight: normal;
+            font-style: normal;
+            font-size: 140%;
+        }
+
         #p_second {
             font-family: "Roboto", sans-serif;
             font-weight: bold;
@@ -135,6 +149,7 @@ input {
 
  #menu_btn {
      margin: 10px 10px 10px;
+     text-align: center; /* Выравнивание текста внутри #menu_btn */
  }
 
  .without_ampm::-webkit-datetime-edit-ampm-field {
@@ -191,10 +206,11 @@ input {
             <option disabled style="color: red">Автобус №44:</option>
             <option selected value="a878ту124" title="Автобус">a878ту124</option>
             <option value="a878ту124" title="Автобус">в671тс124</option>
+            <option value="р608нм124" title="Автобус">р608нм124</option>
             <option disabled></option>
             <option disabled style="color: red">Автобус №10:</option>
-            <option value="a878ту124" title="Автобус">в225тс124</option>
-            <option value="a878ту124" title="Автобус">в353оо124</option>
+            <option value="в225тс124" title="Автобус">в225тс124</option>
+            <option value="в353оо124" title="Автобус">в353оо124</option>
         </select>
         <p id="hint"></p>
         <hr style="width:320px; margin: 0px -50px 0px;"/> <!-- (---) линии под текстом (---) -->
@@ -213,26 +229,21 @@ input {
 <div>
         <img id="img1" src="img/clock.png">
         <p id="p_first">Дата покупки</p>
-        <select id="select_second"><option>12 сентября 2024 г.</option>
-            <option>13 сентября 2024 г.</option>
-        <option>14 сентября 2024 г.</option>
-        <option>15 сентября 2024 г.</option>
-        <option>16 сентября 2024 г.</option></select>
-        <p></p><hr style="width:320px; margin: 0px -50px 0px;"/> <!-- (---) линии под текстом (---) -->
+        <p id="purchaseDate"></p> <hr style="width:320px; margin: 0px -50px 0px;"/> <!-- (---) линии под текстом (---) -->
 
 </div>
 
 <div>
         <img id="img1" src="img/calendar.png">
         <p id="p_first">Время покупки</p>
-        <p><input type="time" id="purchaseTime" value="10:45" class="without_ampm"></p>
+        <p id="purchaseTime"></p>
 </div>
 
 
     </div>
 
     <div id="controlContent" class="hidden">
-        <p>Извините, сервис временно не работает.</p>
+      <img width="300" style="margin: 20px -50px" src="img/accept.png" alt="Описание изображения">
     </div>
 
     <button id="button2" class="button" onclick="closeWindow()" style="width: 350px">Закрыть</button>
@@ -243,35 +254,54 @@ input {
     let timeLeft = 15;
     const timerElement = document.getElementById('timer');
     const timerBlock = document.getElementById('timer_block');
+    let countdown; // Переменная для хранения интервала
 
-    const countdown = setInterval(() => {
-        if (timeLeft <= 0) {
-            clearInterval(countdown);
-            timeLeft = 15; // Сброс времени
-            timerElement.textContent = timeLeft; // Обновление отображения
-        } else {
-            timeLeft--;
-            timerElement.textContent = timeLeft;
-        }
-    }, 1000);
+    // Начальный таймер
+    function startTimer() {
+        countdown = setInterval(() => {
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                timeLeft = 15;
+                timerElement.textContent = timeLeft;
+            } else {
+                timeLeft--;
+                timerElement.textContent = timeLeft;
+            }
+        }, 1000);
+    }
 
     // Переключение контента
     function toggleContent(type) {
         const ticketContent = document.getElementById('ticketContent');
         const controlContent = document.getElementById('controlContent');
+        const ticketButton = document.getElementById('ticketButton');
+        const controlButton = document.getElementById('controlButton');
 
         if (type === 'ticket') {
             ticketContent.classList.remove('hidden');
             controlContent.classList.add('hidden');
-            document.getElementById('ticketButton').classList.add('active');
-            document.getElementById('controlButton').classList.remove('active');
+            // Сначала удаляем класс 'active' для обеих кнопок
+            ticketButton.classList.remove('active');
+            controlButton.classList.remove('active');
+
+            // Затем добавляем класс 'active' для кнопки "Билет"
+            ticketButton.classList.add('active');
+
             timerBlock.classList.remove('hidden'); // Показываем таймер
+            startTimer(); // Запускаем таймер при переходе в "Билет"
         } else {
             ticketContent.classList.add('hidden');
             controlContent.classList.remove('hidden');
-            document.getElementById('controlButton').classList.add('active');
-            document.getElementById('ticketButton').classList.remove('active');
+
+            // Сначала удаляем класс 'active' для обеих кнопок
+            ticketButton.classList.remove('active');
+            controlButton.classList.remove('active');
+
+            // Затем добавляем класс 'active' для кнопки "Контроль"
+            controlButton.classList.add('active');
+
             timerBlock.classList.add('hidden'); // Скрываем таймер
+            clearInterval(countdown); // Останавливаем таймер при переходе в "Контроль"
         }
     }
 
@@ -287,20 +317,38 @@ input {
         alert('Закрыть окно');
     }
 
-    // Добавлено событие click для перезапуска таймера
+    //  Перезапуск таймера при клике на элемент
     timerElement.addEventListener('click', () => {
         timeLeft = 15;
         timerElement.textContent = timeLeft;
         clearInterval(countdown); // Останавливаем текущий таймер
-        countdown = setInterval(() => { // Запускаем новый таймер
-            if (timeLeft <= 0) {
-                clearInterval(countdown);
-            } else {
-                timeLeft--;
-                timerElement.textContent = timeLeft;
-            }
-        }, 1000);
+        startTimer(); // Запускаем новый таймер
     });
+
+    // Получаем текущую дату
+    const today = new Date();
+    const day = today.getDate();
+    const month = today.getMonth(); // Месяц начинается с 0
+    const year = today.getFullYear();
+
+    // Массив с названиями месяцев
+    const monthNames = ["Января", "Февраля", "Марта", "Апреля", "Мая", "Июня",
+                        "Июля", "Августа", "Сентября", "Октября", "Ноября", "Декабря"];
+
+    // Формируем строку с датой
+    const formattedDate = `${day} ${monthNames[month]} ${year} г.`;
+
+    // Выводим дату в элемент с id="purchaseDate"
+    document.getElementById("purchaseDate").textContent = formattedDate;
+
+    // Получаем текущее время
+    const now = new Date();
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+    const formattedTime = `${hours}:${minutes.toString().padStart(2, '0')}`; // Добавляем ведущий ноль к минутам, если нужно
+
+    // Выводим время в элемент с id="purchaseTime"
+    document.getElementById("purchaseTime").textContent = formattedTime;
 
 </script>
 
