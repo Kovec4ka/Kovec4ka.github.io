@@ -175,7 +175,7 @@
     <div class="keyboard-row">
       <button class="qr" onclick="openQrScanner()">QR</button>
       <button onclick="addDigit('0')">0</button>
-      <button class="backspace" onclick="deleteDigit()">←</button>
+      <button class="backspace" id="backspaceButton" onmousedown="startDelete()" onmouseup="stopDelete()" onmouseout="stopDelete()">←</button>
     </div>
   </div>
 
@@ -192,6 +192,10 @@
     const errorMessage = document.getElementById("error-message");
 
     let currentInputIndex = 0;
+    let isDeleting = false;
+    let backspaceInterval;
+
+    const backspaceButton = document.getElementById("backspaceButton");
 
     function addDigit(digit) {
       if (currentInputIndex < 6) {
@@ -207,10 +211,21 @@
       if (currentInputIndex > 0) {
         currentInputIndex--;
         codeInputs[currentInputIndex].value = "";
-        if (currentInputIndex === 6) {
-          checkCode();
-        }
+      } else {
+        // Очистка всего кода, если кнопка зажата и курсор в начале
+        codeInputs.forEach(input => input.value = "");
+        currentInputIndex = 0;
       }
+    }
+
+    function startDelete() {
+      isDeleting = true;
+      backspaceInterval = setInterval(deleteDigit, 100); // Удаление каждые 100мс
+    }
+
+    function stopDelete() {
+      isDeleting = false;
+      clearInterval(backspaceInterval);
     }
 
     function openQrScanner() {
