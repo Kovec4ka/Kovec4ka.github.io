@@ -18,7 +18,8 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      width: 300px;
+      width: 90%;
+      max-width: 300px;
       border: none;
       padding: 20px;
       border-radius: 5px;
@@ -32,8 +33,8 @@
     }
 
     .code-input input {
-      width: 30px;
-      height: 30px;
+      width: 40px;
+      height: 40px;
       margin: 5px;
       border: 1px solid #555;
       text-align: center;
@@ -43,8 +44,9 @@
       border-radius: 5px;
     }
 
-    h1 {
+    h1, h2 {
       margin-bottom: 10px;
+      text-align: center;
     }
 
     button {
@@ -54,12 +56,14 @@
       border: none;
       cursor: pointer;
       border-radius: 5px;
+      font-size: 16px;
     }
 
     .keyboard {
       display: flex;
       flex-direction: column;
       margin-top: 20px;
+      width: 100%;
     }
 
     .keyboard-row {
@@ -103,6 +107,7 @@
     #error-message {
       color: red;
       display: none;
+      text-align: center;
     }
   </style>
 </head>
