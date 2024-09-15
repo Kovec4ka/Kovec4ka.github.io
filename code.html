@@ -47,7 +47,7 @@
       margin: 5px;
       border: 2px solid #555;
       text-align: center;
-      font-size: 24px; 
+      font-size: 24px; /* Увеличенный размер шрифта для input */
       background-color: transparent;
       color: #eee;
       border-radius: 8px;
@@ -55,7 +55,7 @@
 
     h2 {
       margin-bottom: 10px;
-      font-size: 1.5rem; 
+      font-size: 1.5rem; /* Увеличенный размер шрифта для заголовка */
     }
 
     button {
@@ -65,7 +65,7 @@
       border: none;
       cursor: pointer;
       border-radius: 8px;
-      font-size: 1rem; 
+      font-size: 1rem; /* Увеличенный размер шрифта для кнопок */
     }
 
     .keyboard {
@@ -175,10 +175,7 @@
     <div class="keyboard-row">
       <button class="qr" onclick="openQrScanner()">QR</button>
       <button onclick="addDigit('0')">0</button>
-      <button class="backspace" id="backspaceButton" 
-              onpointerdown="startDelete()" 
-              onpointerup="stopDelete()" 
-              onpointerout="stopDelete()">←</button>
+      <button class="backspace" onclick="deleteDigit()">←</button>
     </div>
   </div>
 
@@ -193,11 +190,8 @@
     ];
     const correctCodes = ["123456", "543216"];
     const errorMessage = document.getElementById("error-message");
-    const backspaceButton = document.getElementById("backspaceButton");
 
     let currentInputIndex = 0;
-    let isDeleting = false;
-    let backspaceInterval;
 
     function addDigit(digit) {
       if (currentInputIndex < 6) {
@@ -213,21 +207,10 @@
       if (currentInputIndex > 0) {
         currentInputIndex--;
         codeInputs[currentInputIndex].value = "";
-      } else {
-        // Очистка всего кода, если кнопка зажата и курсор в начале
-        codeInputs.forEach(input => input.value = "");
-        currentInputIndex = 0;
+        if (currentInputIndex === 6) {
+          checkCode();
+        }
       }
-    }
-
-    function startDelete() {
-      isDeleting = true;
-      backspaceInterval = setInterval(deleteDigit, 100); // Удаление каждые 100мс
-    }
-
-    function stopDelete() {
-      isDeleting = false;
-      clearInterval(backspaceInterval);
     }
 
     function openQrScanner() {
@@ -245,18 +228,6 @@
         currentInputIndex = 0;
       }
     }
-
-    document.addEventListener('touchstart', function(event) {
-      if (event.target === backspaceButton) {
-        startDelete();
-      }
-    });
-
-    document.addEventListener('touchend', function(event) {
-      if (event.target === backspaceButton) {
-        stopDelete();
-      }
-    });
   </script>
 </body>
 </html>
