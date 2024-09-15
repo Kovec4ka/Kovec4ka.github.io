@@ -12,74 +12,74 @@
       height: 100vh;
       background-color: #222;
       color: #eee;
-      font-size: 16px; /* Adjust font size for mobile */
+      font-size: 20px; /* Увеличенный размер шрифта */
     }
 
     .code-entry {
       display: flex;
       flex-direction: column;
       align-items: center;
-      width: 90%; /* Make it responsive */
-      max-width: 300px; /* Limit width for larger screens */
+      width: 90%; /* Отзывчивость, но ограничиваем */
+      max-width: 400px; /* Увеличили максимальную ширину */
       border: none;
-      padding: 20px;
-      border-radius: 5px;
+      padding: 30px; /* Увеличенные отступы */
+      border-radius: 10px; /* Увеличенный радиус скругления */
       background-color: transparent;
     }
 
     .code-input {
       display: flex;
-      margin-bottom: 10px;
+      margin-bottom: 20px; /* Увеличили отступ */
       width: 100%;
     }
 
     .code-input input {
-      width: 30px;
-      height: 30px;
-      margin: 5px;
-      border: 1px solid #555;
+      width: 40px; /* Увеличили ширину */
+      height: 40px; /* Увеличили высоту */
+      margin: 10px; /* Увеличили отступ */
+      border: 2px solid #555; /* Утолщенная рамка */
       text-align: center;
-      font-size: 24px;
+      font-size: 32px; /* Увеличенный размер шрифта */
       background-color: transparent;
       color: #eee;
-      border-radius: 5px;
+      border-radius: 8px; /* Увеличенный радиус скругления */
     }
 
     h2 {
-      margin-bottom: 10px;
-      font-size: 1.2rem;
+      margin-bottom: 20px; /* Увеличили отступ */
+      font-size: 2.5rem; /* Увеличили размер шрифта */
     }
 
     button {
-      padding: 10px 20px;
+      padding: 15px 30px; /* Увеличили отступы */
       background-color: #4CAF50;
       color: white;
       border: none;
       cursor: pointer;
-      border-radius: 5px;
-      font-size: 1rem;
+      border-radius: 8px; /* Увеличенный радиус скругления */
+      font-size: 1.5rem; /* Увеличили размер шрифта */
     }
 
     .keyboard {
       display: flex;
       flex-direction: column;
-      margin-top: 20px;
+      margin-top: 30px; /* Увеличили отступ */
     }
 
     .keyboard-row {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 10px;
+      margin-bottom: 20px; /* Увеличили отступ */
     }
 
     .keyboard button {
-      padding: 10px 20px;
-      margin: 0 5px;
+      padding: 15px 30px; /* Увеличили отступы */
+      margin: 0 10px; /* Увеличили отступ */
       background-color: #444;
       border: none;
-      border-radius: 5px;
+      border-radius: 8px; /* Увеличенный радиус скругления */
       cursor: pointer;
-      font-size: 1rem;
+      font-size: 1.5rem; /* Увеличили размер шрифта */
       color: #eee;
       flex: 1;
     }
@@ -107,7 +107,7 @@
     #error-message {
       color: red;
       display: none;
-      font-size: 0.8rem;
+      font-size: 1.2rem; /* Увеличили размер шрифта */
     }
   </style>
 </head>
@@ -121,7 +121,7 @@
       <input type="text" id="codeInput5" readonly maxlength="1">
       <input type="text" id="codeInput6" readonly maxlength="1">
     </div>
-    <h2>Введите код с наклейки</h2>
+    <h3>Введите код с наклейки</h3>
     <div id="error-message">Неправильный код!</div>
   </div>
 
