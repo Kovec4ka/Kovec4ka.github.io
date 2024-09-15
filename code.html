@@ -47,7 +47,7 @@
       margin: 5px;
       border: 2px solid #555;
       text-align: center;
-      font-size: 24px; /* Увеличенный размер шрифта для input */
+      font-size: 24px; 
       background-color: transparent;
       color: #eee;
       border-radius: 8px;
@@ -55,7 +55,7 @@
 
     h2 {
       margin-bottom: 10px;
-      font-size: 1.5rem; /* Увеличенный размер шрифта для заголовка */
+      font-size: 1.5rem; 
     }
 
     button {
@@ -65,7 +65,7 @@
       border: none;
       cursor: pointer;
       border-radius: 8px;
-      font-size: 1rem; /* Увеличенный размер шрифта для кнопок */
+      font-size: 1rem; 
     }
 
     .keyboard {
@@ -175,7 +175,12 @@
     <div class="keyboard-row">
       <button class="qr" onclick="openQrScanner()">QR</button>
       <button onclick="addDigit('0')">0</button>
-      <button class="backspace" id="backspaceButton" onmousedown="startDelete()" onmouseup="stopDelete()" onmouseout="stopDelete()">←</button>
+      <button class="backspace" id="backspaceButton" 
+              onpointerdown="startDelete()" 
+              onpointerup="stopDelete()" 
+              onpointerout="stopDelete()" 
+              ontouchstart="startDelete()" 
+              ontouchend="stopDelete()">←</button>
     </div>
   </div>
 
