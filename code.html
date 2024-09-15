@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Code Entry</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: #222;
+      color: #eee;
+    }
+
+    .code-entry {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 300px;
+      border: none;
+      padding: 20px;
+      border-radius: 5px;
+      background-color: transparent;
+    }
+
+    .code-input {
+      display: flex;
+      margin-bottom: 10px;
+      width: 100%;
+    }
+
+    .code-input input {
+      width: 30px;
+      height: 30px;
+      margin: 5px;
+      border: 1px solid #555;
+      text-align: center;
+      font-size: 24px;
+      background-color: transparent;
+      color: #eee;
+      border-radius: 5px;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .keyboard {
+      display: flex;
+      flex-direction: column;
+      margin-top: 20px;
+    }
+
+    .keyboard-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .keyboard button {
+      padding: 10px 20px;
+      margin: 0 5px;
+      background-color: #444;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 18px;
+      color: #eee;
+      flex: 1;
+    }
+
+    .keyboard button:hover {
+      background-color: #555;
+    }
+
+    .keyboard button.qr {
+      background-color: #007bff;
+    }
+
+    .keyboard button.backspace {
+      background-color: #dc3545;
+    }
+
+    .keyboard button.qr:hover {
+      background-color: #0056b3;
+    }
+
+    .keyboard button.backspace:hover {
+      background-color: #c82333;
+    }
+
+    #error-message {
+      color: red;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="code-entry">
+    <div class="code-input">
+      <input type="text" id="codeInput1" readonly maxlength="1">
+      <input type="text" id="codeInput2" readonly maxlength="1">
+      <input type="text" id="codeInput3" readonly maxlength="1">
+      <input type="text" id="codeInput4" readonly maxlength="1">
+      <input type="text" id="codeInput5" readonly maxlength="1">
+      <input type="text" id="codeInput6" readonly maxlength="1">
+    </div>
+    <h2>Введите код с наклейки</h2>
+    <div id="error-message">Неправильный код!</div>
+  </div>
+
+  <div class="keyboard">
+    <div class="keyboard-row">
+      <button onclick="addDigit('1')">1</button>
+      <button onclick="addDigit('2')">2</button>
+      <button onclick="addDigit('3')">3</button>
+    </div>
+    <div class="keyboard-row">
+      <button onclick="addDigit('4')">4</button>
+      <button onclick="addDigit('5')">5</button>
+      <button onclick="addDigit('6')">6</button>
+    </div>
+    <div class="keyboard-row">
+      <button onclick="addDigit('7')">7</button>
+      <button onclick="addDigit('8')">8</button>
+      <button onclick="addDigit('9')">9</button>
+    </div>
+    <div class="keyboard-row">
+      <button class="qr" onclick="openQrScanner()">QR</button>
+      <button onclick="addDigit('0')">0</button>
+      <button class="backspace" onclick="deleteDigit()">←</button>
+    </div>
+  </div>
+
+  <script>
+    const codeInputs = [
+      document.getElementById("codeInput1"),
+      document.getElementById("codeInput2"),
+      document.getElementById("codeInput3"),
+      document.getElementById("codeInput4"),
+      document.getElementById("codeInput5"),
+      document.getElementById("codeInput6")
+    ];
+    const correctCodes = ["123456", "543216"];
+    const errorMessage = document.getElementById("error-message");
+
+    let currentInputIndex = 0;
+
+    function addDigit(digit) {
+      if (currentInputIndex < 6) {
+        codeInputs[currentInputIndex].value = digit;
+        currentInputIndex++;
+        if (currentInputIndex === 6) {
+          checkCode();
+        }
+      }
+    }
+
+    function deleteDigit() {
+      if (currentInputIndex > 0) {
+        currentInputIndex--;
+        codeInputs[currentInputIndex].value = "";
+        if (currentInputIndex === 6) {
+          checkCode();
+        }
+      }
+    }
+
+    function openQrScanner() {
+      alert("Сканер QR-кодов еще не реализован.");
+    }
+
+    function checkCode() {
+      const enteredCode = codeInputs.map(input => input.value).join('');
+
+      if (correctCodes.includes(enteredCode)) {
+        window.location.href = "https://kovec4ka.github.io/";
+      } else {
+        errorMessage.style.display = "block";
+        codeInputs.forEach(input => input.value = "");
+        currentInputIndex = 0;
+      }
+    }
+  </script>
+</body>
+</html>
