@@ -217,9 +217,14 @@ input {
             <option disabled style="color: red">Автобус №10:</option>
             <option value="в225тс124" title="Автобус">в225тс124</option>
             <option value="в353оо124" title="Автобус">в353оо124</option>
+            <option value="в353оо124" title="Автобус">в702тс124</option>
+            <option value="в353оо124" title="Автобус">в225тс124</option>
+            <option value="в353оо124" title="Автобус">а878ту124</option>
         </select>
         <p id="hint"></p>
         <hr style="width:320px; margin: 0px -50px 0px;"/> <!-- (---) линии под текстом (---) -->
+        <input type="text" id="newNumberInput" placeholder="Введите номер">
+        <button onclick="addNewNumber()">Добавить</button>
 </div>
 
 
@@ -356,6 +361,23 @@ input {
     // Выводим время в элемент с id="purchaseTime"
     document.getElementById("purchaseTime").textContent = formattedTime;
 
+    // Добавление нового номера в список
+    function addNewNumber() {
+        const newNumberInput = document.getElementById('newNumberInput');
+        const newNumber = newNumberInput.value.trim();
+        const selectSecond = document.getElementById('select_second');
+
+        if (newNumber) {
+            const option = document.createElement('option');
+            option.value = newNumber;
+            option.text = newNumber;
+            option.title = "Автобус"; // Можно добавить, если нужно
+            selectSecond.appendChild(option);
+            newNumberInput.value = '';
+        } else {
+            alert('Введите номер!');
+        }
+    }
 </script>
 
 </body>
