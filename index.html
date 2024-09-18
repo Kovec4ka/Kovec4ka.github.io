@@ -170,10 +170,18 @@ input {
    margin: -10px;
  }
 
+ body {
+		-ms-user-select: none;
+		-moz-user-select: none;
+		-webkit-user-select: none;
+		user-select: none;
+	}
+
 
     </style>
 </head>
 <body>
+
 
 <div class="container">
 
@@ -207,24 +215,26 @@ input {
             <option disabled style="color: red">Автобус №10:</option>
             <option>Ленина 75 - Рынок - Ленина 75</option>
         </select>
-        <p></p>
-        <select id="select_second">
-            <option disabled style="color: red">Автобус №44:</option>
-            <option selected value="a878ту124" title="Автобус">a878ту124</option>
-            <option value="a878ту124" title="Автобус">в671тс124</option>
-            <option value="р608нм124" title="Автобус">р608нм124</option>
-            <option disabled></option>
-            <option disabled style="color: red">Автобус №10:</option>
-            <option value="в225тс124" title="Автобус">в225тс124</option>
-            <option value="в353оо124" title="Автобус">в353оо124</option>
-            <option value="в353оо124" title="Автобус">в702тс124</option>
-            <option value="в353оо124" title="Автобус">в225тс124</option>
-            <option value="в353оо124" title="Автобус">а878ту124</option>
-        </select>
+            <p><input list="busnumber" style="width: 200px">
+   <datalist id="busnumber">
+    <option value="a878ту124"></option>
+    <option value="в671тс124"></option>
+    <option value="р608нм124"></option>
+
+    <option value="в225тс124"></option>
+    <option value="в353оо124"></option>
+    <option value="в702тс124"></option>
+
+    <option value="а878ту124"></option>
+    <option value="а861ту124"></option>
+    <option value="в709тс124"></option>
+
+    <option value="а839ту124"></option>
+    <option value="а867ту124"></option>
+    <option value="а872ту124"></option>
+   </datalist></p>
         <p id="hint"></p>
         <hr style="width:320px; margin: 0px -50px 0px;"/> <!-- (---) линии под текстом (---) -->
-        <input type="text" id="newNumberInput" placeholder="Введите номер">
-        <button onclick="addNewNumber()">Добавить</button>
 </div>
 
 
@@ -361,23 +371,6 @@ input {
     // Выводим время в элемент с id="purchaseTime"
     document.getElementById("purchaseTime").textContent = formattedTime;
 
-    // Добавление нового номера в список
-    function addNewNumber() {
-        const newNumberInput = document.getElementById('newNumberInput');
-        const newNumber = newNumberInput.value.trim();
-        const selectSecond = document.getElementById('select_second');
-
-        if (newNumber) {
-            const option = document.createElement('option');
-            option.value = newNumber;
-            option.text = newNumber;
-            option.title = "Автобус"; // Можно добавить, если нужно
-            selectSecond.appendChild(option);
-            newNumberInput.value = '';
-        } else {
-            alert('Введите номер!');
-        }
-    }
 </script>
 
 </body>
