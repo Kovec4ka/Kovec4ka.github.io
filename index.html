@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Городской Транспорт</title>
     <style>
         body {
@@ -142,8 +142,16 @@ input {
             background-color: black;
             color: white;
             border: hidden;
-            margin: 0px -10px;
+            margin: -10px -10px;
         }
+
+input.middle:focus {
+    outline-width: 0;
+}
+
+textarea:focus, input:focus {
+    outline: none;
+}
 
  hr {
         border: none;
@@ -178,8 +186,9 @@ input {
 		user-select: none;
 	}
 
- input::-webkit-calendar-picker-indicator {
-opacity: 0;
+input[list]::-webkit-calendar-picker-indicator,
+input[list]::-webkit-list-button {
+    opacity: 0 !important
 }
 
     </style>
