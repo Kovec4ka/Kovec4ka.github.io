@@ -138,10 +138,11 @@ input {
             font-family: "Roboto", sans-serif;
             font-weight: normal;
             font-style: normal;
-            font-size: 180%;
+            font-size: 150%;
             background-color: black;
             color: white;
             border: hidden;
+            margin: 0px -10px;
         }
 
  hr {
@@ -177,6 +178,9 @@ input {
 		user-select: none;
 	}
 
+ input::-webkit-calendar-picker-indicator {
+opacity: 0;
+}
 
     </style>
 </head>
@@ -214,6 +218,7 @@ input {
             <option disabled></option>
             <option disabled style="color: red">Автобус №10:</option>
             <option>Ленина 75 - Рынок - Ленина 75</option>
+            <option>Ленина 75 - Мира - Ленина 75</option>
         </select>
             <p><input list="busnumber" style="width: 200px">
    <datalist id="busnumber">
