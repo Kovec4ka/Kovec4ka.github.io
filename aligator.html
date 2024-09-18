@@ -2,6 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=2.0, maximum-scale=2.0, user-scalable=no">
   <title>Калькулятор цен</title>
   <style>
     body {
@@ -138,7 +139,7 @@
     <div id="content"">
       <h2>Ваши данные</h2>
 
-      <div style="margin: 0px 188px" id="date-picker">
+      <div style="margin: 0px 200px" id="date-picker">
         <label for="selected-date"></label>
         <input type="date" id="selected-date" value="">
         <script>
@@ -398,7 +399,7 @@
               removeServiceFromHistory(index);
             });
             listItem.appendChild(removeButton);
-            
+
 
             // Кнопка добавления "+"
             const addButton = document.createElement('button');
