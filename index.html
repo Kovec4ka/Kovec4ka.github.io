@@ -10,6 +10,10 @@
             text-align: left; /* Текст слева */
             background-color: #000; /* Черный фон */
             color: #fff; /* Белый цвет текста */
+            -ms-user-select: none;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            user-select: none; /* Отключение выделения текста */
         }
         .active {
             color: red;
@@ -134,7 +138,7 @@
    margin: -10px;
  }
 
-input {
+ input {
             font-family: "Roboto", sans-serif;
             font-weight: normal;
             font-style: normal;
@@ -195,11 +199,9 @@ input[list]::-webkit-list-button {
 </head>
 <body>
 
-
 <div class="container">
 
     <h1 id="timer_block" style="margin: auto -40px">Действует: <span id="timer">15</span> сек.</h1>
-    <!-- Убрано "сек" -->
 
 <div id="menu_btn">
      <img id="img2" src="img/ok.png">
@@ -207,7 +209,7 @@ input[list]::-webkit-list-button {
     <button style="color: red" id="ticketButton" class="button" onclick="toggleContent('ticket')">Билет</button>
     <button id="controlButton" class="button" onclick="toggleContent('control')">Контроль</button>
         </div>
-    <hr style="width:340px; margin: 0px -70px 0px;"/> <!-- (---) линии под текстом (---) -->
+    <hr style="width:340px; margin: 0px -70px 0px;"/>
 
     <div id="ticketContent">
       <div>
@@ -215,7 +217,7 @@ input[list]::-webkit-list-button {
           <p id="p_first">Перевозчик</p>
         <select id="select_second"><option>МП ПАТП</option></select>
           <p></p>
-          <hr style="width:320px; margin: 0px -50px 0px;"/> <!-- (---) линии под текстом (---) -->
+          <hr style="width:320px; margin: 0px -50px 0px;"/>
           <p></p>
           </div>
 
@@ -228,6 +230,9 @@ input[list]::-webkit-list-button {
             <option disabled style="color: red">Автобус №10:</option>
             <option>Ленина 75 - Рынок - Ленина 75</option>
             <option>Ленина 75 - Мира - Ленина 75</option>
+            <option disabled></option>
+            <option disabled style="color: red">Автобус №9:</option>
+            <option>Склады - Маяк - Склады</option>
         </select>
             <p><input list="busnumber" style="width: 250px" spellcheck="false">
    <datalist id="busnumber" spellcheck="false">
@@ -246,9 +251,11 @@ input[list]::-webkit-list-button {
     <option value="а839ту124"></option>
     <option value="а867ту124"></option>
     <option value="а872ту124"></option>
+
+    <option value="р613нв124"></option>
    </datalist></p>
         <p id="hint"></p>
-        <hr style="width:320px; margin: 0px -50px 0px;"/> <!-- (---) линии под текстом (---) -->
+        <hr style="width:320px; margin: 0px -50px 0px;"/>
 </div>
 
 
@@ -257,15 +264,14 @@ input[list]::-webkit-list-button {
         <p id="p_first">Стоимость</p>
         <select id="select_second"><option>1 шт., Полный, 42.00 ₽</option></select>
         <p></p>
-        <hr style="width:320px; margin: 0px -50px 0px;"/> <!-- (---) линии под текстом (---) -->
+        <hr style="width:320px; margin: 0px -50px 0px;"/>
 </div>
 
 
 <div>
         <img id="img1" src="img/clock.png">
         <p id="p_first">Дата покупки</p>
-        <p id="purchaseDate"></p> <hr style="width:320px; margin: 0px -50px 0px;"/> <!-- (---) линии под текстом (---) -->
-
+        <p id="purchaseDate"></p> <hr style="width:320px; margin: 0px -50px 0px;"/>
 </div>
 
 <div>
@@ -289,9 +295,8 @@ input[list]::-webkit-list-button {
     let timeLeft = 15;
     const timerElement = document.getElementById('timer');
     const timerBlock = document.getElementById('timer_block');
-    let countdown; // Переменная для хранения интервала
+    let countdown;
 
-    // Начальный таймер
     function startTimer() {
         countdown = setInterval(() => {
             if (timeLeft <= 0) {
@@ -305,8 +310,14 @@ input[list]::-webkit-list-button {
         }, 1000);
     }
 
+    let isWindowClosed = false; // Флаг для отслеживания состояния
+
     // Переключение контента
     function toggleContent(type) {
+        if (isWindowClosed) {
+            return; // Выход из функции, если окно закрыто
+        }
+
         const ticketContent = document.getElementById('ticketContent');
         const controlContent = document.getElementById('controlContent');
         const ticketButton = document.getElementById('ticketButton');
@@ -315,49 +326,53 @@ input[list]::-webkit-list-button {
         if (type === 'ticket') {
             ticketContent.classList.remove('hidden');
             controlContent.classList.add('hidden');
-            // Сначала удаляем класс 'active' для обеих кнопок
+
             ticketButton.classList.remove('active');
             controlButton.classList.remove('active');
-
-            // Затем добавляем класс 'active' для кнопки "Билет"
             ticketButton.classList.add('active');
 
-            timerBlock.classList.remove('hidden'); // Показываем таймер
-            startTimer(); // Запускаем таймер при переходе в "Билет"
+            timerBlock.classList.remove('hidden');
+            startTimer();
         } else {
             ticketContent.classList.add('hidden');
             controlContent.classList.remove('hidden');
 
-            // Сначала удаляем класс 'active' для обеих кнопок
             ticketButton.classList.remove('active');
             controlButton.classList.remove('active');
-
-            // Затем добавляем класс 'active' для кнопки "Контроль"
             controlButton.classList.add('active');
 
-            timerBlock.classList.add('hidden'); // Скрываем таймер
-            clearInterval(countdown); // Останавливаем таймер при переходе в "Контроль"
+            timerBlock.classList.add('hidden');
+            clearInterval(countdown);
         }
-    }
-
-
-    // Изменение количества
-    function changeQuantity() {
-        const quantity = document.getElementById('quantity');
-        quantity.textContent = '1 шт.';
     }
 
     // Закрытие окна
     function closeWindow() {
-        alert('Закрыть окно');
+        // Переключение состояния окна
+        isWindowClosed = !isWindowClosed;
+
+        if (isWindowClosed) {
+            // Деактивировать все элементы
+            document.querySelectorAll('select, input, button, datalist').forEach(el => {
+                el.disabled = true;
+            });
+            document.body.style.pointerEvents = 'none'; // Отключение событий для всего body
+            alert('Окно закрыто. Нажмите "Закрыть" ещё раз, чтобы открыть.');
+        } else {
+            // Активировать все элементы
+            document.querySelectorAll('select, input, button, datalist').forEach(el => {
+                el.disabled = false;
+            });
+            document.body.style.pointerEvents = 'auto'; // Восстановление событий
+        }
     }
 
     //  Перезапуск таймера при клике на элемент
     timerElement.addEventListener('click', () => {
         timeLeft = 15;
         timerElement.textContent = timeLeft;
-        clearInterval(countdown); // Останавливаем текущий таймер
-        startTimer(); // Запускаем новый таймер
+        clearInterval(countdown);
+        startTimer();
     });
 
     // Получаем текущую дату
