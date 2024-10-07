@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=0.8, maximum-scale=0.8, user-scalable=no">
   <title>Калькулятор цен</title>
   <style>
     body {
@@ -133,27 +135,18 @@
 </head>
 <body>
   <div class="container">
-    <h1>Калькулятор цен</h1>
 
-    <div id="login">
-      <h2>Вход</h2>
-      <input type="text" id="username" placeholder="Введите имя">
-      <button onclick="login()">Войти</button>
-    </div>
-
-    <div id="content" class="hidden">
+    <div style="margin: -40px 0px" id="content"">
       <h2>Ваши данные</h2>
-      <p>Привет, <span id="user-name"></span>!</p>
 
-      <div id="date-picker">
-        <label for="selected-date">Выберите дату:</label>
+      <div style="margin: 0px 170px" id="date-picker">
+        <label for="selected-date"></label>
         <input type="date" id="selected-date" value="">
         <script>
           document.getElementById('selected-date').valueAsDate = new Date();
         </script>
       </div>
 
-      <h2>Сводка</h2>
       <table>
         <tr>
           <td>Грязными:</td>
@@ -169,7 +162,7 @@
         </tr>
       </table>
 
-      <button onclick="resetTotal()">Очистить сводку</button>
+      <button onclick="resetTotal()">Очистить данные</button>
       <button onclick="clearHistory()">Очистить историю</button> <br> <br>
 
       <h2>Все услуги</h2>
@@ -407,13 +400,6 @@
             });
             listItem.appendChild(removeButton);
 
-            // Кнопка "Удалить"
-            const deleteButton = document.createElement('button');
-            deleteButton.textContent = 'Удалить';
-            deleteButton.addEventListener('click', () => {
-              deleteServiceFromHistory(index);
-            });
-            listItem.appendChild(deleteButton);
 
             // Кнопка добавления "+"
             const addButton = document.createElement('button');
