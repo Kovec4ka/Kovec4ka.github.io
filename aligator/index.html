@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=0.8, maximum-scale=0.8, user-scalable=no">
+  <title>Калькулятор цен</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <div class="tabs">
+      <h2 class="tab active" data-tab="your-data">Автомойка</h2>
+      <h2 class="tab" data-tab="bar">Бар</h2>
+    </div>
+
+    <div class="tab-content active" id="your-data">
+      <div id="date-container">
+        <div id="selected-date-display">
+          <span id="date-text"></span>
+          <input type="date" id="selected-date" value="">
+        </div>
+      </div>
+
+      <table>
+        <tr>
+          <td>Грязными:</td>
+          <td id="total">0</td>
+        </tr>
+        <tr>
+          <td>Чистыми:</td>
+          <td id="discount">0</td>
+        </tr>
+        <tr>
+          <td>Помыто:</td>
+          <td id="services-count">0</td>
+        </tr>
+        <tr>
+          <td>Доп. Услуг:</td>
+          <td id="added-services">0</td>
+        </tr>
+      </table>
+
+      <button onclick="resetTotal()" style="background-color: #f44336;">x</button> <br> <br>
+
+      <h2>Все услуги</h2>
+      <div id="services">
+        <div class="button-group">
+          <button id="open-ekonom-options">Эконом</button>
+          <button id="open-nano-options">Нано</button>
+          <button id="open-express-options">Экспресс</button>
+          <button id="open-quartz-options">Кварц</button>
+          <button id="open-optional-options">Дополнительные Услуги</button>
+        </div>
+        <div class="button-group">
+          <button onclick="addPrice('50р', 50)">50р</button>
+          <button onclick="addPrice('100р', 100)">100р</button>
+          <button onclick="addPrice('150р', 150)">150р</button>
+          <button onclick="addPrice('200р', 200)">200р</button>
+        </div>
+      </div>
+
+      <!------------------------------------ Ekonom BUTTONS ------------------------------------------>
+      <div id="ekonom-options" class="hidden">
+        <div class="close-button" onclick="closeEkonomOptions()">&times;</div>
+        <div class="ekonom-option">
+          <button onclick="addPrice('эконом 1 🚗', 800); closeEkonomOptions()">эконом 1 🚗</button>
+          <button onclick="addPrice('эконом 2 🚗', 1000); closeEkonomOptions()">эконом 2 🚗</button>
+        </div>
+        <div class="ekonom-option">
+          <button onclick="addPrice('эконом 1 🚐', 1300); closeEkonomOptions()">эконом 1 🚐</button>
+          <button onclick="addPrice('эконом 2 🚐', 1500); closeEkonomOptions()">эконом 2 🚐</button>
+        </div>
+      </div>
+
+      <!------------------------------------ NANO BUTTONS ------------------------------------------>
+      <div id="nano-options" class="hidden">
+        <div class="close-button" onclick="closeNanoOptions()">&times;</div>
+        <div class="ekonom-option">
+          <button onclick="addPrice('нано 1 🚗', 900); closeNanoOptions()">нано 1 🚗</button>
+          <button onclick="addPrice('нано 2 🚗', 1400); closeNanoOptions()">нано 2 🚗</button>
+        </div>
+
+        <div class="ekonom-option">
+          <button onclick="addPrice('нано 1 🚐', 1200); closeNanoOptions()">нано 1 🚐</button>
+          <button onclick="addPrice('нано 2 🚐', 1700); closeNanoOptions()">нано 2 🚐</button>
+        </div>
+      </div>
+
+      <!------------------------------------ Express BUTTONS ------------------------------------------>
+      <div id="express-options" class="hidden">
+        <div class="close-button" onclick="closeExpressOptions()">&times;</div>
+        <div class="ekonom-option">
+          <button onclick="addPrice('экспресс 🚗', 500); closeExpressOptions()">экспресс 🚗</button>
+          <button onclick="addPrice('экспресс 🚐', 600); closeExpressOptions()">экспресс 🚐</button>
+        </div>
+
+        <div class="ekonom-option">
+          <button onclick="addPrice('экспресс III', 1000); closeExpressOptions()">экспресс III</button>
+        </div>
+      </div>
+
+      <!------------------------------------ Quartz BUTTONS ------------------------------------------>
+      <div id="quartz-options" class="hidden">
+        <div class="close-button" onclick="closeQuartzOptions()">&times;</div>
+        <div class="ekonom-option">
+          <button onclick="addPrice('кварц 1 🚗', 2000); closeQuartzOptions()">кварц 1 🚗</button>
+          <button onclick="addPrice('кварц 2 🚗', 2500); closeQuartzOptions()">кварц 2 🚗</button>
+        </div>
+
+        <div class="ekonom-option">
+          <button onclick="addPrice('кварц 1 🚐', 2200); closeQuartzOptions()">кварц 1 🚐</button>
+          <button onclick="addPrice('кварц 2 🚐', 2700); closeQuartzOptions()">кварц 2 🚐</button>
+        </div>
+      </div>
+
+      <!------------------------------------ Optional BUTTONS ------------------------------------------>
+      <div id="optional-options" class="hidden">
+        <div class="close-button" onclick="closeOptionalOptions()">&times;</div>
+        <div class="ekonom-option">
+          <button onclick="addPrice('салон 🚗', 1000); closeOptionalOptions()">салон 🚗</button>
+          <button onclick="addPrice('салон 🚐', 1300); closeOptionalOptions()">салон 🚐</button>
+        </div>
+
+        <div class="ekonom-option">
+          <button onclick="addPrice('силикон', 250); closeOptionalOptions()">силикон</button>
+          <button onclick="addPrice('чернение', 300); closeOptionalOptions()">чернение</button>
+        </div>
+
+        <div class="ekonom-option">
+          <button onclick="addPrice('п. пластика', 500); closeOptionalOptions()">п. пластика</button>
+          <button onclick="addPrice('двигатель', 2500); closeOptionalOptions()">двигатель</button>
+        </div>
+
+      </div>
+
+
+      <h2>История</h2>
+      <ol class="history-list" id="history-list"></ol>
+    </div>
+
+    <div class="tab-content" id="statistics">
+      <h2>Статистика</h2>
+      <p>Здесь будет статистика</p>
+    </div>
+
+    <div class="tab-content" id="bar">
+      <h2>Бар</h2>
+      <p>Здесь будет информация о баре</p>
+    </div>
+
+    <div id="message-container"></div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
