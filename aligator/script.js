@@ -1,13 +1,24 @@
 // Глобальные переменные
-let total = 0; // Общая сумма
-let selectedServices = []; // Массив выбранных услуг
+let total = 0; // Общая сумма для автомойки
+let selectedServices = []; // Массив выбранных услуг для автомойки
 let selectedDate = new Date().toISOString().slice(0, 10); // Текущая дата в формате YYYY-MM-DD
+
+// Глобальные переменные для бара
+let barTotal = 0; // Общая сумма для бара
+let barSelectedServices = []; // Массив выбранных услуг для бара
+
+let totalStatistics = 0; // Общая сумма за весь месяц (статистика)
 
 // Загружаем данные из localStorage при загрузке страницы
 window.onload = () => {
-  loadData(); // Загружаем данные для текущей даты
-  updateTotal(); // Обновляем сумму при загрузке
-  updateHistory(); // Обновляем историю
+  loadData(); // Загружаем данные для автомойки
+  loadBarData(); // Загружаем данные для бара
+  loadStatisticsData(); // Загружаем данные статистики
+  updateTotal(); // Обновляем сумму автомойки при загрузке
+  updateBarTotal(); // Обновляем сумму бара при загрузке
+  updateHistory(); // Обновляем историю для автомойки
+  updateBarHistory(); // Обновляем историю для бара
+  updateStatisticsTotal(); // Обновляем статистику
   setupTabs(); // Настройка вкладок
   updateDateDisplay(); // Обновляем отображение выбранной даты
 
@@ -21,14 +32,14 @@ document.getElementById('selected-date').addEventListener('change', function() {
 
   // Проверяем, была ли эта дата выбрана ранее
   if (selectedDate !== this.previousDate) {
-    loadData(); // Загружаем данные, если это новая дата
+    loadData(); // Загружаем данные для автомойки, если это новая дата
   }
 
   // Сохраняем предыдущую выбранную дату
   this.previousDate = selectedDate;
 
-  updateTotal(); // Обновляем сумму
-  updateHistory(); // Обновляем историю
+  updateTotal(); // Обновляем сумму автомойки
+  updateHistory(); // Обновляем историю для автомойки
   updateDateDisplay(); // Обновляем отображение выбранной даты
 
   // Скрываем input type="date" после выбора даты
@@ -42,7 +53,7 @@ document.getElementById('selected-date-display').addEventListener('click', funct
 });
 
 
-// Добавление цены к общей сумме и в массив выбранных услуг
+// Добавление цены к общей сумме и в массив выбранных услуг для автомойки
 function addPrice(service, price) {
   total += price;
   selectedServices.push(service);
@@ -83,7 +94,7 @@ function addPrice(service, price) {
   }
 }
 
-// Обновление отображения общей суммы, скидки, количества услуг
+// Обновление отображения общей суммы, скидки, количества услуг для автомойки
 function updateTotal() {
   const discount = total * 0.27;
   document.getElementById('total').textContent = `${total}₽`;
@@ -102,9 +113,19 @@ function updateTotal() {
   }
   document.getElementById('services-count').textContent = `${servicesCount}`;
   document.getElementById('added-services').textContent = `${addedServicesCount}`;
+
+  // Обновляем статистику, если дата изменилась
+  const currentMonth = new Date(selectedDate).getMonth() + 1;
+  const currentYear = new Date(selectedDate).getFullYear();
+
+  if (currentMonth !== lastMonth || currentYear !== lastYear) {
+    calculateStatisticsTotal();
+    lastMonth = currentMonth;
+    lastYear = currentYear;
+  }
 }
 
-// Загрузка данных из localStorage
+// Загрузка данных из localStorage для автомойки
 function loadData() {
   const savedServices = localStorage.getItem(`selectedServices-${selectedDate}`);
   if (savedServices) {
@@ -118,7 +139,7 @@ function loadData() {
   updateHistory(); // Обновляем историю после обнуления
 }
 
-// Обнуление общей суммы и массива выбранных услуг
+// Обнуление общей суммы и массива выбранных услуг для автомойки
 function resetTotal() {
   total = 0;
   selectedServices = [];
@@ -127,7 +148,7 @@ function resetTotal() {
   updateHistory(); // Обновляем историю после обнуления
 }
 
-// Очистка истории (удаление всех элементов из selectedServices)
+// Очистка истории (удаление всех элементов из selectedServices) для автомойки
 function clearHistory() {
   selectedServices = [];
   updateTotal();
@@ -135,7 +156,7 @@ function clearHistory() {
   updateHistory(); // Обновляем историю после обнуления
 }
 
-// Удаление последнего элемента из массива selectedServices
+// Удаление последнего элемента из массива selectedServices для автомойки
 function removeLast() {
   if (selectedServices.length > 0) {
     const lastService = selectedServices.pop();
@@ -147,7 +168,7 @@ function removeLast() {
   }
 }
 
-// Получение цены услуги по ее названию
+// Получение цены услуги по ее названию для автомойки
 function getPrice(service) {
   switch (service) {
     case 'салон 🚗': return 1000;
@@ -180,13 +201,13 @@ function getPrice(service) {
   }
 }
 
-// Сохранение массива selectedServices в localStorage
+// Сохранение массива selectedServices в localStorage для автомойки
 function saveSelectedServices() {
   localStorage.setItem(`selectedServices-${selectedDate}`, JSON.stringify(selectedServices));
   localStorage.setItem(`total-${selectedDate}`, total); // Сохраняем общую сумму
 }
 
-// Обновление отображения истории выбранных услуг
+// Обновление отображения истории выбранных услуг для автомойки
 function updateHistory() {
   const historyList = document.getElementById('history-list');
   historyList.innerHTML = ''; // Очищаем список истории
@@ -219,7 +240,7 @@ function updateHistory() {
   }
 }
 
-// Удаление услуги из истории
+// Удаление услуги из истории для автомойки
 function removeServiceFromHistory(index) {
   const service = selectedServices[index];
   const price = getPrice(service);
@@ -230,7 +251,7 @@ function removeServiceFromHistory(index) {
   updateHistory(); // Обновляем историю после удаления
 }
 
-// Удаление услуги из истории (без изменения total)
+// Удаление услуги из истории (без изменения total) для автомойки
 function deleteServiceFromHistory(index) {
   selectedServices.splice(index, 1);
   updateTotal();
@@ -238,7 +259,7 @@ function deleteServiceFromHistory(index) {
   updateHistory(); // Обновляем историю после удаления
 }
 
-// Добавление услуги в историю (перед текущим элементом)
+// Добавление услуги в историю (перед текущим элементом) для автомойки
 function addServiceToHistory(index) {
   const service = selectedServices[index];
   const price = getPrice(service);
@@ -334,9 +355,7 @@ document.getElementById('open-optional-options').addEventListener('click', openO
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-
-
-// Обновление функции updateTotal()
+// Обновление функции updateTotal() для автомойки
 function updateTotal() {
   const discount = total * 0.27;
   document.getElementById('total').textContent = `${total}₽`;
@@ -355,6 +374,138 @@ function updateTotal() {
   }
   document.getElementById('services-count').textContent = `${servicesCount}`;
   document.getElementById('added-services').textContent = `${addedServicesCount}`;
+
+  // Обновляем статистику, если дата изменилась
+  const currentMonth = new Date(selectedDate).getMonth() + 1;
+  const currentYear = new Date(selectedDate).getFullYear();
+
+  if (currentMonth !== lastMonth || currentYear !== lastYear) {
+    calculateStatisticsTotal();
+    lastMonth = currentMonth;
+    lastYear = currentYear;
+  }
+}
+
+// Функции для бара
+// Добавление цены к общей сумме и в массив выбранных услуг для бара
+function addBarPrice(service, price) {
+  barTotal += price;
+  barSelectedServices.push(service);
+  updateBarTotal();
+  saveBarSelectedServices();
+  updateBarHistory(); // Обновляем историю для бара после добавления услуги
+}
+
+// Обновление отображения общей суммы и скидки для бара
+function updateBarTotal() {
+  document.getElementById('bar-total').textContent = `${barTotal}₽`;
+}
+
+// Загрузка данных из localStorage для бара
+function loadBarData() {
+  const savedBarServices = localStorage.getItem(`barSelectedServices`);
+  if (savedBarServices) {
+    barSelectedServices = JSON.parse(savedBarServices);
+    barTotal = parseInt(localStorage.getItem(`barTotal`), 10) || 0;
+  } else {
+    barTotal = 0;
+    barSelectedServices = [];
+  }
+  updateBarTotal();
+  updateBarHistory(); // Обновляем историю для бара после загрузки данных
+}
+
+// Сохранение массива barSelectedServices в localStorage для бара
+function saveBarSelectedServices() {
+  localStorage.setItem(`barSelectedServices`, JSON.stringify(barSelectedServices));
+  localStorage.setItem(`barTotal`, barTotal);
+}
+
+// Обновление отображения истории выбранных услуг для бара
+function updateBarHistory() {
+  const barHistoryList = document.getElementById('bar-history-list');
+  barHistoryList.innerHTML = ''; // Очищаем список истории
+
+  barSelectedServices.forEach((service, index) => {
+    const listItem = document.createElement('li');
+    listItem.textContent = `${index + 1}. ${service}`; // Добавляем нумерацию
+
+    // Кнопка удаления "-"
+    const removeButton = document.createElement('button');
+    removeButton.textContent = '-';
+    removeButton.addEventListener('click', () => {
+      removeBarServiceFromHistory(index);
+    });
+    listItem.appendChild(removeButton);
+
+    // Кнопка добавления "+"
+    const addButton = document.createElement('button');
+    addButton.textContent = '+';
+    addButton.addEventListener('click', () => {
+      addBarServiceToHistory(index);
+    });
+    listItem.appendChild(addButton);
+
+    barHistoryList.appendChild(listItem);
+  });
+}
+
+// Удаление услуги из истории для бара
+function removeBarServiceFromHistory(index) {
+  const service = barSelectedServices[index];
+  const price = getPrice(service); // Используем функцию getPrice для получения цены
+  barTotal -= price;
+  barSelectedServices.splice(index, 1);
+  updateBarTotal();
+  saveBarSelectedServices();
+  updateBarHistory(); // Обновляем историю после удаления
+}
+
+// Добавление услуги в историю (перед текущим элементом) для бара
+function addBarServiceToHistory(index) {
+  const service = barSelectedServices[index];
+  const price = getPrice(service); // Используем функцию getPrice для получения цены
+  barTotal += price;
+  barSelectedServices.splice(index + 1, 0, service); // Вставляем перед текущим элементом
+  updateBarTotal();
+  saveBarSelectedServices();
+  updateBarHistory(); // Обновляем историю после добавления
+}
+
+// Функции для статистики
+// Подсчет общей суммы за весь месяц
+function calculateStatisticsTotal() {
+  const currentYear = new Date(selectedDate).getFullYear();
+  const currentMonth = new Date(selectedDate).getMonth() + 1;
+
+  totalStatistics = 0;
+
+  for (let i = 1; i <= 31; i++) {
+    const dateString = `${currentYear}-${currentMonth.toString().padStart(2, '0')}-${i.toString().padStart(2, '0')}`;
+    const savedTotal = localStorage.getItem(`total-${dateString}`);
+
+    if (savedTotal) {
+      totalStatistics += parseFloat(savedTotal);
+    }
+  }
+
+  updateStatisticsTotal();
+  saveStatisticsData();
+}
+
+// Обновление отображения общей суммы статистики
+function updateStatisticsTotal() {
+  document.getElementById('total-statistics').textContent = totalStatistics.toFixed(2);
+}
+
+// Загрузка статистики из localStorage
+function loadStatisticsData() {
+  totalStatistics = parseFloat(localStorage.getItem('totalStatistics')) || 0;
+}
+
+// Сохранение статистики в localStorage
+function saveStatisticsData() {
+  localStorage.setItem('totalStatistics', totalStatistics);
 }
 
 // Настройка вкладок
@@ -374,4 +525,20 @@ function setupTabs() {
       document.getElementById(tabId).classList.add('active');
     });
   });
+}
+
+// Переменные для отслеживания месяца и года
+let lastMonth = null;
+let lastYear = null;
+
+// Отображение даты
+function updateDateDisplay() {
+  const dateText = document.getElementById('date-text');
+  const selectedDate = document.getElementById('selected-date').value;
+  const dateParts = selectedDate.split('-');
+  const day = parseInt(dateParts[2]);
+  const month = parseInt(dateParts[1]);
+  const year = parseInt(dateParts[0]);
+  const months = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
+  dateText.textContent = `${day} ${months[month - 1]}`;
 }

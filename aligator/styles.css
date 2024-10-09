@@ -78,6 +78,7 @@ button {
   font-size: 1rem; /* Уменьшаем размер шрифта */
 }
 
+
 /* Стили для блока услуг */
 #services {
   display: flex;
@@ -140,7 +141,7 @@ th {
 
 /* Стиль для кнопки "x" */
 button[onclick="resetTotal()"] {
-  margin-left: auto; /* Отступ слева */
+  margin-left: 400px; /* Отступ слева */
 }
 
 /* Стили для окна "Эконом" */
