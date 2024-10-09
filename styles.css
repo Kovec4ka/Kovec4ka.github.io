@@ -1,5 +1,3 @@
-/* styles.css */
-
 /* Основные стили */
 body {
   font-family: sans-serif;
@@ -194,4 +192,81 @@ button[onclick="resetTotal()"] {
   background-color: #333; /* Серый фон */
   color: #eee; /* Светлый текст */
   margin: 5px; /* Расстояние между кнопками */
+}
+
+/* Стили для сообщения */
+.message {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%); /* Центрируем текст */
+  background-color: transparent; /* Прозрачный фон */
+  color: white; /* Белый цвет текста */
+  padding: 0;
+  border-radius: 0;
+  font-size: 1.2rem; /* Увеличиваем размер шрифта */
+  text-align: center;
+  z-index: 100; /* Чтобы сообщение было над другими элементами */
+}
+
+/* Стили для вкладок */
+.tabs {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #444;
+}
+
+.tab {
+  padding: 10px 20px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: border-bottom-color 0.3s ease;
+  font-size: 1.2rem;
+}
+
+.tab.active {
+  border-bottom-color: #4CAF50; /* Цвет активной вкладки */
+  font-weight: bold;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.tab[data-tab="statistics"] {
+  opacity: 0.5;
+}
+
+.tab[data-tab="bar"] {
+  opacity: 0.5;
+}
+
+/* Стили для блока даты */
+#date-container {
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+#selected-date-display {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  background-color: #333;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#date-text {
+  font-size: 1.2rem;
+  color: #eee;
+}
+
+#selected-date {
+  display: none; /* Скрываем стандартный input type="date" */
 }

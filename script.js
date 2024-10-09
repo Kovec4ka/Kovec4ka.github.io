@@ -1,16 +1,18 @@
-// script.js
-
 // Глобальные переменные
 let total = 0; // Общая сумма
 let selectedServices = []; // Массив выбранных услуг
 let selectedDate = new Date().toISOString().slice(0, 10); // Текущая дата в формате YYYY-MM-DD
-let period = null; // Период для подсчета суммы (null - не определен)
 
 // Загружаем данные из localStorage при загрузке страницы
 window.onload = () => {
   loadData(); // Загружаем данные для текущей даты
   updateTotal(); // Обновляем сумму при загрузке
   updateHistory(); // Обновляем историю
+  setupTabs(); // Настройка вкладок
+  updateDateDisplay(); // Обновляем отображение выбранной даты
+
+  // Отображаем input type="date" по умолчанию
+  document.getElementById('selected-date').style.display = "block";
 };
 
 // Обработка события изменения даты
@@ -27,7 +29,18 @@ document.getElementById('selected-date').addEventListener('change', function() {
 
   updateTotal(); // Обновляем сумму
   updateHistory(); // Обновляем историю
+  updateDateDisplay(); // Обновляем отображение выбранной даты
+
+  // Скрываем input type="date" после выбора даты
+  // this.style.display = "none"; // Комментарий для отображения input type="date" по умолчанию
 });
+
+// Обработка события клика по блоку с датой
+document.getElementById('selected-date-display').addEventListener('click', function() {
+  // Отображаем input type="date"
+  document.getElementById('selected-date').style.display = "block";
+});
+
 
 // Добавление цены к общей сумме и в массив выбранных услуг
 function addPrice(service, price) {
@@ -36,6 +49,38 @@ function addPrice(service, price) {
   updateTotal();
   saveSelectedServices();
   updateHistory();
+
+  // Добавляем сообщение об добавлении услуги
+  const messageContainer = document.getElementById('message-container');
+
+  for (let i = 0; i < 3; i++) { // Создаем 3 одинаковых сообщения
+    const message = document.createElement('div');
+    message.classList.add('message');
+    message.textContent = `${service} добавлена!`;
+    messageContainer.appendChild(message);
+
+    // Устанавливаем начальную прозрачность для каждого сообщения
+    message.style.opacity = 0.3 * (3 - i); // 1 - 0.9, 2 - 0.6, 3 - 0.3
+
+    // Анимация плавного всплывания сообщения
+    message.style.transform = 'translateY(100%)';
+    message.style.opacity = 0;
+
+    //  Добавляем requestAnimationFrame для каждого сообщения
+    requestAnimationFrame(() => {
+      message.style.transition = 'transform 0.8s ease-out, opacity 0.8s ease-out'; // Увеличиваем время анимации
+      message.style.transform = 'translateY(-50px)'; // Поднимаем сообщение выше
+      message.style.opacity = 1;
+    });
+
+    // Удаление сообщения через 3 секунды
+    setTimeout(() => {
+      message.style.opacity = 0;
+      setTimeout(() => {
+        messageContainer.removeChild(message);
+      }, 500); // Дополнительная задержка для плавного исчезновения
+    }, 3000);
+  }
 }
 
 // Обновление отображения общей суммы, скидки, количества услуг
@@ -57,31 +102,6 @@ function updateTotal() {
   }
   document.getElementById('services-count').textContent = `${servicesCount}`;
   document.getElementById('added-services').textContent = `${addedServicesCount}`;
-
-  // Определение периода
-  const dateParts = selectedDate.split('-');
-  const day = parseInt(dateParts[2]);
-  if (day <= 15) {
-    period = 1; // 1-й период (1-15)
-  } else {
-    period = 2; // 2-й период (16-30/31)
-  }
-
-  // Вывод информации о периоде
-  if (period) {
-    // Получение общей суммы для периода из localStorage
-    const periodTotal = parseInt(localStorage.getItem(`periodTotal-${selectedDate}-${period}`), 10) || 0;
-    const periodDiscount = parseFloat(localStorage.getItem(`periodDiscount-${selectedDate}-${period}`), 10) || 0;
-
-    // Обновление общей суммы для периода
-    const newPeriodTotal = periodTotal + total;
-    const newPeriodDiscount = periodDiscount + discount;
-    localStorage.setItem(`periodTotal-${selectedDate}-${period}`, newPeriodTotal);
-    localStorage.setItem(`periodDiscount-${selectedDate}-${period}`, newPeriodDiscount);
-
-    // Вывод общей суммы и скидки для периода
-    // document.getElementById('services-count').textContent += ` (период ${period}: ${newPeriodTotal} (чистыми: ${newPeriodDiscount.toFixed(2)}))`;
-  }
 }
 
 // Загрузка данных из localStorage
@@ -235,6 +255,17 @@ document.addEventListener("DOMContentLoaded", function() {
   datePicker.valueAsDate = new Date();
 });
 
+// Обновляем отображение выбранной даты
+function updateDateDisplay() {
+  const dateText = document.getElementById('date-text');
+  const selectedDate = document.getElementById('selected-date').value;
+  const dateParts = selectedDate.split('-');
+  const day = parseInt(dateParts[2]);
+  const month = parseInt(dateParts[1]);
+  const year = parseInt(dateParts[0]);
+  const months = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
+  dateText.textContent = `${day} ${months[month - 1]}`;
+}
 
 //----------////////////////////////////////////////////////////////////////////////////////////----------//
 ///////////////////////////////// Новые функции для окна выбора "Эконом"///////////////////////////////////
@@ -324,29 +355,23 @@ function updateTotal() {
   }
   document.getElementById('services-count').textContent = `${servicesCount}`;
   document.getElementById('added-services').textContent = `${addedServicesCount}`;
+}
 
-  // Определение периода
-  const dateParts = selectedDate.split('-');
-  const day = parseInt(dateParts[2]);
-  if (day <= 15) {
-    period = 1; // 1-й период (1-15)
-  } else {
-    period = 2; // 2-й период (16-30/31)
-  }
+// Настройка вкладок
+function setupTabs() {
+  const tabs = document.querySelectorAll('.tab');
+  const tabContents = document.querySelectorAll('.tab-content');
 
-  // Вывод информации о периоде
-  if (period) {
-    // Получение общей суммы для периода из localStorage
-    const periodTotal = parseInt(localStorage.getItem(`periodTotal-${selectedDate}-${period}`), 10) || 0;
-    const periodDiscount = parseFloat(localStorage.getItem(`periodDiscount-${selectedDate}-${period}`), 10) || 0;
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      // Убираем активность у предыдущих вкладок
+      tabs.forEach(t => t.classList.remove('active'));
+      tabContents.forEach(tc => tc.classList.remove('active'));
 
-    // Обновление общей суммы для периода
-    const newPeriodTotal = periodTotal + total;
-    const newPeriodDiscount = periodDiscount + discount;
-    localStorage.setItem(`periodTotal-${selectedDate}-${period}`, newPeriodTotal);
-    localStorage.setItem(`periodDiscount-${selectedDate}-${period}`, newPeriodDiscount);
-
-    // Вывод общей суммы и скидки для периода
-    // document.getElementById('services-count').textContent += ` (период ${period}: ${newPeriodTotal} (чистыми: ${newPeriodDiscount.toFixed(2)}))`;
-  }
+      // Делаем текущую вкладку активной
+      tab.classList.add('active');
+      const tabId = tab.getAttribute('data-tab');
+      document.getElementById(tabId).classList.add('active');
+    });
+  });
 }

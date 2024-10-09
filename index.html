@@ -8,13 +8,17 @@
 </head>
 <body>
   <div class="container">
+    <div class="tabs">
+      <h2 class="tab active" data-tab="your-data">Автомойка</h2>
+      <h2 class="tab" data-tab="bar">Бар</h2>
+    </div>
 
-    <div style="margin: -40px 0px" id="content"">
-      <h2>Ваши данные</h2>
-
-      <div style="margin: 0px 170px" id="date-picker">
-        <label for="selected-date"></label>
-        <input type="date" id="selected-date" value="">
+    <div class="tab-content active" id="your-data">
+      <div id="date-container">
+        <div id="selected-date-display">
+          <span id="date-text"></span>
+          <input type="date" id="selected-date" value="">
+        </div>
       </div>
 
       <table>
@@ -55,9 +59,7 @@
         </div>
       </div>
 
-
-
-    <!------------------------------------ Ekonom BUTTONS ------------------------------------------>
+      <!------------------------------------ Ekonom BUTTONS ------------------------------------------>
       <div id="ekonom-options" class="hidden">
         <div class="close-button" onclick="closeEkonomOptions()">&times;</div>
         <div class="ekonom-option">
@@ -70,7 +72,7 @@
         </div>
       </div>
 
-    <!------------------------------------ NANO BUTTONS ------------------------------------------>
+      <!------------------------------------ NANO BUTTONS ------------------------------------------>
       <div id="nano-options" class="hidden">
         <div class="close-button" onclick="closeNanoOptions()">&times;</div>
         <div class="ekonom-option">
@@ -84,7 +86,7 @@
         </div>
       </div>
 
-    <!------------------------------------ Express BUTTONS ------------------------------------------>
+      <!------------------------------------ Express BUTTONS ------------------------------------------>
       <div id="express-options" class="hidden">
         <div class="close-button" onclick="closeExpressOptions()">&times;</div>
         <div class="ekonom-option">
@@ -97,7 +99,7 @@
         </div>
       </div>
 
-    <!------------------------------------ Quartz BUTTONS ------------------------------------------>
+      <!------------------------------------ Quartz BUTTONS ------------------------------------------>
       <div id="quartz-options" class="hidden">
         <div class="close-button" onclick="closeQuartzOptions()">&times;</div>
         <div class="ekonom-option">
@@ -111,7 +113,7 @@
         </div>
       </div>
 
-    <!------------------------------------ Optional BUTTONS ------------------------------------------>
+      <!------------------------------------ Optional BUTTONS ------------------------------------------>
       <div id="optional-options" class="hidden">
         <div class="close-button" onclick="closeOptionalOptions()">&times;</div>
         <div class="ekonom-option">
@@ -135,6 +137,18 @@
       <h2>История</h2>
       <ol class="history-list" id="history-list"></ol>
     </div>
+
+    <div class="tab-content" id="statistics">
+      <h2>Статистика</h2>
+      <p>Здесь будет статистика</p>
+    </div>
+
+    <div class="tab-content" id="bar">
+      <h2>Бар</h2>
+      <p>Здесь будет информация о баре</p>
+    </div>
+
+    <div id="message-container"></div>
 
     <script src="script.js"></script>
   </body>
