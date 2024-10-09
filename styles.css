@@ -268,5 +268,34 @@ button[onclick="resetTotal()"] {
 }
 
 #selected-date {
-  display: none; /* Скрываем стандартный input type="date" */
+  display: block; /* Отображаем input type="date" по умолчанию */
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #444;
+  border-radius: 5px;
+  background-color: #333;
+  color: #eee;
+}
+
+/* Media Query для адаптивности вкладок */
+@media (max-width: 768px) {
+  .tabs {
+    display: block;
+    width: 100%;
+  }
+
+  .tab {
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
+
+  .tab-content {
+    display: block;
+    width: 100%;
+  }
+
+  .tab-content:not(.active) {
+    display: none;
+  }
 }
