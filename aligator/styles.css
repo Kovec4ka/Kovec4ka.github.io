@@ -140,7 +140,7 @@ button {
 
 /* Стиль для кнопки "x" */
 button[onclick="resetTotal()"] {
-  /*margin-left: 400px; /* Отступ слева */
+  margin-left: 350px; /* Отступ слева */
 }
 
 /* Стили для окна "Эконом" */
