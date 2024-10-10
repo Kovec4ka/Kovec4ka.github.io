@@ -59,7 +59,7 @@ button {
 }
 
 /* Стили для отображения сумм и количества */
-#total, #discount, #services-count, #added-services {
+#total, #discount, #services-count, #added-services, #pure { /* Добавлен #pure */
   font-size: 1.2rem; /* Увеличиваем размер текста */
   margin-bottom: 10px;
   text-align: center;

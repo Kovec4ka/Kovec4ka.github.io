@@ -8,6 +8,8 @@ let barTotal = 0; // Общая сумма для бара
 let barSelectedServices = []; // Массив выбранных услуг для бара
 
 let totalStatistics = 0; // Общая сумма за весь месяц (статистика)
+let totalStatistics15 = 0; // Общая сумма за первые 15 дней
+let totalStatistics16 = 0; // Общая сумма с 16 дня по конец месяца
 
 // Загружаем данные из localStorage при загрузке страницы
 window.onload = () => {
@@ -398,7 +400,9 @@ function addBarPrice(service, price) {
 
 // Обновление отображения общей суммы и скидки для бара
 function updateBarTotal() {
+  const barDiscount = barTotal * 0.27;
   document.getElementById('bar-total').textContent = `${barTotal}₽`;
+  document.getElementById('bar-discount').textContent = `${barDiscount.toFixed(2)}₽`;
 }
 
 // Загрузка данных из localStorage для бара
@@ -479,6 +483,8 @@ function calculateStatisticsTotal() {
   const currentMonth = new Date(selectedDate).getMonth() + 1;
 
   totalStatistics = 0;
+  totalStatistics15 = 0;
+  totalStatistics16 = 0;
 
   for (let i = 1; i <= 31; i++) {
     const dateString = `${currentYear}-${currentMonth.toString().padStart(2, '0')}-${i.toString().padStart(2, '0')}`;
@@ -486,6 +492,12 @@ function calculateStatisticsTotal() {
 
     if (savedTotal) {
       totalStatistics += parseFloat(savedTotal);
+
+      if (i <= 15) {
+        totalStatistics15 += parseFloat(savedTotal);
+      } else {
+        totalStatistics16 += parseFloat(savedTotal);
+      }
     }
   }
 
@@ -496,16 +508,24 @@ function calculateStatisticsTotal() {
 // Обновление отображения общей суммы статистики
 function updateStatisticsTotal() {
   document.getElementById('total-statistics').textContent = totalStatistics.toFixed(2);
+  document.getElementById('total-15').textContent = totalStatistics15.toFixed(2);
+  document.getElementById('total-16').textContent = totalStatistics16.toFixed(2);
+  document.getElementById('discount-15').textContent = (totalStatistics15 * 0.27).toFixed(2);
+  document.getElementById('discount-16').textContent = (totalStatistics16 * 0.27).toFixed(2);
 }
 
 // Загрузка статистики из localStorage
 function loadStatisticsData() {
   totalStatistics = parseFloat(localStorage.getItem('totalStatistics')) || 0;
+  totalStatistics15 = parseFloat(localStorage.getItem('totalStatistics15')) || 0;
+  totalStatistics16 = parseFloat(localStorage.getItem('totalStatistics16')) || 0;
 }
 
 // Сохранение статистики в localStorage
 function saveStatisticsData() {
   localStorage.setItem('totalStatistics', totalStatistics);
+  localStorage.setItem('totalStatistics15', totalStatistics15);
+  localStorage.setItem('totalStatistics16', totalStatistics16);
 }
 
 // Настройка вкладок
