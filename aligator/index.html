@@ -10,7 +10,6 @@
   <div class="container">
     <div class="tabs">
       <h2 class="tab active" data-tab="your-data">Автомойка</h2>
-      <h2 class="tab" data-tab="bar">Бар</h2>
       <h2 class="tab" data-tab="statistics">Статистика</h2>
     </div>
 
@@ -149,37 +148,6 @@
       <p>Зп (1-15): <span id="zp-15">0 / 0</span>₽</p>
       <p>Зп (16-31): <span id="zp-16">0 / 0</span>₽</p>
       <button class="update-button" onclick="location.reload()">Обновить</button>
-    </div>
-
-    <div class="tab-content" id="bar">
-      <h2>Бар</h2>
-      <table>
-        <tr>
-          <th></th>
-          <th></th>
-        </tr>
-        <tr>
-          <th>Должен:</th>
-          <td id="bar-total" style="text-align: right;">0</td>
-        </tr>
-      </table>
-      <div id="bar-services">
-        <div class="button-group">
-          <button onclick="addBarPrice('Кофе', 150)">Кофе</button>
-          <button onclick="addBarPrice('Чай', 100)">Чай</button>
-          <button onclick="addBarPrice('Пиво', 200)">Пиво</button>
-          <button onclick="addBarPrice('Вино', 300)">Вино</button>
-          <button onclick="addBarPrice('Водка', 250)">Водка</button>
-          <button onclick="addBarPrice('Коньяк', 350)">Коньяк</button>
-          <button onclick="addBarPrice('Фруктовый сок', 120)">Фруктовый сок</button>
-          <button onclick="addBarPrice('Газировка', 80)">Газировка</button>
-          <button onclick="addBarPrice('Чипсы', 100)">Чипсы</button>
-          <button onclick="addBarPrice('Орешки', 150)">Орешки</button>
-        </div>
-      </div>
-      <h2>История</h2>
-      <ol class="history-list" id="bar-history-list"></ol>
-      <p>Здесь будет информация о баре</p>
     </div>
 
     <div id="message-container"></div>

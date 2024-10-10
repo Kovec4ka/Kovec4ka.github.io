@@ -3,11 +3,6 @@ let total = 0; // Общая сумма для автомойки
 let selectedServices = []; // Массив выбранных услуг для автомойки
 let selectedDate = new Date().toISOString().slice(0, 10); // Текущая дата в формате YYYY-MM-DD
 
-// Глобальные переменные для бара
-let barTotal = 0; // Общая сумма для бара
-let barSelectedServices = []; // Массив выбранных услуг для бара
-let barServicesHistory = []; // Массив для истории услуг бара
-
 let totalStatistics = 0; // Общая сумма за весь месяц (статистика)
 let totalStatistics15 = 0; // Общая сумма за первые 15 дней
 let totalStatistics16 = 0; // Общая сумма с 16 дня по конец месяца
@@ -15,12 +10,9 @@ let totalStatistics16 = 0; // Общая сумма с 16 дня по конец
 // Загружаем данные из localStorage при загрузке страницы
 window.onload = () => {
   loadData(); // Загружаем данные для автомойки
-  loadBarData(); // Загружаем данные для бара
   loadStatisticsData(); // Загружаем данные статистики
   updateTotal(); // Обновляем сумму автомойки при загрузке
-  updateBarTotal(); // Обновляем сумму бара при загрузке
   updateHistory(); // Обновляем историю для автомойки
-  updateBarHistory(); // Обновляем историю для бара
   updateStatisticsTotal(); // Обновляем статистику
   setupTabs(); // Настройка вкладок
   updateDateDisplay(); // Обновляем отображение выбранной даты
@@ -199,16 +191,6 @@ function getPrice(service) {
     case 'кварц 2 🚗': return 2500;
     case 'кварц 1 🚐': return 2200;
     case 'кварц 2 🚐': return 2700;
-    case 'Кофе': return 150;
-    case 'Чай': return 100;
-    case 'Пиво': return 200;
-    case 'Вино': return 300;
-    case 'Водка': return 250;
-    case 'Коньяк': return 350;
-    case 'Фруктовый сок': return 120;
-    case 'Газировка': return 80;
-    case 'Чипсы': return 100;
-    case 'Орешки': return 150;
     default: return 0;
   }
 }
@@ -395,99 +377,6 @@ function updateTotal() {
     lastMonth = currentMonth;
     lastYear = currentYear;
   }
-}
-
-// Функции для бара
-// Добавление цены к общей сумме и в массив выбранных услуг для бара
-function addBarPrice(service, price) {
-  barTotal += price;
-  barSelectedServices.push(service);
-  updateBarTotal();
-  saveBarSelectedServices();
-  updateBarHistory(); // Обновляем историю для бара после добавления услуги
-}
-
-// Обновление отображения общей суммы и скидки для бара
-function updateBarTotal() {
-  const barDiscount = barTotal * 0.27;
-  document.getElementById('bar-total').textContent = `${barTotal}₽`;
-  // document.getElementById('bar-discount').textContent = `${barDiscount.toFixed(2)}₽`; // Убрано
-}
-
-// Загрузка данных из localStorage для бара
-function loadBarData() {
-  const savedBarServices = localStorage.getItem(`barSelectedServices`);
-  if (savedBarServices) {
-    barSelectedServices = JSON.parse(savedBarServices);
-    barTotal = parseInt(localStorage.getItem(`barTotal`), 10) || 0;
-    barServicesHistory = JSON.parse(localStorage.getItem(`barServicesHistory`)) || [];
-  } else {
-    barTotal = 0;
-    barSelectedServices = [];
-    barServicesHistory = [];
-  }
-  updateBarTotal();
-  updateBarHistory(); // Обновляем историю для бара после загрузки данных
-}
-
-// Сохранение массива barSelectedServices в localStorage для бара
-function saveBarSelectedServices() {
-  localStorage.setItem(`barSelectedServices`, JSON.stringify(barSelectedServices));
-  localStorage.setItem(`barTotal`, barTotal);
-  localStorage.setItem(`barServicesHistory`, JSON.stringify(barServicesHistory)); // Сохраняем историю услуг
-}
-
-// Обновление отображения истории выбранных услуг для бара
-function updateBarHistory() {
-  const barHistoryList = document.getElementById('bar-history-list');
-  barHistoryList.innerHTML = ''; // Очищаем список истории
-
-  barServicesHistory.forEach((service, index) => {
-    const listItem = document.createElement('li');
-    listItem.textContent = `${index + 1}. ${service}`; // Добавляем нумерацию
-
-    // Кнопка удаления "-"
-    const removeButton = document.createElement('button');
-    removeButton.textContent = '-';
-    removeButton.addEventListener('click', () => {
-      removeBarServiceFromHistory(index);
-    });
-    listItem.appendChild(removeButton);
-
-    // Кнопка добавления "+"
-    const addButton = document.createElement('button');
-    addButton.textContent = '+';
-    addButton.addEventListener('click', () => {
-      addBarServiceToHistory(index);
-    });
-    listItem.appendChild(addButton);
-
-    barHistoryList.appendChild(listItem);
-  });
-}
-
-// Удаление услуги из истории для бара
-function removeBarServiceFromHistory(index) {
-  const service = barServicesHistory[index];
-  const price = getPrice(service); // Используем функцию getPrice для получения цены
-  barTotal -= price;
-  // barSelectedServices.splice(index, 1); // Убрано
-  barServicesHistory.splice(index, 1);
-  updateBarTotal();
-  saveBarSelectedServices();
-  updateBarHistory(); // Обновляем историю после удаления
-}
-
-// Добавление услуги в историю (перед текущим элементом) для бара
-function addBarServiceToHistory(index) {
-  const service = barServicesHistory[index];
-  const price = getPrice(service); // Используем функцию getPrice для получения цены
-  barTotal += price;
-  // barSelectedServices.splice(index + 1, 0, service); // Убрано
-  barServicesHistory.splice(index + 1, 0, service); // Вставляем перед текущим элементом
-  updateBarTotal();
-  saveBarSelectedServices();
-  updateBarHistory(); // Обновляем историю после добавления
 }
 
 // Функции для статистики

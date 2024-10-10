@@ -281,14 +281,15 @@ button[onclick="resetTotal()"] {
 /* Media Query для адаптивности вкладок */
 @media (max-width: 768px) {
   .tabs {
-    display: block;
-    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
   }
 
   .tab {
-    display: block;
-    width: 100%;
+    flex: 1 0 48%;
     text-align: center;
+    margin-bottom: 10px;
   }
 
   .tab-content {
