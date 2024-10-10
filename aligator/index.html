@@ -8,12 +8,12 @@
 </head>
 <body>
   <div class="container">
-    <div class="tabs">
-      <h2 class="tab active" data-tab="your-data">Авто</h2>
-      <h2 class="tab" data-tab="statistics">Стат</h2>
+    <div class="header">
+      <h1 id="auto-title" class="active">Автомойка</h1>
+      <h1 id="statistics-title">Статистика</h1>
     </div>
 
-    <div class="tab-content active" id="your-data">
+    <div id="auto-section">
       <div id="date-container">
         <div id="selected-date-display">
           <span id="date-text"></span>
@@ -137,12 +137,13 @@
 
       </div>
 
-
       <h2>История</h2>
       <ol class="history-list" id="history-list"></ol>
+
+      <button class="report-button" onclick="openStatistics()">Отчет</button>
     </div>
 
-    <div class="tab-content" id="statistics">
+    <div id="statistics" class="hidden">
       <h2>Статистика</h2>
       <table class="data-table">
         <thead>
@@ -171,11 +172,11 @@
         </tbody>
       </table>
 
-      <button class="update-button" onclick="updateStatistics()" style="margin-left: auto;">Обновить</button>
+      <button class="back-button" onclick="closeStatistics()">Скрыть</button>
     </div>
 
     <div id="message-container"></div>
 
     <script src="script.js"></script>
   </body>
-</html>
+</html

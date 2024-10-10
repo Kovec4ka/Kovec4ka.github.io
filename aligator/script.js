@@ -14,11 +14,18 @@ window.onload = () => {
   updateTotal(); // Обновляем сумму автомойки при загрузке
   updateHistory(); // Обновляем историю для автомойки
   updateStatisticsTotal(); // Обновляем статистику
-  setupTabs(); // Настройка вкладок
   updateDateDisplay(); // Обновляем отображение выбранной даты
 
   // Отображаем input type="date" по умолчанию
   document.getElementById('selected-date').style.display = "block";
+
+  // Обработчики кликов для заголовков
+  document.getElementById('auto-title').addEventListener('click', () => {
+    openAutoSection();
+  });
+  document.getElementById('statistics-title').addEventListener('click', () => {
+    openStatistics();
+  });
 };
 
 // Обработка события изменения даты
@@ -46,7 +53,6 @@ document.getElementById('selected-date-display').addEventListener('click', funct
   // Отображаем input type="date"
   document.getElementById('selected-date').style.display = "block";
 });
-
 
 // Добавление цены к общей сумме и в массив выбранных услуг для автомойки
 function addPrice(service, price) {
@@ -429,48 +435,29 @@ function saveStatisticsData() {
   localStorage.setItem('totalStatistics16', totalStatistics16);
 }
 
-// Настройка вкладок
-function setupTabs() {
-  const tabs = document.querySelectorAll('.tab');
-  const tabContents = document.querySelectorAll('.tab-content');
+// Функция для открытия раздела "Автомойка"
+function openAutoSection() {
+  document.getElementById('auto-section').classList.remove('hidden');
+  document.getElementById('statistics').classList.add('hidden');
 
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      // Убираем активность у предыдущих вкладок
-      tabs.forEach(t => t.classList.remove('active'));
-      tabContents.forEach(tc => tc.classList.remove('active'));
-
-      // Делаем текущую вкладку активной
-      tab.classList.add('active');
-      const tabId = tab.getAttribute('data-tab');
-      document.getElementById(tabId).classList.add('active');
-    });
-  });
+  document.getElementById('auto-title').classList.add('active');
+  document.getElementById('statistics-title').classList.remove('active');
 }
 
-// Переменные для отслеживания месяца и года
-let lastMonth = null;
-let lastYear = null;
+// Новая функция для открытия вкладки статистики
+function openStatistics() {
+  document.getElementById('statistics').classList.remove('hidden');
+  document.getElementById('auto-section').classList.add('hidden');
 
-// Отображение даты
-function updateDateDisplay() {
-  const dateText = document.getElementById('date-text');
-  const selectedDate = document.getElementById('selected-date').value;
-  const dateParts = selectedDate.split('-');
-  const day = parseInt(dateParts[2]);
-  const month = parseInt(dateParts[1]);
-  const year = parseInt(dateParts[0]);
-  const months = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
-  dateText.textContent = `${day} ${months[month - 1]}`;
+  document.getElementById('auto-title').classList.remove('active');
+  document.getElementById('statistics-title').classList.add('active');
 }
 
-// Обновление страницы с открытой вкладкой "Статистика"
-function updateStatistics() {
-  location.reload(); // Обновляем страницу
-  // Дополнительный код, чтобы сделать вкладку "Статистика" активной после обновления
-  const statisticsTab = document.querySelector('.tab[data-tab="statistics"]');
-  statisticsTab.click();
-}
+// Новая функция для закрытия вкладки статистики
+function closeStatistics() {
+  document.getElementById('statistics').classList.add('hidden');
+  document.getElementById('auto-section').classList.remove('hidden');
 
-// Изменяем обработчик события для кнопки "Обновить"
-document.querySelector('.update-button').addEventListener('click', updateStatistics);
+  document.getElementById('auto-title').classList.add('active');
+  document.getElementById('statistics-title').classList.remove('active');
+}
