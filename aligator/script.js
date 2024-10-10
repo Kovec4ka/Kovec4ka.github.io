@@ -71,7 +71,7 @@ function addPrice(service, price) {
   for (let i = 0; i < 3; i++) { // Создаем 3 одинаковых сообщения
     const message = document.createElement('div');
     message.classList.add('message');
-    message.textContent = `${service} добавлена!`;
+    message.textContent = `${service} добавлено!`;
     messageContainer.appendChild(message);
 
     // Устанавливаем начальную прозрачность для каждого сообщения
