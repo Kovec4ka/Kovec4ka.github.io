@@ -410,9 +410,9 @@ function calculateStatisticsTotal() {
 
 // Обновление отображения общей суммы статистики
 function updateStatisticsTotal() {
-  document.getElementById('total-statistics').textContent = totalStatistics.toFixed(2) + '';
-  document.getElementById('zp-15').textContent = `${totalStatistics15.toFixed(0)}₽ / ${(totalStatistics15 * 0.27).toFixed(0)}`;
-  document.getElementById('zp-16').textContent = `${totalStatistics16.toFixed(0)}₽ / ${(totalStatistics16 * 0.27).toFixed(0)}`;
+  document.getElementById('total-statistics').textContent = totalStatistics.toFixed(2) + '₽';
+  document.getElementById('zp-15').textContent = `${totalStatistics15.toFixed(0)}₽ / ${(totalStatistics15 * 0.27).toFixed(0)}₽`;
+  document.getElementById('zp-16').textContent = `${totalStatistics16.toFixed(0)}₽ / ${(totalStatistics16 * 0.27).toFixed(0)}₽`;
 }
 
 // Загрузка статистики из localStorage
