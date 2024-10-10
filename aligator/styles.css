@@ -120,22 +120,21 @@ button {
 }
 
 /* Стили для таблицы */
-table {
-  border-collapse: collapse;
+.data-table {
   width: 100%;
+  border-collapse: collapse;
+  font-size: 16px;
+  margin-bottom: 20px;
 }
 
-th, td {
+.data-table th, .data-table td {
   text-align: left;
   padding: 8px;
   color: #eee; /* Светлый текст */
+  border: 1px solid #444;
 }
 
-tr:nth-child(even) {
-  /* background-color: #444; */ /* Убираем фон для четных строк */
-}
-
-th {
+.data-table th {
   background-color: #555;
 }
 
@@ -294,5 +293,39 @@ button[onclick="resetTotal()"] {
   }
   .data-table, .data-table td, .data-table th {
     font-size: 14px;
+  }
+
+  /* Убираем подчеркивание у вкладок */
+  .tab {
+    border-bottom: none;
+  }
+
+  /* Делаем вкладки кнопками */
+  .tab {
+    padding: 8px 16px;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+  }
+
+  /* Изменяем стиль активной вкладки */
+  .tab.active {
+    background-color: #45a049; /* Более темный зеленый цвет */
+  }
+
+  /* Изменяем стиль неактивных вкладок */
+  .tab:not(.active) {
+    background-color: #333;
+  }
+
+  /* Убираем отступы у вкладок */
+  .tabs {
+    margin-bottom: 10px;
+  }
+
+  .ekonom-option button {
+    flex: 1 1 100px; /* Делаем кнопки в секциях адаптивными */
+    min-width: 50px; /* Минимальная ширина кнопок */
+    font-size: 0.8rem; /* Уменьшаем размер шрифта */
   }
 }

@@ -410,9 +410,9 @@ function calculateStatisticsTotal() {
 
 // Обновление отображения общей суммы статистики
 function updateStatisticsTotal() {
-  document.getElementById('total-statistics').textContent = totalStatistics.toFixed(2) + '₽';
-  document.getElementById('zp-15').textContent = `${totalStatistics15.toFixed(0)}₽ / ${(totalStatistics15 * 0.27).toFixed(0)}₽`;
-  document.getElementById('zp-16').textContent = `${totalStatistics16.toFixed(0)}₽ / ${(totalStatistics16 * 0.27).toFixed(0)}₽`;
+  document.getElementById('total-statistics').textContent = totalStatistics.toFixed(2) + '';
+  document.getElementById('zp-15').textContent = `${totalStatistics15.toFixed(0)}₽ / ${(totalStatistics15 * 0.27).toFixed(0)}`;
+  document.getElementById('zp-16').textContent = `${totalStatistics16.toFixed(0)}₽ / ${(totalStatistics16 * 0.27).toFixed(0)}`;
 }
 
 // Загрузка статистики из localStorage
@@ -465,12 +465,12 @@ function updateDateDisplay() {
 }
 
 // Обновление страницы с открытой вкладкой "Статистика"
-function reloadWithStatisticsTab() {
-  location.reload();
+function updateStatistics() {
+  location.reload(); // Обновляем страницу
   // Дополнительный код, чтобы сделать вкладку "Статистика" активной после обновления
   const statisticsTab = document.querySelector('.tab[data-tab="statistics"]');
   statisticsTab.click();
 }
 
 // Изменяем обработчик события для кнопки "Обновить"
-document.querySelector('.update-button').addEventListener('click', reloadWithStatisticsTab);
+document.querySelector('.update-button').addEventListener('click', updateStatistics);
