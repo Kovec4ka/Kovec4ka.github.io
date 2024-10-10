@@ -1,0 +1,302 @@
+/* Основные стили */
+body {
+  font-family: sans-serif;
+  background-color: #222; /* Темный фон */
+  color: #eee; /* Светлый текст */
+  margin: 0; /* Убираем отступы */
+  padding: 0; /* Убираем отступы */
+  display: flex;
+  flex-direction: column; /* Выравниваем по вертикали */
+  align-items: center; /* Центрируем элементы */
+}
+
+.container {
+  width: 90%; /* Занимаем 90% ширины экрана */
+  max-width: 500px; /* Максимальная ширина */
+  padding: 20px;
+  margin: 20px auto; /* Центрируем контейнер */
+}
+
+h1 {
+  font-size: 2rem; /* Увеличиваем размер заголовка */
+  text-align: center;
+  margin-bottom: 20px;
+  color: #eee; /* Светлый текст */
+}
+
+h2 {
+  font-size: 1.5rem; /* Увеличиваем размер заголовка */
+  text-align: center;
+  margin-bottom: 10px;
+  color: #eee; /* Светлый текст */
+}
+
+/* Стили для групп кнопок */
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+/* Стили для кнопок */
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #4CAF50;
+  color: white;
+  cursor: pointer;
+  font-size: 1rem; /* Уменьшаем размер шрифта */
+  flex: 1 1 100px; /* Делаем кнопки адаптивными */
+  min-width: 100px; /* Минимальная ширина кнопок */
+}
+
+/* Стили для скрытых элементов */
+.hidden {
+  display: none;
+}
+
+/* Стили для отображения сумм и количества */
+#total, #discount, #services-count, #added-services, #pure { /* Добавлен #pure */
+  font-size: 1.2rem; /* Увеличиваем размер текста */
+  margin-bottom: 10px;
+  text-align: center;
+  color: #eee; /* Светлый текст */
+}
+
+/* Стили для выбора даты */
+#date-picker {
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+/* Стили для кнопки "x" */
+#toggle-button {
+  background-color: #f44336; /* Красный цвет для выделения */
+  font-size: 1rem; /* Уменьшаем размер шрифта */
+}
+
+
+/* Стили для блока услуг */
+#services {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+#services .button-group {
+  flex-wrap: wrap; /* Делаем группы кнопок адаптивными */
+  justify-content: center;
+}
+
+/* Стили для истории */
+.history-list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+.history-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 10px;
+  border-bottom: 1px solid #444;
+}
+
+.history-list li button {
+  background-color: transparent;
+  border: none;
+  color: #eee;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.history-list li button:hover {
+  color: #fff;
+}
+
+/* Стили для таблицы */
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+  color: #eee; /* Светлый текст */
+}
+
+tr:nth-child(even) {
+  /* background-color: #444; */ /* Убираем фон для четных строк */
+}
+
+th {
+  background-color: #555;
+}
+
+/* Стиль для кнопки "x" */
+button[onclick="resetTotal()"] {
+  margin-left: 400px; /* Отступ слева */
+}
+
+/* Стили для окна "Эконом" */
+#optional-options,
+#ekonom-options,
+#express-options,
+#quartz-options,
+#nano-options {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  background-color: #222; /* Темный фон */
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  z-index: 100;
+}
+
+/* Стили для кнопки закрытия */
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  color: #f62828; /* red текст */
+}
+
+/* Стили для опций в окне выбора */
+.ekonom-option {
+  margin-bottom: 15px;
+  display: flex; /* Кнопки на одной строке */
+  justify-content: space-between; /* Расстояние между кнопками */
+}
+
+.ekonom-option h3 {
+  margin-top: 0;
+  color: #eee; /* Светлый текст */
+}
+
+/* Стили для кнопок в окне выбора */
+#optional-options button,
+#ekonom-options button,
+#express-options button,
+#quartz-options button,
+#nano-options button {
+  background-color: #333; /* Серый фон */
+  color: #eee; /* Светлый текст */
+  margin: 5px; /* Расстояние между кнопками */
+}
+
+/* Стили для сообщения */
+.message {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%); /* Центрируем текст */
+  background-color: transparent; /* Прозрачный фон */
+  color: white; /* Белый цвет текста */
+  padding: 0;
+  border-radius: 0;
+  font-size: 1.2rem; /* Увеличиваем размер шрифта */
+  text-align: center;
+  z-index: 100; /* Чтобы сообщение было над другими элементами */
+}
+
+/* Стили для вкладок */
+.tabs {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #444;
+}
+
+.tab {
+  padding: 10px 20px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: border-bottom-color 0.3s ease;
+  font-size: 1.2rem;
+}
+
+.tab.active {
+  border-bottom-color: #4CAF50; /* Цвет активной вкладки */
+  font-weight: bold;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.tab[data-tab="statistics"] {
+  opacity: 0.5;
+}
+
+.tab[data-tab="bar"] {
+  opacity: 0.5;
+}
+
+/* Стили для блока даты */
+#date-container {
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+#selected-date-display {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  background-color: #333;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#date-text {
+  font-size: 1.2rem;
+  color: #eee;
+}
+
+#selected-date {
+  display: block; /* Отображаем input type="date" по умолчанию */
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #444;
+  border-radius: 5px;
+  background-color: #333;
+  color: #eee;
+}
+
+/* Media Query для адаптивности вкладок */
+@media (max-width: 768px) {
+  .tabs {
+    display: block;
+    width: 100%;
+  }
+
+  .tab {
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
+
+  .tab-content {
+    display: block;
+    width: 100%;
+  }
+
+  .tab-content:not(.active) {
+    display: none;
+  }
+}
