@@ -144,10 +144,30 @@
 
     <div class="tab-content" id="statistics">
       <h2>Статистика</h2>
-      <p>Всего: <span id="total-statistics">0</span>₽</p>
-      <p>Зп (1-15): <span id="zp-15">0 / 0</span>₽</p>
-      <p>Зп (16-31): <span id="zp-16">0 / 0</span>₽</p>
-      <button class="update-button" onclick="updateStatistics()">Обновить</button>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Зп (1-15):</td>
+            <td id="zp-15" style="text-align: right;">0 / 0</td>
+          </tr>
+          <tr>
+            <td>Зп (16-31):</td>
+            <td id="zp-16" style="text-align: right;">0 / 0</td>
+          </tr>
+          <tr>
+            <td>Всего:</td>
+            <td id="total-statistics" style="text-align: right;">0</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <button class="update-button" onclick="updateStatistics()" style="margin-left: auto;">Обновить</button>
     </div>
 
     <div id="message-container"></div>

@@ -289,7 +289,7 @@ button[onclick="resetTotal()"] {
     flex: 1 0 48%;
     text-align: center;
     margin-bottom: 10px;
-    font-size: 14px; /* Уменьшаем размер шрифта в меню */
+    font-size: 12px; /* Уменьшаем размер шрифта в меню */
   }
   .data-table, .data-table td, .data-table th {
     font-size: 14px;
@@ -328,4 +328,21 @@ button[onclick="resetTotal()"] {
     min-width: 50px; /* Минимальная ширина кнопок */
     font-size: 0.8rem; /* Уменьшаем размер шрифта */
   }
+
+  .update-button {
+    margin-left: auto; /* Сдвигаем кнопку "Обновить" вправо */
+  }
+}
+
+/* Стили для таблицы статистики */
+#statistics .data-table td {
+  color: #eee; /* Белый цвет для сумм после "/" */
+}
+
+#statistics .data-table td:first-child {
+  color: #555; /* Темно-серый цвет для сумм до "/" */
+}
+
+.update-button {
+  margin-left: auto; /* Сдвигаем кнопку "Обновить" вправо */
 }
