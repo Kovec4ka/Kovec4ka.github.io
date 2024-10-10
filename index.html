@@ -1,189 +1,420 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Калькулятор цен</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Городской Транспорт</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: left; /* Текст слева */
+            background-color: #000; /* Черный фон */
+            color: #fff; /* Белый цвет текста */
+            -ms-user-select: none;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            user-select: none; /* Отключение выделения текста */
+        }
+        .active {
+            color: red;
+            text-decoration: underline; /* Добавлено подчеркивание */
+            background-color: red; /* Добавлено фоновое закрашивание */
+            padding: 10px 20px; /* Добавлено padding */
+        }
+        .hidden {
+            display: none;
+        }
+        .container {
+            margin: auto; /* Центрирование по горизонтали */
+            width: 210px; /* Ширина контейнера */
+           /* padding: 20px;
+             background-color: #111; Темно-серый фон контейнера */
+            border-radius: 10px; /* Скругленные углы */
+            text-align: left; /* Выравнивание по левому краю */
+        }
+        .button {
+            padding: 10px 10px;
+            width: 90px;
+            cursor: pointer;
+            border: none;
+            background-color: transparent; /* Прозрачный фон */
+            color: #fff;
+            margin: 5px 0px;
+            border-radius: 5px; /* Скругленные углы */
+            font-family: "Roboto", sans-serif;
+            font-weight: bold;
+            font-style: normal;
+            font-size: 16px;
+        }
+
+        #button2 {
+            padding: 10px 20px;
+            cursor: pointer;
+            border: none;
+            background-color: red;
+            color: #fff;
+            margin: 0px -70px;
+            border-radius: 5px; /* Скругленные углы */
+        }
+
+        #img1 {
+            width: 28px;
+            margin: 15px -50px 130px;
+            position: absolute;
+        }
+
+        #img2 {
+            width: 35px;
+            margin: 0px -30px 130px;
+            position: absolute;
+        }
+
+        #img3 {
+            width: 23px;
+            margin: 10px 93px 130px;
+            position: absolute;
+        }
+
+        #select_first {
+            border: none;
+            background-color: black;
+            color: #b1b1b1;
+            -webkit-appearance: none;
+            font-family: "Roboto", sans-serif;
+            font-weight: normal;
+            font-style: normal;
+            font-size: 16px;
+            margin: 0px -5px;
+        }
+
+        #select_second {
+            border: none;
+            background-color: black;
+            color: white;
+            -webkit-appearance: none;
+            font-family: "Roboto", sans-serif;
+            font-weight: normal;
+            font-style: normal;
+            font-size: 150%;
+            margin: -8px -10px;
+        }
+
+        #p_first {
+            color: #b1b1b1;
+        }
+
+        #purchaseDate {
+            font-family: "Roboto", sans-serif;
+            font-weight: normal;
+            font-style: normal;
+            font-size: 135%;
+            margin: -5px 0px 15px;
+        }
+
+        #purchaseTime {
+            font-family: "Roboto", sans-serif;
+            font-weight: normal;
+            font-style: normal;
+            font-size: 140%;
+            margin: -5px 0px 25px;
+        }
+
+        #p_second {
+            font-family: "Roboto", sans-serif;
+            font-weight: bold;
+            font-style: normal;
+            font-size: 180%;
+        }
+
+        .without_ampm::-webkit-datetime-edit-ampm-field {
+   display: none;
+ }
+ input[type=time]::-webkit-clear-button {
+   -webkit-appearance: none;
+   -moz-appearance: none;
+   -o-appearance: none;
+   -ms-appearance:none;
+   appearance: none;
+   margin: -10px;
+ }
+
+ input {
+            font-family: "Roboto", sans-serif;
+            font-weight: normal;
+            font-style: normal;
+            font-size: 150%;
+            background-color: black;
+            color: white;
+            border: hidden;
+            margin: -10px -10px;
+        }
+
+input.middle:focus {
+    outline-width: 0;
+}
+
+textarea:focus, input:focus {
+    outline: none;
+}
+
+ hr {
+        border: none;
+        height: 1px;
+        color: #333;
+        background-color: #333;
+        }
+
+ #menu_btn {
+     margin: 10px 10px 0px;
+     display: flex;
+     gap: 3rem;
+     text-align: center; /* Выравнивание текста внутри #menu_btn */
+ }
+
+ .without_ampm::-webkit-datetime-edit-ampm-field {
+   display: none;
+ }
+ input[type=time]::-webkit-clear-button {
+   -webkit-appearance: none;
+   -moz-appearance: none;
+   -o-appearance: none;
+   -ms-appearance:none;
+   appearance: none;
+   margin: -10px;
+ }
+
+ body {
+		-ms-user-select: none;
+		-moz-user-select: none;
+		-webkit-user-select: none;
+		user-select: none;
+	}
+
+input[list]::-webkit-calendar-picker-indicator,
+input[list]::-webkit-list-button {
+    opacity: 0 !important
+}
+
+    </style>
 </head>
 <body>
-  <div class="container">
-    <div class="tabs">
-      <h2 class="tab active" data-tab="your-data">Автомойка</h2>
-      <h2 class="tab" data-tab="bar">Бар</h2>
-      <h2 class="tab" data-tab="statistics">Статистика</h2>
+
+<div class="container">
+
+    <h1 id="timer_block" style="margin: auto -40px">Действует: <span id="timer">15</span> сек.</h1>
+
+<div id="menu_btn">
+     <img id="img2" src="img/ok.png">
+    <img id="img3" src="img/man.png">
+    <button style="color: red" id="ticketButton" class="button" onclick="toggleContent('ticket')">Билет</button>
+    <button id="controlButton" class="button" onclick="toggleContent('control')">Контроль</button>
+        </div>
+    <hr style="width:340px; margin: 0px -70px 0px;"/>
+
+    <div id="ticketContent">
+      <div>
+          <img id="img1" src="img/man.png">
+          <p id="p_first">Перевозчик</p>
+        <select id="select_second"><option>МП ПАТП</option></select>
+          <p></p>
+          <hr style="width:320px; margin: 0px -50px 0px;"/>
+          <p></p>
+          </div>
+
+<div>
+        <img id="img1" src="img/bus.png">
+        <select id="select_first">
+            <option disabled style="color: red">Автобус №44:</option>
+            <option selected>Ленина 75 - Церковь - Ленина 75</option>
+            <option disabled></option>
+            <option disabled style="color: red">Автобус №10:</option>
+            <option>Ленина 75 - Рынок - Ленина 75</option>
+            <option>Ленина 75 - Мира - Ленина 75</option>
+            <option disabled></option>
+            <option disabled style="color: red">Автобус №9:</option>
+            <option>Склады - Маяк - Склады</option>
+            <option disabled></option>
+            <option disabled style="color: red">Автобус №6:</option>
+            <option>ПАТП - ЛУКАШИ - ПАТП</option>
+            <option disabled></option>
+            <option disabled style="color: red">Автобус №3:</option>
+            <option selected>ПАТП - Решетнева - ПАТП</option>
+            <option disabled></option>
+            <option disabled style="color: red">Автобус №2:</option>
+            <option selected>Ленина 75 - КПП 1 - Ленина75</option>
+            <option disabled></option>
+            <option disabled style="color: red">Автобус №1:</option>
+            <option selected>Ленина 75 - Площадь Победы - Ленина75</option>
+        </select>
+            <p><input list="busnumber" style="width: 250px" spellcheck="false">
+   <datalist id="busnumber" spellcheck="false">
+    <option value="a878ту124"></option>
+    <option value="в671тс124"></option>
+    <option value="р608нм124"></option>
+
+    <option value="в225тс124"></option>
+    <option value="в353оо124"></option>
+    <option value="в702тс124"></option>
+
+    <option value="а878ту124"></option>
+    <option value="а861ту124"></option>
+    <option value="в709тс124"></option>
+
+    <option value="а839ту124"></option>
+    <option value="а867ту124"></option>
+    <option value="а872ту124"></option>
+
+    <option value="р613нв124"></option>
+   </datalist></p>
+        <p id="hint"></p>
+        <hr style="width:320px; margin: 0px -50px 0px;"/>
+</div>
+
+
+<div>
+        <img id="img1" src="img/rub.png">
+        <p id="p_first">Стоимость</p>
+        <select id="select_second"><option>1 шт., Полный, 42.00 ₽</option>
+        <option>2 шт., Полный, 84.00 ₽</option>
+        <option>1 шт., Полный, 126.00 ₽</option></select>
+        <p></p>
+        <hr style="width:320px; margin: 0px -50px 0px;"/>
+</div>
+
+
+<div>
+        <img id="img1" src="img/clock.png">
+        <p id="p_first">Дата покупки</p>
+        <p id="purchaseDate"></p> <hr style="width:320px; margin: 0px -50px 0px;"/>
+</div>
+
+<div>
+        <img id="img1" src="img/calendar.png">
+        <p id="p_first">Время покупки</p>
+        <p id="purchaseTime"></p>
+</div>
+
+
     </div>
 
-    <div class="tab-content active" id="your-data">
-      <div id="date-container">
-        <div id="selected-date-display">
-          <span id="date-text"></span>
-          <input type="date" id="selected-date" value="">
-        </div>
-      </div>
-
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th></th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th>Грязными:</th>
-            <td id="total" style="text-align: right;">0</td>
-          </tr>
-          <tr>
-            <th>Чистыми:</th>
-            <td id="discount" style="text-align: right;">0</td>
-          </tr>
-          <tr>
-            <th>Помыто/Доп.Услуги:</th>
-            <td id="services-info" style="text-align: right;">0 / 0</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <button onclick="resetTotal()" style="background-color: #f44336;">x</button> <br> <br>
-
-      <h2>Все услуги</h2>
-      <div id="services">
-        <div class="button-group">
-          <button id="open-ekonom-options">Эконом</button>
-          <button id="open-nano-options">Нано</button>
-          <button id="open-express-options">Экспресс</button>
-          <button id="open-quartz-options">Кварц</button>
-          <button id="open-optional-options">Дополнительные Услуги</button>
-        </div>
-        <div class="button-group">
-          <button onclick="addPrice('50р', 50)">50р</button>
-          <button onclick="addPrice('100р', 100)">100р</button>
-          <button onclick="addPrice('150р', 150)">150р</button>
-          <button onclick="addPrice('200р', 200)">200р</button>
-        </div>
-      </div>
-
-      <!------------------------------------ Ekonom BUTTONS ------------------------------------------>
-      <div id="ekonom-options" class="hidden">
-        <div class="close-button" onclick="closeEkonomOptions()">&times;</div>
-        <div class="ekonom-option">
-          <button onclick="addPrice('эконом 1 🚗', 800); closeEkonomOptions()">эконом 1 🚗</button>
-          <button onclick="addPrice('эконом 2 🚗', 1000); closeEkonomOptions()">эконом 2 🚗</button>
-        </div>
-        <div class="ekonom-option">
-          <button onclick="addPrice('эконом 1 🚐', 1300); closeEkonomOptions()">эконом 1 🚐</button>
-          <button onclick="addPrice('эконом 2 🚐', 1500); closeEkonomOptions()">эконом 2 🚐</button>
-        </div>
-      </div>
-
-      <!------------------------------------ NANO BUTTONS ------------------------------------------>
-      <div id="nano-options" class="hidden">
-        <div class="close-button" onclick="closeNanoOptions()">&times;</div>
-        <div class="ekonom-option">
-          <button onclick="addPrice('нано 1 🚗', 900); closeNanoOptions()">нано 1 🚗</button>
-          <button onclick="addPrice('нано 2 🚗', 1400); closeNanoOptions()">нано 2 🚗</button>
-        </div>
-
-        <div class="ekonom-option">
-          <button onclick="addPrice('нано 1 🚐', 1200); closeNanoOptions()">нано 1 🚐</button>
-          <button onclick="addPrice('нано 2 🚐', 1700); closeNanoOptions()">нано 2 🚐</button>
-        </div>
-      </div>
-
-      <!------------------------------------ Express BUTTONS ------------------------------------------>
-      <div id="express-options" class="hidden">
-        <div class="close-button" onclick="closeExpressOptions()">&times;</div>
-        <div class="ekonom-option">
-          <button onclick="addPrice('экспресс 🚗', 500); closeExpressOptions()">экспресс 🚗</button>
-          <button onclick="addPrice('экспресс 🚐', 600); closeExpressOptions()">экспресс 🚐</button>
-        </div>
-
-        <div class="ekonom-option">
-          <button onclick="addPrice('экспресс III', 1000); closeExpressOptions()">экспресс III</button>
-        </div>
-      </div>
-
-      <!------------------------------------ Quartz BUTTONS ------------------------------------------>
-      <div id="quartz-options" class="hidden">
-        <div class="close-button" onclick="closeQuartzOptions()">&times;</div>
-        <div class="ekonom-option">
-          <button onclick="addPrice('кварц 1 🚗', 2000); closeQuartzOptions()">кварц 1 🚗</button>
-          <button onclick="addPrice('кварц 2 🚗', 2500); closeQuartzOptions()">кварц 2 🚗</button>
-        </div>
-
-        <div class="ekonom-option">
-          <button onclick="addPrice('кварц 1 🚐', 2200); closeQuartzOptions()">кварц 1 🚐</button>
-          <button onclick="addPrice('кварц 2 🚐', 2700); closeQuartzOptions()">кварц 2 🚐</button>
-        </div>
-      </div>
-
-      <!------------------------------------ Optional BUTTONS ------------------------------------------>
-      <div id="optional-options" class="hidden">
-        <div class="close-button" onclick="closeOptionalOptions()">&times;</div>
-        <div class="ekonom-option">
-          <button onclick="addPrice('салон 🚗', 1000); closeOptionalOptions()">салон 🚗</button>
-          <button onclick="addPrice('салон 🚐', 1300); closeOptionalOptions()">салон 🚐</button>
-        </div>
-
-        <div class="ekonom-option">
-          <button onclick="addPrice('силикон', 250); closeOptionalOptions()">силикон</button>
-          <button onclick="addPrice('чернение', 300); closeOptionalOptions()">чернение</button>
-        </div>
-
-        <div class="ekonom-option">
-          <button onclick="addPrice('п. пластика', 500); closeOptionalOptions()">п. пластика</button>
-          <button onclick="addPrice('двигатель', 2500); closeOptionalOptions()">двигатель</button>
-        </div>
-
-      </div>
-
-
-      <h2>История</h2>
-      <ol class="history-list" id="history-list"></ol>
+    <div id="controlContent" class="hidden">
+      <img width="300" style="margin: 20px -50px" src="img/accept.png" alt="Описание изображения">
     </div>
 
-    <div class="tab-content" id="statistics">
-      <h2>Статистика</h2>
-      <p>Всего: <span id="total-statistics">0</span>₽</p>
-      <p>Зп (1-15): <span id="zp-15">0 / 0</span>₽</p>
-      <p>Зп (16-31): <span id="zp-16">0 / 0</span>₽</p>
-      <button class="update-button" onclick="location.reload()">Обновить</button>
-    </div>
+    <button id="button2" class="button" onclick="closeWindow()" style="width: 350px">Закрыть</button>
+</div>
 
-    <div class="tab-content" id="bar">
-      <h2>Бар</h2>
-      <table>
-        <tr>
-          <th></th>
-          <th></th>
-        </tr>
-        <tr>
-          <th>Должен:</th>
-          <td id="bar-total" style="text-align: right;">0</td>
-        </tr>
-      </table>
-      <div id="bar-services">
-        <div class="button-group">
-          <button onclick="addBarPrice('Кофе', 150)">Кофе</button>
-          <button onclick="addBarPrice('Чай', 100)">Чай</button>
-          <button onclick="addBarPrice('Пиво', 200)">Пиво</button>
-          <button onclick="addBarPrice('Вино', 300)">Вино</button>
-          <button onclick="addBarPrice('Водка', 250)">Водка</button>
-          <button onclick="addBarPrice('Коньяк', 350)">Коньяк</button>
-          <button onclick="addBarPrice('Фруктовый сок', 120)">Фруктовый сок</button>
-          <button onclick="addBarPrice('Газировка', 80)">Газировка</button>
-          <button onclick="addBarPrice('Чипсы', 100)">Чипсы</button>
-          <button onclick="addBarPrice('Орешки', 150)">Орешки</button>
-        </div>
-      </div>
-      <h2>История</h2>
-      <ol class="history-list" id="bar-history-list"></ol>
-      <p>Здесь будет информация о баре</p>
-    </div>
+<script>
+    // Отсчет времени
+    let timeLeft = 15;
+    const timerElement = document.getElementById('timer');
+    const timerBlock = document.getElementById('timer_block');
+    let countdown;
 
-    <div id="message-container"></div>
+    function startTimer() {
+        countdown = setInterval(() => {
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                timeLeft = 15;
+                timerElement.textContent = timeLeft;
+            } else {
+                timeLeft--;
+                timerElement.textContent = timeLeft;
+            }
+        }, 1000);
+    }
 
-    <script src="script.js"></script>
-  </body>
+    let isWindowClosed = false; // Флаг для отслеживания состояния
+
+    // Переключение контента
+    function toggleContent(type) {
+        if (isWindowClosed) {
+            return; // Выход из функции, если окно закрыто
+        }
+
+        const ticketContent = document.getElementById('ticketContent');
+        const controlContent = document.getElementById('controlContent');
+        const ticketButton = document.getElementById('ticketButton');
+        const controlButton = document.getElementById('controlButton');
+
+        if (type === 'ticket') {
+            ticketContent.classList.remove('hidden');
+            controlContent.classList.add('hidden');
+
+            ticketButton.classList.remove('active');
+            controlButton.classList.remove('active');
+            ticketButton.classList.add('active');
+
+            timerBlock.classList.remove('hidden');
+            startTimer();
+        } else {
+            ticketContent.classList.add('hidden');
+            controlContent.classList.remove('hidden');
+
+            ticketButton.classList.remove('active');
+            controlButton.classList.remove('active');
+            controlButton.classList.add('active');
+
+            timerBlock.classList.add('hidden');
+            clearInterval(countdown);
+        }
+    }
+
+    // Закрытие окна
+    function closeWindow() {
+        // Переключение состояния окна
+        isWindowClosed = !isWindowClosed;
+
+        if (isWindowClosed) {
+            // Деактивировать все элементы
+            document.querySelectorAll('select, input, button, datalist').forEach(el => {
+                el.disabled = true;
+            });
+            document.body.style.pointerEvents = 'none'; // Отключение событий для всего body
+            alert('Окно закрыто. Нажмите "Закрыть" ещё раз, чтобы открыть.');
+        } else {
+            // Активировать все элементы
+            document.querySelectorAll('select, input, button, datalist').forEach(el => {
+                el.disabled = false;
+            });
+            document.body.style.pointerEvents = 'auto'; // Восстановление событий
+        }
+    }
+
+    //  Перезапуск таймера при клике на элемент
+    timerElement.addEventListener('click', () => {
+        timeLeft = 15;
+        timerElement.textContent = timeLeft;
+        clearInterval(countdown);
+        startTimer();
+    });
+
+    // Получаем текущую дату
+    const today = new Date();
+    const day = today.getDate();
+    const month = today.getMonth(); // Месяц начинается с 0
+    const year = today.getFullYear();
+
+    // Массив с названиями месяцев
+    const monthNames = ["Января", "Февраля", "Марта", "Апреля", "Мая", "Июня",
+                        "Июля", "Августа", "Сентября", "Октября", "Ноября", "Декабря"];
+
+    // Формируем строку с датой
+    const formattedDate = `${day} ${monthNames[month]} ${year} г.`;
+
+    // Выводим дату в элемент с id="purchaseDate"
+    document.getElementById("purchaseDate").textContent = formattedDate;
+
+    // Получаем текущее время
+    const now = new Date();
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+    const formattedTime = `${hours}:${minutes.toString().padStart(2, '0')}`; // Добавляем ведущий ноль к минутам, если нужно
+
+    // Выводим время в элемент с id="purchaseTime"
+    document.getElementById("purchaseTime").textContent = formattedTime;
+
+</script>
+
+</body>
 </html>

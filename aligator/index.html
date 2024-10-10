@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=0.8, maximum-scale=0.8, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Калькулятор цен</title>
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -22,39 +22,27 @@
         </div>
       </div>
 
-      <table>
-        <tr>
-          <td>Грязными:</td>
-          <td id="total" style="text-align: right;">0</td>
-        </tr>
-        <tr>
-          <td>Чистыми:</td>
-          <td id="discount" style="text-align: right;">0</td>
-        </tr>
-        <tr>
-          <td>Помыто:</td>
-          <td id="services-count" style="text-align: right;">0</td>
-        </tr>
-        <tr>
-          <td>Доп. Услуг:</td>
-          <td id="added-services" style="text-align: right;">0</td>
-        </tr>
-        <tr>
-          <td>Всего (1-15):</td>
-          <td id="total-15" style="text-align: right;">0</td>
-        </tr>
-        <tr>
-          <td>Чистыми (1-15):</td>
-          <td id="discount-15" style="text-align: right;">0</td>
-        </tr>
-        <tr>
-          <td>Всего (16-31):</td>
-          <td id="total-16" style="text-align: right;">0</td>
-        </tr>
-        <tr>
-          <td>Чистыми (16-31):</td>
-          <td id="discount-16" style="text-align: right;">0</td>
-        </tr>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>Грязными:</th>
+            <td id="total" style="text-align: right;">0</td>
+          </tr>
+          <tr>
+            <th>Чистыми:</th>
+            <td id="discount" style="text-align: right;">0</td>
+          </tr>
+          <tr>
+            <th>Помыто/Доп.Услуги:</th>
+            <td id="services-info" style="text-align: right;">0 / 0</td>
+          </tr>
+        </tbody>
       </table>
 
       <button onclick="resetTotal()" style="background-color: #f44336;">x</button> <br> <br>
@@ -158,18 +146,21 @@
     <div class="tab-content" id="statistics">
       <h2>Статистика</h2>
       <p>Всего: <span id="total-statistics">0</span>₽</p>
+      <p>Зп (1-15): <span id="zp-15">0 / 0</span>₽</p>
+      <p>Зп (16-31): <span id="zp-16">0 / 0</span>₽</p>
+      <button class="update-button" onclick="location.reload()">Обновить</button>
     </div>
 
     <div class="tab-content" id="bar">
       <h2>Бар</h2>
       <table>
         <tr>
-          <td>Грязными:</td>
-          <td id="bar-total" style="text-align: right;">0</td>
+          <th></th>
+          <th></th>
         </tr>
         <tr>
-          <td>Чистыми:</td>
-          <td id="bar-discount" style="text-align: right;">0</td>
+          <th>Должен:</th>
+          <td id="bar-total" style="text-align: right;">0</td>
         </tr>
       </table>
       <div id="bar-services">

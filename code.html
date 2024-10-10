@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Code Entry</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <style>
+    body {
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: #222;
+      color: #eee;
+      font-size: 16px;
+      -webkit-touch-callout: none; 
+      -webkit-user-select: none; 
+      -khtml-user-select: none; 
+      -moz-user-select: none; 
+      -ms-user-select: none; 
+      user-select: none; 
+    }
+
+    .code-entry {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 90%;
+      max-width: 400px;
+      border: none;
+      padding: 20px;
+      border-radius: 10px;
+      background-color: transparent;
+    }
+
+    .code-input {
+      display: flex;
+      margin-bottom: 10px;
+      width: 100%;
+    }
+
+    .code-input input {
+      width: 30px; /* Увеличенный размер input */
+      height: 30px; /* Увеличенный размер input */
+      margin: 5px;
+      border: 2px solid #555;
+      text-align: center;
+      font-size: 24px; /* Увеличенный размер шрифта для input */
+      background-color: transparent;
+      color: #eee;
+      border-radius: 8px;
+    }
+
+    h2 {
+      margin-bottom: 10px;
+      font-size: 1.5rem; /* Увеличенный размер шрифта для заголовка */
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 8px;
+      font-size: 1rem; /* Увеличенный размер шрифта для кнопок */
+    }
+
+    .keyboard {
+      display: flex;
+      flex-direction: column;
+      margin-top: 10px;
+    }
+
+    .keyboard-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .keyboard button {
+      padding: 12px 24px; /* Увеличенный размер кнопок */
+      margin: 0 5px;
+      background-color: #444;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1.2rem; /* Увеличенный размер шрифта для кнопок */
+      color: #eee;
+      flex: 1;
+    }
+
+    .keyboard button:hover {
+      background-color: #555;
+    }
+
+    .keyboard button.qr {
+      background-color: #007bff;
+    }
+
+    .keyboard button.backspace {
+      background-color: #dc3545;
+    }
+
+    .keyboard button.qr:hover {
+      background-color: #0056b3;
+    }
+
+    .keyboard button.backspace:hover {
+      background-color: #c82333;
+    }
+
+    #error-message {
+      color: red;
+      display: none;
+      font-size: 1rem;
+    }
+
+    /* Медиа-запросы для адаптации на мобильных устройствах */
+    @media (max-width: 480px) {
+      .code-entry {
+        max-width: 90%;
+        padding: 15px;
+      }
+
+      .code-input input {
+        width: 25px;
+        height: 25px;
+        font-size: 18px;
+      }
+
+      .keyboard button {
+        padding: 8px 15px;
+        font-size: 0.8rem;
+      }
+
+      h2 {
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="code-entry">
+    <div class="code-input">
+      <input type="text" id="codeInput1" readonly maxlength="1">
+      <input type="text" id="codeInput2" readonly maxlength="1">
+      <input type="text" id="codeInput3" readonly maxlength="1">
+      <input type="text" id="codeInput4" readonly maxlength="1">
+      <input type="text" id="codeInput5" readonly maxlength="1">
+      <input type="text" id="codeInput6" readonly maxlength="1">
+    </div>
+    <h2>Введите код с наклейки</h2>
+    <div id="error-message">Неправильный код!</div>
+  </div>
+
+  <div class="keyboard">
+    <div class="keyboard-row">
+      <button onclick="addDigit('1')">1</button>
+      <button onclick="addDigit('2')">2</button>
+      <button onclick="addDigit('3')">3</button>
+    </div>
+    <div class="keyboard-row">
+      <button onclick="addDigit('4')">4</button>
+      <button onclick="addDigit('5')">5</button>
+      <button onclick="addDigit('6')">6</button>
+    </div>
+    <div class="keyboard-row">
+      <button onclick="addDigit('7')">7</button>
+      <button onclick="addDigit('8')">8</button>
+      <button onclick="addDigit('9')">9</button>
+    </div>
+    <div class="keyboard-row">
+      <button class="qr" onclick="openQrScanner()">QR</button>
+      <button onclick="addDigit('0')">0</button>
+      <button class="backspace" onclick="deleteDigit()">←</button>
+    </div>
+  </div>
+
+  <script>
+    const codeInputs = [
+      document.getElementById("codeInput1"),
+      document.getElementById("codeInput2"),
+      document.getElementById("codeInput3"),
+      document.getElementById("codeInput4"),
+      document.getElementById("codeInput5"),
+      document.getElementById("codeInput6")
+    ];
+    const correctCodes = ["123456", "543216"];
+    const errorMessage = document.getElementById("error-message");
+
+    let currentInputIndex = 0;
+
+    function addDigit(digit) {
+      if (currentInputIndex < 6) {
+        codeInputs[currentInputIndex].value = digit;
+        currentInputIndex++;
+        if (currentInputIndex === 6) {
+          checkCode();
+        }
+      }
+    }
+
+    function deleteDigit() {
+      if (currentInputIndex > 0) {
+        currentInputIndex--;
+        codeInputs[currentInputIndex].value = "";
+        if (currentInputIndex === 6) {
+          checkCode();
+        }
+      }
+    }
+
+    function openQrScanner() {
+      alert("Сканер QR-кодов еще не реализован.");
+    }
+
+    function checkCode() {
+      const enteredCode = codeInputs.map(input => input.value).join('');
+
+      if (correctCodes.includes(enteredCode)) {
+        window.location.href = "https://kovec4ka.github.io/";
+      } else {
+        errorMessage.style.display = "block";
+        codeInputs.forEach(input => input.value = "");
+        currentInputIndex = 0;
+      }
+    }
+  </script>
+</body>
+</html>

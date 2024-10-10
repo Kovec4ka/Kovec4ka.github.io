@@ -6,6 +6,7 @@ let selectedDate = new Date().toISOString().slice(0, 10); // Текущая да
 // Глобальные переменные для бара
 let barTotal = 0; // Общая сумма для бара
 let barSelectedServices = []; // Массив выбранных услуг для бара
+let barServicesHistory = []; // Массив для истории услуг бара
 
 let totalStatistics = 0; // Общая сумма за весь месяц (статистика)
 let totalStatistics15 = 0; // Общая сумма за первые 15 дней
@@ -113,8 +114,7 @@ function updateTotal() {
       servicesCount++;
     }
   }
-  document.getElementById('services-count').textContent = `${servicesCount}`;
-  document.getElementById('added-services').textContent = `${addedServicesCount}`;
+  document.getElementById('services-info').textContent = `${servicesCount} / ${addedServicesCount}`;
 
   // Обновляем статистику, если дата изменилась
   const currentMonth = new Date(selectedDate).getMonth() + 1;
@@ -199,6 +199,16 @@ function getPrice(service) {
     case 'кварц 2 🚗': return 2500;
     case 'кварц 1 🚐': return 2200;
     case 'кварц 2 🚐': return 2700;
+    case 'Кофе': return 150;
+    case 'Чай': return 100;
+    case 'Пиво': return 200;
+    case 'Вино': return 300;
+    case 'Водка': return 250;
+    case 'Коньяк': return 350;
+    case 'Фруктовый сок': return 120;
+    case 'Газировка': return 80;
+    case 'Чипсы': return 100;
+    case 'Орешки': return 150;
     default: return 0;
   }
 }
@@ -374,8 +384,7 @@ function updateTotal() {
       servicesCount++;
     }
   }
-  document.getElementById('services-count').textContent = `${servicesCount}`;
-  document.getElementById('added-services').textContent = `${addedServicesCount}`;
+  document.getElementById('services-info').textContent = `${servicesCount} / ${addedServicesCount}`;
 
   // Обновляем статистику, если дата изменилась
   const currentMonth = new Date(selectedDate).getMonth() + 1;
@@ -402,7 +411,7 @@ function addBarPrice(service, price) {
 function updateBarTotal() {
   const barDiscount = barTotal * 0.27;
   document.getElementById('bar-total').textContent = `${barTotal}₽`;
-  document.getElementById('bar-discount').textContent = `${barDiscount.toFixed(2)}₽`;
+  // document.getElementById('bar-discount').textContent = `${barDiscount.toFixed(2)}₽`; // Убрано
 }
 
 // Загрузка данных из localStorage для бара
@@ -411,9 +420,11 @@ function loadBarData() {
   if (savedBarServices) {
     barSelectedServices = JSON.parse(savedBarServices);
     barTotal = parseInt(localStorage.getItem(`barTotal`), 10) || 0;
+    barServicesHistory = JSON.parse(localStorage.getItem(`barServicesHistory`)) || [];
   } else {
     barTotal = 0;
     barSelectedServices = [];
+    barServicesHistory = [];
   }
   updateBarTotal();
   updateBarHistory(); // Обновляем историю для бара после загрузки данных
@@ -423,6 +434,7 @@ function loadBarData() {
 function saveBarSelectedServices() {
   localStorage.setItem(`barSelectedServices`, JSON.stringify(barSelectedServices));
   localStorage.setItem(`barTotal`, barTotal);
+  localStorage.setItem(`barServicesHistory`, JSON.stringify(barServicesHistory)); // Сохраняем историю услуг
 }
 
 // Обновление отображения истории выбранных услуг для бара
@@ -430,7 +442,7 @@ function updateBarHistory() {
   const barHistoryList = document.getElementById('bar-history-list');
   barHistoryList.innerHTML = ''; // Очищаем список истории
 
-  barSelectedServices.forEach((service, index) => {
+  barServicesHistory.forEach((service, index) => {
     const listItem = document.createElement('li');
     listItem.textContent = `${index + 1}. ${service}`; // Добавляем нумерацию
 
@@ -456,10 +468,11 @@ function updateBarHistory() {
 
 // Удаление услуги из истории для бара
 function removeBarServiceFromHistory(index) {
-  const service = barSelectedServices[index];
+  const service = barServicesHistory[index];
   const price = getPrice(service); // Используем функцию getPrice для получения цены
   barTotal -= price;
-  barSelectedServices.splice(index, 1);
+  // barSelectedServices.splice(index, 1); // Убрано
+  barServicesHistory.splice(index, 1);
   updateBarTotal();
   saveBarSelectedServices();
   updateBarHistory(); // Обновляем историю после удаления
@@ -467,10 +480,11 @@ function removeBarServiceFromHistory(index) {
 
 // Добавление услуги в историю (перед текущим элементом) для бара
 function addBarServiceToHistory(index) {
-  const service = barSelectedServices[index];
+  const service = barServicesHistory[index];
   const price = getPrice(service); // Используем функцию getPrice для получения цены
   barTotal += price;
-  barSelectedServices.splice(index + 1, 0, service); // Вставляем перед текущим элементом
+  // barSelectedServices.splice(index + 1, 0, service); // Убрано
+  barServicesHistory.splice(index + 1, 0, service); // Вставляем перед текущим элементом
   updateBarTotal();
   saveBarSelectedServices();
   updateBarHistory(); // Обновляем историю после добавления
@@ -507,11 +521,9 @@ function calculateStatisticsTotal() {
 
 // Обновление отображения общей суммы статистики
 function updateStatisticsTotal() {
-  document.getElementById('total-statistics').textContent = totalStatistics.toFixed(2);
-  document.getElementById('total-15').textContent = totalStatistics15.toFixed(2);
-  document.getElementById('total-16').textContent = totalStatistics16.toFixed(2);
-  document.getElementById('discount-15').textContent = (totalStatistics15 * 0.27).toFixed(2);
-  document.getElementById('discount-16').textContent = (totalStatistics16 * 0.27).toFixed(2);
+  document.getElementById('total-statistics').textContent = totalStatistics.toFixed(2) + '₽';
+  document.getElementById('zp-15').textContent = `${totalStatistics15.toFixed(0)}₽ / ${(totalStatistics15 * 0.27).toFixed(0)}₽`;
+  document.getElementById('zp-16').textContent = `${totalStatistics16.toFixed(0)}₽ / ${(totalStatistics16 * 0.27).toFixed(0)}₽`;
 }
 
 // Загрузка статистики из localStorage
@@ -562,3 +574,14 @@ function updateDateDisplay() {
   const months = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
   dateText.textContent = `${day} ${months[month - 1]}`;
 }
+
+// Обновление страницы с открытой вкладкой "Статистика"
+function reloadWithStatisticsTab() {
+  location.reload();
+  // Дополнительный код, чтобы сделать вкладку "Статистика" активной после обновления
+  const statisticsTab = document.querySelector('.tab[data-tab="statistics"]');
+  statisticsTab.click();
+}
+
+// Изменяем обработчик события для кнопки "Обновить"
+document.querySelector('.update-button').addEventListener('click', reloadWithStatisticsTab);
