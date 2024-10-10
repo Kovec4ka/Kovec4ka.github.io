@@ -272,48 +272,66 @@ button[onclick="resetTotal()"] {
 
 /* Media Query для адаптивности вкладок */
 @media (max-width: 768px) {
-  .tabs {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
+  .container {
+    width: 95%; /* Занимаем больше ширины экрана */
+    max-width: 400px; /* Уменьшаем максимальную ширину */
+    padding: 10px; /* Уменьшаем отступы */
   }
 
-  .tab {
-    flex: 1 0 48%;
-    text-align: center;
-    margin-bottom: 10px;
-    font-size: 12px; /* Уменьшаем размер шрифта в меню */
+  h1 {
+    font-size: 1.5rem; /* Уменьшаем размер заголовка */
   }
+
+  h2 {
+    font-size: 1.2rem; /* Уменьшаем размер заголовка */
+  }
+
   .data-table, .data-table td, .data-table th {
     font-size: 14px;
   }
 
-  /* Убираем подчеркивание у вкладок */
-  .tab {
-    border-bottom: none;
+  .button-group {
+    flex-wrap: wrap; /* Делаем группы кнопок адаптивными */
+    justify-content: center;
   }
 
-  /* Делаем вкладки кнопками */
-  .tab {
-    padding: 8px 16px;
-    border-radius: 5px;
-    background-color: #4CAF50;
-    color: white;
+  button {
+    padding: 8px 16px; /* Уменьшаем отступы */
+    font-size: 0.8rem; /* Уменьшаем размер шрифта */
+    flex: 1 1 100px; /* Делаем кнопки адаптивными */
+    min-width: 50px; /* Минимальная ширина кнопок */
   }
 
-  /* Изменяем стиль активной вкладки */
-  .tab.active {
-    background-color: #45a049; /* Более темный зеленый цвет */
+  .history-list li {
+    font-size: 0.9rem; /* Уменьшаем размер шрифта */
   }
 
-  /* Изменяем стиль неактивных вкладок */
-  .tab:not(.active) {
-    background-color: #333;
+  .history-list li button {
+    font-size: 0.8rem; /* Уменьшаем размер шрифта */
   }
 
-  /* Убираем отступы у вкладок */
-  .tabs {
-    margin-bottom: 10px;
+  /* Стили для окна "Эконом" и других секций */
+  #optional-options,
+  #ekonom-options,
+  #express-options,
+  #quartz-options,
+  #nano-options {
+    width: 90%; /* Занимаем больше ширины экрана */
+    max-width: 300px; /* Уменьшаем максимальную ширину */
+    font-size: 0.8rem; /* Уменьшаем размер шрифта */
+  }
+
+  /* Стили для кнопки закрытия */
+  .close-button {
+    top: 5px;
+    right: 5px;
+    font-size: 16px;
+  }
+
+  /* Стили для секций с кнопками */
+  .ekonom-option {
+    flex-direction: column; /* Кнопки вертикально */
+    align-items: center;
   }
 
   .ekonom-option button {
@@ -322,11 +340,33 @@ button[onclick="resetTotal()"] {
     font-size: 0.8rem; /* Уменьшаем размер шрифта */
   }
 
-  .update-button {
-    margin-left: auto; /* Сдвигаем кнопку "Обновить" вправо */
+  /* Стили для сообщения */
+  .message {
+    bottom: 10px;
+    font-size: 1rem;
   }
-}
 
-.update-button {
-  margin-left: auto; /* Сдвигаем кнопку "Обновить" вправо */
+  /* Стили для блока даты */
+  #selected-date-display {
+    font-size: 0.9rem;
+  }
+
+  #date-text {
+    font-size: 0.9rem;
+  }
+
+  #selected-date {
+    font-size: 0.9rem;
+  }
+
+  /* Стили для заголовков */
+  .header h1 {
+    font-size: 1.2rem;
+  }
+
+  /* Стили для блока статистики */
+  #statistics {
+    width: 95%; /* Занимаем больше ширины экрана */
+    max-width: 400px; /* Уменьшаем максимальную ширину */
+  }
 }
