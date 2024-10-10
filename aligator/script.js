@@ -165,8 +165,8 @@ function removeLast() {
 // Получение цены услуги по ее названию для автомойки
 function getPrice(service) {
   switch (service) {
-    case 'салон 🚗': return 1000;
-    case 'салон 🚐': return 1300;
+    case 'салон ': return 1000;
+    case 'салон ': return 1300;
     case 'днище': return 400;
     case 'чернение': return 300;
     case 'силикон': return 250;
@@ -176,21 +176,21 @@ function getPrice(service) {
     case '100р': return 100;
     case '150р': return 150;
     case '200р': return 200;
-    case 'эконом 1 🚗': return 800;
-    case 'эконом 1 🚗': return 1000;
-    case 'эконом 1 🚐': return 1300; // Добавлена цена для "эк 1 🚐"
-    case 'эконом 2 🚐': return 1500; // Добавлена цена для "эк 2 🚐"
-    case 'нано 1 🚗': return 900;
-    case 'нано 2 🚗': return 1400;
-    case 'нано 1 🚐': return 1200;
-    case 'нано 2 🚐': return 1700;
-    case 'экспресс 🚗': return 500;
-    case 'экспресс 🚐': return 600;
+    case 'эконом 1 ': return 800;
+    case 'эконом 1 ': return 1000;
+    case 'эконом 1 ': return 1300; // Добавлена цена для "эк 1 "
+    case 'эконом 2 ': return 1500; // Добавлена цена для "эк 2 "
+    case 'нано 1 ': return 900;
+    case 'нано 2 ': return 1400;
+    case 'нано 1 ': return 1200;
+    case 'нано 2 ': return 1700;
+    case 'экспресс ': return 500;
+    case 'экспресс ': return 600;
     case 'экспресс III': return 1000;
-    case 'кварц 1 🚗': return 2000;
-    case 'кварц 2 🚗': return 2500;
-    case 'кварц 1 🚐': return 2200;
-    case 'кварц 2 🚐': return 2700;
+    case 'кварц 1 ': return 2000;
+    case 'кварц 2 ': return 2500;
+    case 'кварц 1 ': return 2200;
+    case 'кварц 2 ': return 2700;
     default: return 0;
   }
 }

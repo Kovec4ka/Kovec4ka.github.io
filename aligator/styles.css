@@ -334,15 +334,6 @@ button[onclick="resetTotal()"] {
   }
 }
 
-/* Стили для таблицы статистики */
-#statistics .data-table td {
-  color: #eee; /* Белый цвет для сумм после "/" */
-}
-
-#statistics .data-table td:first-child {
-  color: #555; /* Темно-серый цвет для сумм до "/" */
-}
-
 .update-button {
   margin-left: auto; /* Сдвигаем кнопку "Обновить" вправо */
 }

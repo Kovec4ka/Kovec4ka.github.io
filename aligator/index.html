@@ -9,8 +9,8 @@
 <body>
   <div class="container">
     <div class="tabs">
-      <h2 class="tab active" data-tab="your-data">Автомойка</h2>
-      <h2 class="tab" data-tab="statistics">Статистика</h2>
+      <h2 class="tab active" data-tab="your-data">Авто</h2>
+      <h2 class="tab" data-tab="statistics">Стат</h2>
     </div>
 
     <div class="tab-content active" id="your-data">
@@ -67,12 +67,12 @@
       <div id="ekonom-options" class="hidden">
         <div class="close-button" onclick="closeEkonomOptions()">&times;</div>
         <div class="ekonom-option">
-          <button onclick="addPrice('эконом 1 🚗', 800); closeEkonomOptions()">эконом 1 🚗</button>
-          <button onclick="addPrice('эконом 2 🚗', 1000); closeEkonomOptions()">эконом 2 🚗</button>
+          <button onclick="addPrice('эконом 1 ', 800); closeEkonomOptions()">эконом 1 </button>
+          <button onclick="addPrice('эконом 2 ', 1000); closeEkonomOptions()">эконом 2 </button>
         </div>
         <div class="ekonom-option">
-          <button onclick="addPrice('эконом 1 🚐', 1300); closeEkonomOptions()">эконом 1 🚐</button>
-          <button onclick="addPrice('эконом 2 🚐', 1500); closeEkonomOptions()">эконом 2 🚐</button>
+          <button onclick="addPrice('эконом 1 ', 1300); closeEkonomOptions()">эконом 1 </button>
+          <button onclick="addPrice('эконом 2 ', 1500); closeEkonomOptions()">эконом 2 </button>
         </div>
       </div>
 
@@ -80,13 +80,13 @@
       <div id="nano-options" class="hidden">
         <div class="close-button" onclick="closeNanoOptions()">&times;</div>
         <div class="ekonom-option">
-          <button onclick="addPrice('нано 1 🚗', 900); closeNanoOptions()">нано 1 🚗</button>
-          <button onclick="addPrice('нано 2 🚗', 1400); closeNanoOptions()">нано 2 🚗</button>
+          <button onclick="addPrice('нано 1 ', 900); closeNanoOptions()">нано 1 </button>
+          <button onclick="addPrice('нано 2 ', 1400); closeNanoOptions()">нано 2 </button>
         </div>
 
         <div class="ekonom-option">
-          <button onclick="addPrice('нано 1 🚐', 1200); closeNanoOptions()">нано 1 🚐</button>
-          <button onclick="addPrice('нано 2 🚐', 1700); closeNanoOptions()">нано 2 🚐</button>
+          <button onclick="addPrice('нано 1 ', 1200); closeNanoOptions()">нано 1 </button>
+          <button onclick="addPrice('нано 2 ', 1700); closeNanoOptions()">нано 2 </button>
         </div>
       </div>
 
@@ -94,8 +94,8 @@
       <div id="express-options" class="hidden">
         <div class="close-button" onclick="closeExpressOptions()">&times;</div>
         <div class="ekonom-option">
-          <button onclick="addPrice('экспресс 🚗', 500); closeExpressOptions()">экспресс 🚗</button>
-          <button onclick="addPrice('экспресс 🚐', 600); closeExpressOptions()">экспресс 🚐</button>
+          <button onclick="addPrice('экспресс ', 500); closeExpressOptions()">экспресс </button>
+          <button onclick="addPrice('экспресс ', 600); closeExpressOptions()">экспресс </button>
         </div>
 
         <div class="ekonom-option">
@@ -107,13 +107,13 @@
       <div id="quartz-options" class="hidden">
         <div class="close-button" onclick="closeQuartzOptions()">&times;</div>
         <div class="ekonom-option">
-          <button onclick="addPrice('кварц 1 🚗', 2000); closeQuartzOptions()">кварц 1 🚗</button>
-          <button onclick="addPrice('кварц 2 🚗', 2500); closeQuartzOptions()">кварц 2 🚗</button>
+          <button onclick="addPrice('кварц 1 ', 2000); closeQuartzOptions()">кварц 1 </button>
+          <button onclick="addPrice('кварц 2  ', 2500); closeQuartzOptions()">кварц 2 </button>
         </div>
 
         <div class="ekonom-option">
-          <button onclick="addPrice('кварц 1 🚐', 2200); closeQuartzOptions()">кварц 1 🚐</button>
-          <button onclick="addPrice('кварц 2 🚐', 2700); closeQuartzOptions()">кварц 2 🚐</button>
+          <button onclick="addPrice('кварц 1 ', 2200); closeQuartzOptions()">кварц 1 </button>
+          <button onclick="addPrice('кварц 2 ', 2700); closeQuartzOptions()">кварц 2 </button>
         </div>
       </div>
 
@@ -121,8 +121,8 @@
       <div id="optional-options" class="hidden">
         <div class="close-button" onclick="closeOptionalOptions()">&times;</div>
         <div class="ekonom-option">
-          <button onclick="addPrice('салон 🚗', 1000); closeOptionalOptions()">салон 🚗</button>
-          <button onclick="addPrice('салон 🚐', 1300); closeOptionalOptions()">салон 🚐</button>
+          <button onclick="addPrice('салон ', 1000); closeOptionalOptions()">салон </button>
+          <button onclick="addPrice('салон ', 1300); closeOptionalOptions()">салон </button>
         </div>
 
         <div class="ekonom-option">
@@ -154,11 +154,15 @@
         <tbody>
           <tr>
             <td>Зп (1-15):</td>
-            <td id="zp-15" style="text-align: right;">0 / 0</td>
+            <td id="zp-15" style="text-align: right;">
+              <span class="dark-gray">0</span> / <span class="white">0</span>
+            </td>
           </tr>
           <tr>
             <td>Зп (16-31):</td>
-            <td id="zp-16" style="text-align: right;">0 / 0</td>
+            <td id="zp-16" style="text-align: right;">
+              <span class="dark-gray">0</span> / <span class="white">0</span>
+            </td>
           </tr>
           <tr>
             <td>Всего:</td>
