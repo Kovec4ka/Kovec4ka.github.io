@@ -141,7 +141,7 @@ th {
 
 /* Стиль для кнопки "x" */
 button[onclick="resetTotal()"] {
-  margin-left: 400px; /* Отступ слева */
+  /*margin-left: 400px; /* Отступ слева */
 }
 
 /* Стили для окна "Эконом" */
@@ -290,14 +290,9 @@ button[onclick="resetTotal()"] {
     flex: 1 0 48%;
     text-align: center;
     margin-bottom: 10px;
+    font-size: 14px; /* Уменьшаем размер шрифта в меню */
   }
-
-  .tab-content {
-    display: block;
-    width: 100%;
-  }
-
-  .tab-content:not(.active) {
-    display: none;
+  .data-table, .data-table td, .data-table th {
+    font-size: 14px;
   }
 }
