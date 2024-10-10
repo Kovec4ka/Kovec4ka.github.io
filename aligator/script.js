@@ -29,6 +29,35 @@ window.onload = () => {
   document.getElementById('statistics-title').addEventListener('click', () => {
     openStatistics();
   });
+
+  // Обработчики кликов для закрытия окон
+  document.addEventListener('click', (event) => {
+    if (event.target !== document.getElementById('open-ekonom-options') &&
+        event.target !== document.getElementById('ekonom-options') &&
+        !document.getElementById('ekonom-options').contains(event.target)) {
+      closeEkonomOptions();
+    }
+    if (event.target !== document.getElementById('open-nano-options') &&
+        event.target !== document.getElementById('nano-options') &&
+        !document.getElementById('nano-options').contains(event.target)) {
+      closeNanoOptions();
+    }
+    if (event.target !== document.getElementById('open-express-options') &&
+        event.target !== document.getElementById('express-options') &&
+        !document.getElementById('express-options').contains(event.target)) {
+      closeExpressOptions();
+    }
+    if (event.target !== document.getElementById('open-quartz-options') &&
+        event.target !== document.getElementById('quartz-options') &&
+        !document.getElementById('quartz-options').contains(event.target)) {
+      closeQuartzOptions();
+    }
+    if (event.target !== document.getElementById('open-optional-options') &&
+        event.target !== document.getElementById('optional-options') &&
+        !document.getElementById('optional-options').contains(event.target)) {
+      closeOptionalOptions();
+    }
+  });
 };
 
 // Обработка события изменения даты
