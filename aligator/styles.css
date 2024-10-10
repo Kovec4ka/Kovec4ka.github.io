@@ -273,7 +273,7 @@ button[onclick="resetTotal()"] {
 /* Media Query для адаптивности вкладок */
 @media (max-width: 768px) {
   .container {
-    width: 95%; /* Занимаем больше ширины экрана */
+    width: 90%; /* Занимаем больше ширины экрана */
     max-width: 400px; /* Уменьшаем максимальную ширину */
     padding: 10px; /* Уменьшаем отступы */
   }
@@ -310,35 +310,6 @@ button[onclick="resetTotal()"] {
     font-size: 0.8rem; /* Уменьшаем размер шрифта */
   }
 
-  /* Стили для окна "Эконом" и других секций */
-  #optional-options,
-  #ekonom-options,
-  #express-options,
-  #quartz-options,
-  #nano-options {
-    width: 90%; /* Занимаем больше ширины экрана */
-    max-width: 300px; /* Уменьшаем максимальную ширину */
-    font-size: 0.8rem; /* Уменьшаем размер шрифта */
-  }
-
-  /* Стили для кнопки закрытия */
-  .close-button {
-    top: 5px;
-    right: 5px;
-    font-size: 16px;
-  }
-
-  /* Стили для секций с кнопками */
-  .ekonom-option {
-    flex-direction: column; /* Кнопки вертикально */
-    align-items: center;
-  }
-
-  .ekonom-option button {
-    flex: 1 1 100px; /* Делаем кнопки в секциях адаптивными */
-    min-width: 50px; /* Минимальная ширина кнопок */
-    font-size: 0.8rem; /* Уменьшаем размер шрифта */
-  }
 
   /* Стили для сообщения */
   .message {
