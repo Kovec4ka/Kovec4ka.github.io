@@ -216,7 +216,7 @@ function getPrice(service) {
     case '200р': return 200;
     case 'эконом 1 I': return 800;   // 1-ая колонка
     case 'эконом 1 II': return 1000; // 2-ая колонка
-    case 'эконом 1 I': return 1300;   // 1-ая колонка
+    case 'эконом 2 I': return 1300;   // 1-ая колонка
     case 'эконом 2 II': return 1500;   // 2-ая колонка
     case 'нано 1 I': return 900; // 1-ая колонка
     case 'нано 1 II': return 1200; // 2-ая колонка
