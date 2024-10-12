@@ -273,7 +273,7 @@ button[onclick="resetTotal()"] {
 /* Media Query для адаптивности вкладок */
 @media (max-width: 768px) {
   .container {
-    width: 80%; /* Занимаем больше ширины экрана */
+    width: 90%; /* Занимаем больше ширины экрана */
     max-width: 400px; /* Уменьшаем максимальную ширину */
     padding: 10px; /* Уменьшаем отступы */
   }
